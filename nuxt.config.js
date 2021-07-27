@@ -19,8 +19,16 @@ export default {
     ]
   },
 
+  styleResources: {
+    scss: [
+      '@/theme/_mixins/*.scss',
+      '@/theme/_vars/*.scss',
+    ]
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '@/theme/main.scss'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -45,7 +53,8 @@ export default {
     '@nuxtjs/auth-next', // реализуем авторизацию JWT
     'cookie-universal-nuxt', // работа с печеньками
     ['@nuxtjs/moment', { locales: ['ru'], defaultLocale: 'ru' }], // работа с датой / временем
-    '@nuxtjs/toast' // а это in-app пуши
+    '@nuxtjs/toast', // а это in-app пуши
+    '@nuxtjs/style-resources'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

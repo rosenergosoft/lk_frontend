@@ -1,0 +1,319 @@
+@import "_vars/vars";
+@import "_fonts/fonts";
+
+body {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: $defaultFontColor;
+  background-color: $bodyBackgroundColor;
+  padding-left: 10px;
+}
+.col, .row, .container {
+  margin: 0;
+  padding: 0;
+}
+.sidebar {
+  padding-top: 25px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-right: 1px solid $separatorColor;
+  height: 100vh;
+  .nav, .nav-item, .nav-link {
+    margin: 0;
+    padding: 0;
+  }
+  .nav-link {
+    color: $defaultFontColor;
+    &:hover {
+      color: $LinkHoverColor;
+      i.book {
+        background: url('/images/hover/bi_book.svg') no-repeat;
+      }
+      i.connect {
+        background: url('/images/hover/raphael_connect.svg') no-repeat;
+      }
+      i.questions {
+        background: url('/images/hover/mdi_frequently-asked-questions.svg') no-repeat;
+      }
+      i.users {
+        background: url('/images/hover/gridicons_multiple-users.svg') no-repeat;
+      }
+      i.info {
+        background: url('/images/hover/ant-design_info-circle-outlined.svg') no-repeat;
+      }
+      i.settings {
+        background: url('/images/hover/ci_settings.svg') no-repeat;
+      }
+    }
+  }
+  .nav-item {
+    margin-bottom: 15px;
+  }
+  .subnav {
+    margin-top: 15px;
+    margin-left: 20px;
+  }
+  nav {
+    label {
+      font-size: 12px;
+      font-family: Arial, sans-serif;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+    .active::before {
+      height: 24px;
+      width: 5px;
+      position: absolute;
+      background-color: #444B76;
+      content: " ";
+      display: block;
+      margin-left: -35px;
+    }
+  }
+}
+.logo {
+  padding-bottom: 25px;
+}
+.wrapper {
+  background-color: $wrapperBackgroundColor;
+  height: 100vh;
+}
+.bell {
+  background: url('/images/akar-icons_bell.svg') no-repeat;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  position: relative;
+  top: 5px;
+  margin-right: 11px;
+}
+.messages {
+  background: url('/images/jam_messages.svg') no-repeat;
+  width: 21px;
+  height: 21px;
+  display: inline-block;
+  position: relative;
+  top: 3px;
+  margin-right: 20px;
+}
+.logout {
+  background: url('/images/fe_logout.svg') no-repeat;
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  position: relative;
+}
+.person {
+  background: url('/images/bi_person-circle.svg') no-repeat;
+  width: 26px;
+  height: 26px;
+  display: inline-block;
+  position: relative;
+  margin-right: 13px;
+}
+.book {
+  background: url('/images/bi_book.svg') no-repeat;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  position: relative;
+  top: 4px;
+  margin-right: 4px;
+}
+.connect {
+  background: url('/images/raphael_connect.svg') no-repeat;
+  width: 21px;
+  height: 21px;
+  display: inline-block;
+  position: relative;
+  top: 6px;
+  margin-right: 4px;
+}
+.questions {
+  background: url('/images/mdi_frequently-asked-questions.svg') no-repeat;
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  position: relative;
+  top: 6px;
+  margin-right: 7px;
+}
+.users {
+  background: url('/images/gridicons_multiple-users.svg') no-repeat;
+  width: 19px;
+  height: 19px;
+  display: inline-block;
+  position: relative;
+  top: 6px;
+  margin-right: 2px;
+}
+.info {
+  background: url('/images/ant-design_info-circle-outlined.svg') no-repeat;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  position: relative;
+  top: 5px;
+  margin-right: 2px;
+}
+.settings {
+  background: url('/images/ci_settings.svg') no-repeat;
+  width: 23px;
+  height: 23px;
+  display: inline-block;
+  position: relative;
+  top: 7px;
+  margin-right: 2px;
+}
+.separator {
+  border-bottom: 1px solid $separatorColor;
+  margin-bottom: 25px;
+}
+.userBar {
+  margin-top: 20px;
+  margin-left: auto;
+  margin-bottom: 55px;
+}
+.user-account {
+  margin-right: 20px;
+  a {
+    color: $defaultFontColor;
+    line-height: 9px;
+    position: relative;
+    top: -3px;
+    &:hover {
+      color: $LinkHoverColor;
+      text-decoration: none;
+    }
+    p {
+      margin: 0;
+      padding:0;
+      color: $LinkHoverColor;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      font-size: 12px;
+    }
+  }
+}
+.page-title {
+  font-size: 24px;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  a {
+    color: $LinkHoverColor;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  .l-separator {
+    color: $LinkHoverColor;
+    margin-left: 14px;
+    margin-right: 14px;
+  }
+  .active {
+    color: $defaultFontColor;
+    border-bottom: 1px solid $defaultFontColor;
+  }
+}
+.status {
+  text-align: center;
+  cursor: pointer;
+  height: 97px;
+  font-size: 10px;
+  background-color: $statusBackgroundColor;
+  max-width: 145px;
+  border-left: 20px solid #1F2234;
+  .count {
+    font-family: Barlow-Bold, sans-serif;
+    font-size: 30px;
+  }
+  .status-text {
+  }
+}
+.status-1 {
+  border-color: $status1;
+}
+.status-2 {
+  border-color: $status2;
+}
+.status-3 {
+  border-color: $status3;
+}
+.status-4 {
+  border-color: $status4;
+}
+.status-5 {
+  border-color: $status5;
+}
+.status-6 {
+  border-color: $status6;
+}
+.funnel {
+  margin-top: 15px;
+}
+.filters {
+  margin-top: 25px;
+  select {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 254px;
+    height: 28px;
+    border: 1px solid $separatorColor;
+    color: $defaultFontColor;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  input {
+    width: 254px;
+    height: 28px;
+    border: 1px solid $separatorColor;
+    color: $defaultFontColor;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  input::placeholder {
+    color: $defaultFontColor;
+  }
+  .select-wrapper, .search-wrapper {
+    margin-right: 20px;
+  }
+  .select-wrapper::before {
+    content: " ";
+    width: 8px;
+    display: inline-block;
+    height: 5px;
+    position: absolute;
+    margin-left: 230px;
+    margin-top: 12px;
+    background: url('/images/arrow-down.svg') no-repeat;
+  }
+  .search-wrapper::before {
+    content: " ";
+    width: 16px;
+    display: inline-block;
+    height: 16px;
+    position: absolute;
+    margin-left: 225px;
+    margin-top: 7px;
+    background: url('/images/search.svg') no-repeat;
+  }
+}
+div.table table.table {
+  border: 0;
+  font-size: 12px;
+  margin-top: 20px;
+  width: 100%;
+  thead tr th {
+    padding-top: 0;
+    border-bottom: 1px solid $separatorColor;
+    border-top: 0;
+  }
+  td {
+    border: 0;
+  }
+  tr.odd {
+    border-top: 1px solid $separatorColor;
+    border-bottom: 1px solid $separatorColor;
+    background-color: $tableBackgroundColor;
+  }
+}
