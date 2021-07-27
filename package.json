@@ -13,8 +13,8 @@
   "dependencies": {
     "@nuxtjs/auth-next": "5.0.0-1624817847.21691f1",
     "@nuxtjs/axios": "^5.13.6",
-    "@nuxtjs/toast": "^3.3.1",
     "@nuxtjs/moment": "^1.6.1",
+    "@nuxtjs/toast": "^3.3.1",
     "bootstrap": "^4.6.0",
     "bootstrap-vue": "^2.21.2",
     "cookie-universal-nuxt": "^2.1.5",
@@ -25,8 +25,13 @@
     "@babel/eslint-parser": "^7.14.7",
     "@nuxtjs/eslint-config": "^6.0.1",
     "@nuxtjs/eslint-module": "^3.0.2",
+    "@nuxtjs/style-resources": "^1.2.0",
     "eslint": "^7.29.0",
     "eslint-plugin-nuxt": "^2.0.0",
-    "eslint-plugin-vue": "^7.12.1"
+    "eslint-plugin-vue": "^7.12.1",
+    "fibers": "^5.0.0",
+    "node-sass": "^6.0.1",
+    "sass": "^1.36.0",
+    "sass-loader": "^10.2.0"
   }
 }
