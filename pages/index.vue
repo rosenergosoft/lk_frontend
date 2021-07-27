@@ -2,8 +2,8 @@
   <div class="wrapper">
     <div>
       <div class="row">
-        <div class="col-4"><Sidebar /></div>
-        <div class="col-8">
+        <div class="col-3"><Sidebar /></div>
+        <div class="col-9">
           <div class="row"><UserBar /></div>
           <div class=""><Connection /></div>
         </div>
