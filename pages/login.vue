@@ -1,7 +1,7 @@
 <template>
   <div class="relative flex items-top justify-center min-h-screen sm:items-center sm:pt-0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
-    <div class="login-form mx-auto">
+    <div class="login-form mx-auto d-none">
       <div class="bg-white">
         <div class="row">
           <div class="col-6 form-container">
@@ -31,6 +31,49 @@
               <div>
                 <button class="btn reg">
                   Регистрация
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 form-image" />
+        </div>
+      </div>
+    </div>
+    <div class="login-form mx-auto">
+      <div class="bg-white">
+        <div class="row">
+          <div class="col-6 form-container">
+            <h2 class="text-2xl leading-7 font-semibold">
+              Регистрация
+            </h2>
+            <div class="steps">
+              <div class="step-title">
+                1. Способ входа
+              </div>
+              <div class="step-description">
+                Выберите тип аккаунта для определения способа входа. В последствии вы можете изменить его в вашем профиле.
+              </div>
+            </div>
+            <ul>
+              <li><input id="phys" type="radio" name="type"><label for="phys">Физическое лицо (вход по СНИЛС)</label></li>
+              <li><input id="yur" type="radio" name="type"><label for="yur">Юридическое лицо (вход по ОГРН)</label></li>
+              <li><input id="ip" type="radio" name="type"><label for="ip">Индивидуальный предприниматель (вход по ОГРНИП)</label></li>
+            </ul>
+            <div class="inputs">
+              <div class="form-group">
+                <input v-model="email" type="text" class="form-control" placeholder="СНИЛС">
+              </div>
+              <div class="form-group">
+                <input v-model="password" type="password" class="form-control" placeholder="Пароль">
+              </div>
+              <div class="form-group">
+                <input v-model="password" type="password" class="form-control" placeholder="Повторите пароль">
+              </div>
+            </div>
+            <div class="form-group d-flex justify-content-between">
+              <div>
+                <button class="btn submit">
+                  Далее
                 </button>
               </div>
             </div>
@@ -75,8 +118,23 @@ export default {
     margin: 0;
     padding: 0;
   }
+  .step-title {
+    font-family: Varela, sans-serif;
+    font-size: 24px;
+    color: $h2Color;
+    margin-top: 25px;
+    line-height: 19px;
+  }
+  .step-description {
+    font-family: Varela, sans-serif;
+    color: $h2Color;
+    font-size: 14px;
+    line-height: 21px;
+    margin-top: 10px;
+  }
   .form-image {
     background: url('/images/sign-up/form-image.jpg') no-repeat right center;
+    background-size: cover;
   }
   .login-form {
     max-width: 1140px;
@@ -138,6 +196,9 @@ export default {
       background-color: $submitColor;
       color: $wrapperBackgroundColor;
       border-radius: 0;
+      &:hover {
+        background-color: $submitColorHover;
+      }
     }
     .reg {
       margin-top: 33px;
@@ -146,6 +207,9 @@ export default {
       background-color: $regColor;
       color: $wrapperBackgroundColor;
       border-radius: 0;
+      &:hover {
+        background-color: $regColorHover;
+      }
     }
   }
 </style>
