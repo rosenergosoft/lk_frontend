@@ -161,8 +161,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
-  name: 'Connection'
+  name: 'Connection',
+  computed: {
+    ...mapGetters(['user'])
+  }
 }
 </script>
 

@@ -42,6 +42,7 @@
 <script>
 export default {
   name: 'Login',
+  layout: 'auth',
   data () {
     return {
       email: '',
@@ -49,9 +50,9 @@ export default {
     }
   },
   methods: {
-    submitLogin () {
+    async submitLogin () {
       const self = this
-      this.$auth.loginWith('laravelJWT', {
+      await this.$auth.login({
         data: {
           email: self.email,
           password: self.password

@@ -73,10 +73,19 @@ export default {
           maxAge: 20160 * 60
         },
       },
+    },
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      callback: '/login',
+      home: '/'
     }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+  router: {
+    middleware: ['auth']
   }
 }
