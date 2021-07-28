@@ -4,7 +4,9 @@
       <div class="active">
         Технологическое подключение
       </div>
-      <div class="l-separator">/</div>
+      <div class="l-separator">
+        /
+      </div>
       <div><a href="">Обращения</a></div>
     </div>
     <div class="row justify-content-between funnel align-middle">
@@ -85,7 +87,18 @@
       </div>
       <div class="">
         <div class="search-wrapper">
-          <input type="text" placeholder="Поиск"/>
+          <input type="text" placeholder="Поиск">
+        </div>
+      </div>
+      <div class="">
+        <div class="select-wrapper">
+          <select>
+            <option>Тип заявки</option>
+            <option>Вода</option>
+            <option>Элеткричество</option>
+            <option>Тепло</option>
+            <option>Все заявки</option>
+          </select>
         </div>
       </div>
     </div>
@@ -98,7 +111,7 @@
             <th>Тип заявки</th>
             <th>Статус</th>
             <th>Дата создания</th>
-            <th></th>
+            <th>&nbsp;</th>
           </tr>
         </thead>
         <tbody>
@@ -115,22 +128,32 @@
               </div>
             </td>
             <td>
-              <div>Технологическое присоединение</div>
-              <div>Тульская обл, Щекинский р-н с, Карамышево ул. Южная д,1 ряд 2, гараж №5</div>
-              <div>Постоянное подключение, Изменение точки присоединения, 0.22 кВ</div>
-              <div>26 июля 2021 г.: Заявка обновлена.</div>
+              <div class="order-status">
+                Технологическое присоединение
+              </div>
+              <div class="order-address">
+                Тульская обл, Щекинский р-н с, Карамышево ул. Южная д,1 ряд 2, гараж №5
+              </div>
+              <div class="order-details">
+                Постоянное подключение, Изменение точки присоединения, 0.22 кВ
+              </div>
+              <div class="order-updated-at">
+                26 июля 2021 г.: Заявка обновлена.
+              </div>
             </td>
             <td>
-              <div>Ожидает ответа компании</div>
+              <div class="orange-status">
+                Ожидает ответа компании
+              </div>
             </td>
             <td>
               <div>26 июля 2021 г.</div>
             </td>
-            <td></td>
+            <td><a><img src="" alt="" title=""></a></td>
           </tr>
           <tr class="odd">
             <td>
-              1
+              2
             </td>
             <td>
               <div>
@@ -141,21 +164,66 @@
               </div>
             </td>
             <td>
-              <div>Технологическое присоединение</div>
-              <div>Тульская обл, Щекинский р-н с, Карамышево ул. Южная д,1 ряд 2, гараж №5</div>
-              <div>Постоянное подключение, Изменение точки присоединения, 0.22 кВ</div>
-              <div>26 июля 2021 г.: Заявка обновлена.</div>
+              <div class="order-status">
+                Технологическое присоединение
+              </div>
+              <div class="order-address">
+                Тульская обл, Щекинский р-н с, Карамышево ул. Южная д,1 ряд 2, гараж №5
+              </div>
+              <div class="order-details">
+                Постоянное подключение, Изменение точки присоединения, 0.22 кВ
+              </div>
+              <div class="order-updated-at">
+                26 июля 2021 г.: Заявка обновлена.
+              </div>
             </td>
             <td>
-              <div>Ожидает ответа компании</div>
+              <div>Черновик</div>
             </td>
             <td>
               <div>26 июля 2021 г.</div>
             </td>
-            <td></td>
+            <td><a><img src="" alt="" title=""></a></td>
+          </tr>
+          <tr>
+            <td>
+              3
+            </td>
+            <td>
+              <div>
+                <strong>От:</strong> Иванов Петр Васильевич
+              </div>
+              <div>
+                <strong>Кому:</strong> "ООО Росэлектросеть"
+              </div>
+            </td>
+            <td>
+              <div class="order-status">
+                Технологическое присоединение
+              </div>
+              <div class="order-address">
+                Тульская обл, Щекинский р-н с, Карамышево ул. Южная д,1 ряд 2, гараж №5
+              </div>
+              <div class="order-details">
+                Постоянное подключение, Изменение точки присоединения, 0.22 кВ
+              </div>
+              <div class="order-updated-at">
+                26 июля 2021 г.: Заявка обновлена.
+              </div>
+            </td>
+            <td>
+              <div class="green-status">
+                Выполнена
+              </div>
+            </td>
+            <td>
+              <div>26 июля 2021 г.</div>
+            </td>
+            <td><a><img src="" alt="" title=""></a></td>
           </tr>
         </tbody>
       </table>
+      <div class="separator"></div>
     </div>
   </div>
 </template>

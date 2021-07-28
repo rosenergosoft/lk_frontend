@@ -17,7 +17,7 @@ body {
   padding-left: 20px;
   padding-right: 20px;
   border-right: 1px solid $separatorColor;
-  height: 100vh;
+  min-height: 100vh;
   .nav, .nav-item, .nav-link {
     margin: 0;
     padding: 0;
@@ -76,7 +76,7 @@ body {
 }
 .wrapper {
   background-color: $wrapperBackgroundColor;
-  height: 100vh;
+  min-height: 100vh;
 }
 .bell {
   background: url('/images/akar-icons_bell.svg') no-repeat;
@@ -298,11 +298,16 @@ body {
     background: url('/images/search.svg') no-repeat;
   }
 }
+div.table {
+  margin: 0;
+}
 div.table table.table {
   border: 0;
   font-size: 12px;
   margin-top: 20px;
+  margin-bottom: 0;
   width: 100%;
+  color: $defaultFontColor;
   thead tr th {
     padding-top: 0;
     border-bottom: 1px solid $separatorColor;
@@ -315,5 +320,20 @@ div.table table.table {
     border-top: 1px solid $separatorColor;
     border-bottom: 1px solid $separatorColor;
     background-color: $tableBackgroundColor;
+  }
+  .order-status, .order-updated-at {
+    color: $orderStatusColor;
+  }
+  .order-details {
+    font-weight: bold;
+  }
+  .order-address {
+    width: 282px;
+  }
+  .orange-status {
+    color: $orangeStatus;
+  }
+  .green-status {
+    color: $greenStatus;
   }
 }
