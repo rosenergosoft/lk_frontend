@@ -1,44 +1,46 @@
 <template>
-  <div class="relative flex items-top justify-center min-h-screen bg-gray-100 sm:items-center sm:pt-0">
+  <div class="relative flex items-top justify-center min-h-screen sm:items-center sm:pt-0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
-    <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-      <div class="mt-8 bg-white overflow-hidden shadow sm:rounded-lg p-6">
+    <div class="login-form mx-auto">
+      <div class="bg-white">
         <div class="row">
-          <div class="col-6">
+          <div class="col-6 form-container">
             <h2 class="text-2xl leading-7 font-semibold">
               Авторизация
             </h2>
             <ul>
-              <li><input type="radio" name="type"><label>Физ Лицо</label></li>
-              <li><input type="radio" name="type"><label>ИП</label></li>
-              <li><input type="radio" name="type"><label>ООО</label></li>
+              <li><input id="snils" type="radio" name="type"><label for="snils">Физическое лицо (вход по СНИЛС)</label></li>
+              <li><input id="ogrn" type="radio" name="type"><label for="ogrn">Юридическое лицо (вход по ОГРН)</label></li>
+              <li><input id="ogrnip" type="radio" name="type"><label for="ogrnip">Индивидуальный предприниматель (вход по ОГРНИП)</label></li>
+              <li><input id="by-email" type="radio" name="type"><label for="by-email">Вход по электронной почте</label></li>
             </ul>
-            <div class="form-group">
-              <input v-model="email" type="text" class="form-control" placeholder="email">
+            <div class="inputs">
+              <div class="form-group">
+                <input v-model="email" type="text" class="form-control" placeholder="СНИЛС">
+              </div>
+              <div class="form-group">
+                <input v-model="password" type="password" class="form-control" placeholder="Пароль">
+              </div>
             </div>
-            <div class="form-group">
-              <input v-model="password" type="text" class="form-control" placeholder="password">
+            <div class="form-group d-flex justify-content-between">
+              <div>
+                <button class="btn submit">
+                  Войти
+                </button>
+              </div>
+              <div>
+                <button class="btn reg">
+                  Регистрация
+                </button>
+              </div>
             </div>
           </div>
-          <div class="col-6">
-            <span>image here</span>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <button
-              class="btn btn-primary"
-              @click="submitLogin"
-            >
-              Войти
-            </button>
-          </div>
+          <div class="col-6 form-image" />
         </div>
       </div>
     </div>
   </div>
 </template>
-
 <script>
 export default {
   name: 'Login',
@@ -47,6 +49,11 @@ export default {
     return {
       email: '',
       password: ''
+    }
+  },
+  head: {
+    bodyAttrs: {
+      class: 'login'
     }
   },
   methods: {
@@ -63,6 +70,82 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+  .col, .row, .col-6 {
+    margin: 0;
+    padding: 0;
+  }
+  .form-image {
+    background: url('/images/sign-up/form-image.jpg') no-repeat right center;
+  }
+  .login-form {
+    max-width: 1140px;
+    width: 100%;
+  }
+  h2 {
+    font-family: Barlow-Bold, sans-serif;
+    font-size: 38px;
+    color: $h2Color;
+  }
+  .form-container {
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-top: 32px;
+    input[type=text], input[type=password] {
+      width: 508px;
+      border-radius: 0;
+      height: 40px;
+      border: 1px solid $radioColor;
+      &::-webkit-input-placeholder {
+        color: $placeholderColor;
+      }
+      &::-moz-placeholder {
+        color: $placeholderColor;
+      }
+      &:-ms-input-placeholder {
+        color: $placeholderColor;
+      }
+      &::placeholder {
+        color: $placeholderColor;
+      }
+    }
+    ul {
+      margin-top: 28px;
+      li {
+        margin-bottom: 7px;
+      }
+      input[type=radio] {
+        width: 16px;
+        height: 16px;
+        border: 1px solid $radioColor;
+      }
+      label {
+        font-family: Varela, sans-serif;
+        font-size: 14px;
+        margin-left: 10px;
+        top: -3px;
+        position: relative;
+        margin-bottom: 0;
+      }
+    }
+    .inputs {
+      margin-top: 18px;
+    }
+    .submit {
+      margin-top: 33px;
+      margin-bottom: 25px;
+      padding: 15px 31px;
+      background-color: $submitColor;
+      color: $wrapperBackgroundColor;
+      border-radius: 0;
+    }
+    .reg {
+      margin-top: 33px;
+      margin-bottom: 25px;
+      padding: 15px 31px;
+      background-color: $regColor;
+      color: $wrapperBackgroundColor;
+      border-radius: 0;
+    }
+  }
 </style>

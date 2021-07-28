@@ -2,11 +2,15 @@
 @import "_fonts/fonts";
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif !important;
   font-size: 14px;
   color: $defaultFontColor;
   background-color: $bodyBackgroundColor;
   padding-left: 10px;
+}
+body.login {
+  padding: 0;
+  background: url('/images/sign-up/main-slide2.jpg') center center;
 }
 .col, .row, .container {
   margin: 0;
