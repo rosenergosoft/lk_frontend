@@ -192,7 +192,7 @@
             </div>
             <div class="form-group d-flex justify-content-between">
               <div>
-                <button @click="submitRegistration" class="btn submit">
+                <button class="btn submit" @click="submitRegistration">
                   Отправить
                 </button>
               </div>
