@@ -10,17 +10,26 @@
             </h2>
             <div>
               <ul>
-                <li><input id="snils" type="radio" name="type" checked="checked" @click="changeTypePlaceholder('СНИЛС')"><label for="snils">Физическое лицо (вход по СНИЛС)</label></li>
-                <li><input id="ogrn" type="radio" name="type" @click="changeTypePlaceholder('ОГРН')"><label for="ogrn">Юридическое лицо (вход по ОГРН)</label></li>
-                <li><input id="ogrnip" type="radio" name="type" @click="changeTypePlaceholder('ОГРНИП')"><label for="ogrnip">Индивидуальный предприниматель (вход по ОГРНИП)</label></li>
-                <li><input id="by-email" type="radio" name="type" @click="changeTypePlaceholder('Имейл')"><label for="by-email">Вход по электронной почте</label></li>
+                <li><input id="snils" v-model="loginData.type" type="radio" name="type" value="phys"><label for="snils">Физическое лицо (вход по СНИЛС)</label></li>
+                <li><input id="ogrn" v-model="loginData.type" type="radio" name="type" value="yur"><label for="ogrn">Юридическое лицо (вход по ОГРН)</label></li>
+                <li><input id="ogrnip" v-model="loginData.type" type="radio" name="type" value="ip"><label for="ogrnip">Индивидуальный предприниматель (вход по ОГРНИП)</label></li>
+                <li><input id="by-email" v-model="loginData.type" type="radio" name="type" value="email"><label for="by-email">Вход по электронной почте</label></li>
               </ul>
               <div class="inputs">
-                <div class="form-group">
-                  <input v-model="email" :placeholder="placeholder" type="text" class="form-control">
+                <div v-if="loginData.type === 'phys'" class="form-group">
+                  <input v-model="loginData.snils" :placeholder="placeholder" type="text" class="form-control">
+                </div>
+                <div v-if="loginData.type === 'yur'" class="form-group">
+                  <input v-model="loginData.ogrn" :placeholder="placeholder" type="text" class="form-control">
+                </div>
+                <div v-if="loginData.type === 'ip'" class="form-group">
+                  <input v-model="loginData.ogrnip" :placeholder="placeholder" type="text" class="form-control">
+                </div>
+                <div v-if="loginData.type === 'email'" class="form-group">
+                  <input v-model="loginData.email" :placeholder="placeholder" type="text" class="form-control">
                 </div>
                 <div class="form-group">
-                  <input v-model="password" type="password" class="form-control" placeholder="Пароль">
+                  <input v-model="loginData.password" type="password" class="form-control" placeholder="Пароль">
                 </div>
               </div>
             </div>
@@ -245,8 +254,15 @@ export default {
   data () {
     return {
       currentStep: 0,
-      placeholder: 'СНИЛС',
       notaclient: false,
+      loginData: {
+        snils: '',
+        ogrn: '',
+        ogrnip: '',
+        email: '',
+        password: '',
+        type: 'phys'
+      },
       email: '',
       password: '',
       confirmPassword: '',
@@ -272,6 +288,21 @@ export default {
       class: 'login'
     }
   },
+  computed: {
+    placeholder () {
+      switch (this.loginData.type) {
+        case 'phys':
+          return 'СНИЛС'
+        case 'yur':
+          return 'ОГРН'
+        case 'ip':
+          return 'ОГРНИП'
+        case 'email':
+          return 'Имейл'
+      }
+      return ''
+    }
+  },
   watch: {
     'display.snils' (val) {
       this.snils = val.replace(/[^0-9]/g, '')
@@ -282,12 +313,8 @@ export default {
   },
   methods: {
     async submitLogin () {
-      const self = this
       await this.$auth.login({
-        data: {
-          email: self.email,
-          password: self.password
-        }
+        data: this.loginData
       })
     },
     submitRegistration () {
