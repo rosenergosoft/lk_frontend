@@ -64,25 +64,46 @@
               </ul>
               <div class="inputs">
                 <div v-if="type === 'phys'" class="form-group">
-                  <input v-model="snils" type="text" class="form-control" placeholder="СНИЛС">
+                  <input v-model="display.snils" v-mask="'###-###-### ##'" type="text" class="form-control" placeholder="СНИЛС">
+                  <div v-if="validationErrors.snils.message" class="alert alert-danger">
+                    {{ validationErrors.snils.message }}
+                  </div>
                 </div>
                 <div v-if="type === 'yur'" class="form-group">
                   <input v-model="ogrn" type="text" class="form-control" placeholder="ОГРН">
+                  <div v-if="validationErrors.ogrn.message" class="alert alert-danger">
+                    {{ validationErrors.ogrn.message }}
+                  </div>
                 </div>
                 <div v-if="type === 'ip'" class="form-group">
                   <input v-model="ogrnip" type="text" class="form-control" placeholder="ОГРНИП">
+                  <div v-if="validationErrors.ogrnip.message" class="alert alert-danger">
+                    {{ validationErrors.ogrnip.message }}
+                  </div>
                 </div>
                 <div class="form-group">
                   <input v-model="password" type="password" class="form-control" placeholder="Пароль">
+                  <div v-if="passwordError.required.message" class="alert alert-danger">
+                    {{ passwordError.required.message }}
+                  </div>
+                  <div v-if="passwordError.confirm.message" class="alert alert-danger">
+                    {{ passwordError.confirm.message }}
+                  </div>
                 </div>
                 <div class="form-group">
                   <input v-model="confirmPassword" type="password" class="form-control" placeholder="Повторите пароль">
+                  <div v-if="passwordError.required.message" class="alert alert-danger">
+                    {{ passwordError.required.message }}
+                  </div>
+                  <div v-if="passwordError.confirm.message" class="alert alert-danger">
+                    {{ passwordError.confirm.message }}
+                  </div>
                 </div>
               </div>
             </div>
             <div class="form-group d-flex justify-content-between">
               <div>
-                <button class="btn submit" @click="nextTo(2)">
+                <button class="btn submit" @click="validateFirstStep">
                   Далее
                 </button>
               </div>
@@ -123,7 +144,7 @@
                   <input v-model="email" type="text" class="form-control" placeholder="Электронная почта для связи">
                 </div>
                 <div class="form-group">
-                  <input v-model="phone" type="tel" class="form-control" placeholder="Телефон для уведомлений">
+                  <input v-model="phone" v-mask="'+7 (###) ###-###-##'" type="tel" class="form-control" placeholder="Телефон для уведомлений">
                 </div>
               </div>
             </div>
@@ -215,8 +236,11 @@
   </div>
 </template>
 <script>
+import dataValidation from '../mixins/dataValidation'
+
 export default {
   name: 'Login',
+  mixins: [dataValidation],
   layout: 'auth',
   data () {
     return {
@@ -232,12 +256,28 @@ export default {
       ogrn: '',
       ogrnip: '',
       account: '',
-      name: ''
+      name: '',
+      display: {
+        snils: '',
+        phone: ''
+      },
+      passwordError: {
+        required: {},
+        confirm: {}
+      }
     }
   },
   head: {
     bodyAttrs: {
       class: 'login'
+    }
+  },
+  watch: {
+    'display.snils' (val) {
+      this.snils = val.replace(/[^0-9]/g, '')
+    },
+    'display.phone' (val) {
+      this.phone = val.replace(/[^0-9]/g, '')
     }
   },
   methods: {
@@ -271,6 +311,38 @@ export default {
           this.currentStep = 0
         }
       })
+    },
+    validateFirstStep () {
+      Object.assign(this.passwordError, {
+        required: {},
+        confirm: {}
+      })
+      this.resetValidation()
+      let result = true
+      switch (this.type) {
+        case 'phys':
+          result = this.validateSnils(this.snils)
+          break
+        case 'yur':
+          result = this.validateOgrn(this.ogrn)
+          break
+        case 'ip':
+          result = this.validateOgrnip(this.ogrnip)
+          break
+      }
+      if (!this.password) {
+        this.passwordError.required = {
+          message: 'Обязательное поле'
+        }
+      }
+      if (this.password !== this.confirmPassword) {
+        this.passwordError.confirm = {
+          message: 'Пароли не совпадают'
+        }
+      }
+      if (result) {
+        this.nextTo(2)
+      }
     },
     nextTo (to = false) {
       this.currentStep = to
