@@ -60,7 +60,42 @@
                 </div>
               </div>
               <div class="text-right">
-                <a href=""><img src="/images/edit.svg" alt="" title=""></a>
+                <a v-b-modal.modal-phys-data href="#"><img src="/images/edit.svg" alt="" title=""></a>
+                <b-modal id="modal-phys-data" centered title="Паспортные данные">
+                  <div class="d-flex inputs justify-content-between">
+                    <div class="form-group col-4 mr-20">
+                      <input type="text" class="form-control" placeholder="Имя">
+                    </div>
+                    <div class="form-group col-4 mr-20">
+                      <input type="text" class="form-control" placeholder="Фамилия">
+                    </div>
+                    <div class="form-group col-4">
+                      <input type="text" class="form-control" placeholder="Отчество">
+                    </div>
+                  </div>
+                  <div class="inputs form-group">
+                    <input type="text" class="form-control" placeholder="Серия и номер паспорта">
+                  </div>
+                  <div class="d-flex inputs justify-content-between">
+                    <div class="form-group col-9 mr-20">
+                      <input type="text" class="form-control" placeholder="Кем выдан">
+                    </div>
+                    <div class="form-group col-3">
+                      <input type="text" class="form-control" placeholder="Дата выдачи">
+                    </div>
+                  </div>
+                  <div class="inputs form-group">
+                    <input type="text" class="form-control" placeholder="Адрес регистрации">
+                  </div>
+                  <div class="inputs form-group">
+                    <input type="text" class="form-control" placeholder="Адрес проживания (если отличается)">
+                  </div>
+                  <template #modal-footer>
+                    <button type="button" class="btn blue-button">
+                      Сохранить
+                    </button>
+                  </template>
+                </b-modal>
               </div>
             </div>
             <div class="separator" />
@@ -80,7 +115,21 @@
                 </div>
               </div>
               <div class="text-right">
-                <a href=""><img src="/images/edit.svg" alt="" title=""></a>
+                <a v-b-modal.modal-yur-data href="#"><img src="/images/edit.svg" alt="" title=""></a>
+                <b-modal id="modal-yur-data" centered title="Данные о Юридическом лице или ИП">
+                  <div class="inputs form-group">
+                    <input type="text" class="form-control" placeholder="Название компании/ИП/ИНН">
+                  </div>
+                  <label class="label">Банковские реквизиты</label>
+                  <div class="inputs form-group">
+                    <input type="text" class="form-control" placeholder="БИК">
+                  </div>
+                  <template #modal-footer>
+                    <button type="button" class="btn blue-button">
+                      Сохранить
+                    </button>
+                  </template>
+                </b-modal>
               </div>
             </div>
           </div>
@@ -93,10 +142,28 @@
             <label class="label">Документы по физическому лицу</label>
           </div>
           <div class="file-upload">
-            <input type="file" class="invisible position-absolute">
-            <button class="btn blue-button">
+            <button v-b-modal.modal-phys-docs type="button" class="btn blue-button">
               Загрузить
             </button>
+            <b-modal id="modal-phys-docs" centered size="xl" title="Загрузка документов">
+              <v-file-input
+                show-size
+                single-line
+                label="Документ удостоверяющий личность заявителя"
+                hint="Документ удостоверяющий личность заявителя"
+              />
+              <v-file-input
+                show-size
+                single-line
+                label="Документ подтверждающий полномочия представителя заявителя"
+                hint="Документ подтверждающий полномочия представителя заявителя"
+              />
+              <template #modal-footer>
+                <button type="button" class="btn blue-button">
+                  Загрузить
+                </button>
+              </template>
+            </b-modal>
           </div>
           <div class="uploaded-files d-flex mt-20 align-items-center justify-content-between">
             <div class="d-flex align-items-center">
@@ -129,16 +196,52 @@
             </div>
           </div>
         </div>
-        <div class="separator sep-15"></div>
+        <div class="separator sep-15" />
         <div class="personal-data">
           <div>
             <label class="label">Документы по юридическому лицу или ИП</label>
           </div>
           <div class="file-upload">
-            <input type="file" class="invisible position-absolute">
-            <button class="btn blue-button">
+            <button v-b-modal.modal-yur-docs type="button" class="btn blue-button">
               Загрузить
             </button>
+            <b-modal id="modal-yur-docs" centered size="xl" title="Загрузка документов">
+              <v-file-input
+                show-size
+                single-line
+                label="Документ подтверждающий полномочия представителя заявителя"
+                hint="Документ подтверждающий полномочия представителя заявителя"
+              />
+              <v-file-input
+                show-size
+                single-line
+                label="Устав, решение учредителей о создании юр. лица и т.п."
+                hint="Устав, решение учредителей о создании юр. лица и т.п."
+              />
+              <v-file-input
+                show-size
+                single-line
+                label="Приказ, выписка из протокола, решение учредителей о назначении директора"
+                hint="Приказ, выписка из протокола, решение учредителей о назначении директора"
+              />
+              <v-file-input
+                show-size
+                single-line
+                label="Выписка или свидетельство о государственной регистрации заявителя в качестве юридического лица или ип"
+                hint="Выписка или свидетельство о государственной регистрации заявителя в качестве юридического лица или ип"
+              />
+              <v-file-input
+                show-size
+                single-line
+                label="Свидетельство о постановке заявителя на учет в налоговом органе"
+                hint="Свидетельство о постановке заявителя на учет в налоговом органе"
+              />
+              <template #modal-footer>
+                <button type="button" class="btn blue-button">
+                  Загрузить
+                </button>
+              </template>
+            </b-modal>
           </div>
           <div class="uploaded-files d-flex mt-20 align-items-center justify-content-between">
             <div class="d-flex align-items-center">
@@ -222,8 +325,10 @@
 </template>
 
 <script>
+// import Index from "@/pages";
 export default {
   name: 'Account'
+  // components: { Index }
 }
 </script>
 

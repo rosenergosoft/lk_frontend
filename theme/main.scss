@@ -12,7 +12,7 @@ body.login {
   padding: 0;
   background: url('/images/sign-up/main-slide2.jpg') center center;
 }
-.col, .row, .container, .col-9, .col-3, .col-6 {
+.col, .row, .container, .col-9, .col-3, .col-6, .col-4 {
   margin: 0;
   padding: 0;
   flex: auto;
@@ -404,4 +404,26 @@ h4 {
 .sep-15 {
   margin-top: 25px;
   margin-bottom: 15px;
+}
+.modal-content {
+  border-radius: 0;
+}
+.v-input__prepend-outer {
+  margin-right: 10px;
+}
+.v-input {
+  margin-left: -5px;
+}
+.btn {
+  border-radius: 0;
+}
+.theme--light.v-label {
+  color: $defaultFontColor;
+  font-family: Arial, sans-serif;
+}
+.v-text-field > .v-input__control > .v-input__slot:before {
+  border-color: $separatorColor !important;
+}
+.mdi-paperclip::before {
+  color: $defaultFontColor;
 }
