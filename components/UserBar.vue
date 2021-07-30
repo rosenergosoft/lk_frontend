@@ -7,9 +7,9 @@
       <a href=""><i class="messages" /></a>
     </div>
     <div class="user-account d-flex">
-      <div class="person"></div>
+      <div class="person" />
       <div>
-        <a href="">
+        <a href="/account">
           Владимир Спутников
           <p class="">Менеджер</p>
         </a>

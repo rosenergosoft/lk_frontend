@@ -1,31 +1,31 @@
 <template>
   <div class="sidebar">
     <div class="logo">
-      <a href=""><img src="/images/logo.svg" alt="" title="" /></a>
+      <a href=""><img src="/images/logo.svg" alt="" title=""></a>
     </div>
-    <div class="separator"></div>
+    <div class="separator" />
     <nav>
       <label>Администрирование</label>
       <ul class="nav d-block">
         <li class="nav-item active">
-          <a href="" class="nav-link"><i class="book"></i> Заявки</a>
+          <a href="/" class="nav-link"><i class="book" /> Заявки</a>
           <ul class="nav d-block subnav">
             <li class="nav-item">
-              <a href="" class="nav-link"><i class="connect"></i> Технологическое подключение</a>
+              <a href="/" class="nav-link"><i class="connect" /> Технологическое подключение</a>
             </li>
             <li class="nav-item">
-              <a href="" class="nav-link"><i class="questions"></i> Обращения</a>
+              <a href="" class="nav-link"><i class="questions" /> Обращения</a>
             </li>
           </ul>
         </li>
         <li class="nav-item">
-          <a href="" class="nav-link"><i class="users"></i> Пользователи</a>
+          <a href="" class="nav-link"><i class="users" /> Пользователи</a>
         </li>
         <li class="nav-item">
-          <a href="" class="nav-link"><i class="info"></i> Раскрытие</a>
+          <a href="" class="nav-link"><i class="info" /> Раскрытие</a>
         </li>
         <li class="nav-item">
-          <a href="" class="nav-link"><i class="settings"></i> Настройки</a>
+          <a href="" class="nav-link"><i class="settings" /> Настройки</a>
         </li>
       </ul>
     </nav>

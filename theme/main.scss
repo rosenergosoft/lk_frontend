@@ -361,6 +361,7 @@ h4 {
   border: 1px solid $radioColor;
   padding: 8px 15px;
   margin-bottom:15px;
+  font-size: 14px;
 }
 .label {
   font-size: 12px;
@@ -373,6 +374,8 @@ h4 {
   background-color: $LinkHoverColor;
   color: $wrapperBackgroundColor;
   border-radius: 0;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
   &:hover {
     color: $wrapperBackgroundColor;
   }
@@ -381,7 +384,24 @@ h4 {
 .mr-20 {
   margin-right: 20px;
 }
+.mt-20 {
+  margin-top: 20px;
+}
 .connection {
   padding-left: 20px;
   padding-right: 20px;
+}
+.file-upload {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border: 1px solid $fileUploadBorder;
+  background-color: $fileUploadBg;
+  text-align: center;
+  .blue-button {
+    float: none;
+  }
+}
+.sep-15 {
+  margin-top: 25px;
+  margin-bottom: 15px;
 }
