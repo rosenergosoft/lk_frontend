@@ -1,12 +1,12 @@
 <template>
-  <Connection />
+  <Account />
 </template>
 
 <script>
-import Connection from '@/components/Connection'
+import Account from '@/components/Account'
 export default {
   components: {
-    Connection
+    Account
   }
 }
 </script>

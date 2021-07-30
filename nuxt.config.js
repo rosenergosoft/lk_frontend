@@ -22,7 +22,7 @@ export default {
   styleResources: {
     scss: [
       '@/theme/_mixins/*.scss',
-      '@/theme/_vars/*.scss',
+      '@/theme/_vars/*.scss'
     ]
   },
 
@@ -86,6 +86,9 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    extractCSS: {
+      ignoreOrder: false
+    }
   },
   router: {
     middleware: ['auth']

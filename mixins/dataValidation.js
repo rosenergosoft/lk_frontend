@@ -109,7 +109,7 @@ export default {
         } else {
           this.validationErrors.snils = {
             code: 4,
-            message: 'Неправильное контрольное число'
+            message: 'Неправильный СНИЛС'
           }
         }
       }
@@ -144,7 +144,7 @@ export default {
         } else {
           this.validationErrors.ogrn = {
             code: 4,
-            message: 'Неправильное контрольное число'
+            message: 'Неправильный ОГРН'
           }
         }
       }
@@ -179,7 +179,7 @@ export default {
         } else {
           this.validationErrors.ogrnip = {
             code: 4,
-            message: 'Неправильное контрольное число'
+            message: 'Неправильный ОГРНИП'
           }
         }
       }
