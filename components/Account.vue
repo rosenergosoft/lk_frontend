@@ -7,32 +7,7 @@
     </div>
     <div class="account">
       <div class="d-flex boxes">
-        <div class="box status-1 col-6 mr-20">
-          <h4>Доступ к личному кабинету</h4>
-          <div class="inputs">
-            <div class="form-group">
-              <input type="text" placeholder="СНИЛС" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="email" placeholder="Имейл" class="form-control">
-            </div>
-            <label class="label">Смена пароля</label>
-            <div class="form-group">
-              <input type="password" placeholder="Старый пароль" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Новый пароль" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Новый пароль еще раз" class="form-control">
-            </div>
-            <div class="form-group">
-              <button class="btn blue-button">
-                Сохранить
-              </button>
-            </div>
-          </div>
-        </div>
+        <account-form />
         <div class="box status-5 col-6">
           <h4>Персональные данные</h4>
           <div class="personal-data">
@@ -53,49 +28,15 @@
                   <label class="label">Физическое лицо</label>
                 </div>
                 <div class="text-content">
-                  Петр Иванович Язь
+                  {{ customerName }}
                 </div>
                 <div class="red-warning">
-                  Паспортные данные не указаны
+                  {{ passportData }}
                 </div>
               </div>
               <div class="text-right">
-                <a v-b-modal.modal-phys-data href="#"><img src="/images/edit.svg" alt="" title=""></a>
-                <b-modal id="modal-phys-data" centered title="Паспортные данные">
-                  <div class="d-flex inputs justify-content-between">
-                    <div class="form-group col-4 mr-20">
-                      <input type="text" class="form-control" placeholder="Имя">
-                    </div>
-                    <div class="form-group col-4 mr-20">
-                      <input type="text" class="form-control" placeholder="Фамилия">
-                    </div>
-                    <div class="form-group col-4">
-                      <input type="text" class="form-control" placeholder="Отчество">
-                    </div>
-                  </div>
-                  <div class="inputs form-group">
-                    <input type="text" class="form-control" placeholder="Серия и номер паспорта">
-                  </div>
-                  <div class="d-flex inputs justify-content-between">
-                    <div class="form-group col-9 mr-20">
-                      <input type="text" class="form-control" placeholder="Кем выдан">
-                    </div>
-                    <div class="form-group col-3">
-                      <input type="text" class="form-control" placeholder="Дата выдачи">
-                    </div>
-                  </div>
-                  <div class="inputs form-group">
-                    <input type="text" class="form-control" placeholder="Адрес регистрации">
-                  </div>
-                  <div class="inputs form-group">
-                    <input type="text" class="form-control" placeholder="Адрес проживания (если отличается)">
-                  </div>
-                  <template #modal-footer>
-                    <button type="button" class="btn blue-button">
-                      Сохранить
-                    </button>
-                  </template>
-                </b-modal>
+                <a v-b-modal.modal-phys-data><img src="/images/edit.svg" alt="" title=""></a>
+                <profile />
               </div>
             </div>
             <div class="separator" />
@@ -116,20 +57,7 @@
               </div>
               <div class="text-right">
                 <a v-b-modal.modal-yur-data href="#"><img src="/images/edit.svg" alt="" title=""></a>
-                <b-modal id="modal-yur-data" centered title="Данные о Юридическом лице или ИП">
-                  <div class="inputs form-group">
-                    <input type="text" class="form-control" placeholder="Название компании/ИП/ИНН">
-                  </div>
-                  <label class="label">Банковские реквизиты</label>
-                  <div class="inputs form-group">
-                    <input type="text" class="form-control" placeholder="БИК">
-                  </div>
-                  <template #modal-footer>
-                    <button type="button" class="btn blue-button">
-                      Сохранить
-                    </button>
-                  </template>
-                </b-modal>
+                <company />
               </div>
             </div>
           </div>
@@ -325,9 +253,35 @@
 </template>
 
 <script>
-// import Index from "@/pages";
+import { mapGetters } from 'vuex'
+import Profile from './account/Profile'
+import Company from './account/Company'
+import Form from './account/Form'
 export default {
-  name: 'Account'
+  name: 'Account',
+  components: {
+    Profile,
+    Company,
+    'account-form': Form
+  },
+  computed: {
+    ...mapGetters([
+      'user',
+      'userProfile'
+    ]),
+    customerName () {
+      if (this.userProfile) {
+        return this.userProfile.last_name + ' ' + this.userProfile.first_name + ' ' + this.userProfile.middle_name
+      }
+      return ''
+    },
+    passportData () {
+      if (this.userProfile && this.userProfile.pasport) {
+        return this.userProfile.pasport
+      }
+      return 'Паспортные данные не указаны'
+    }
+  }
   // components: { Index }
 }
 </script>

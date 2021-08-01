@@ -322,7 +322,8 @@ export default {
         password: this.password,
         email: this.email,
         account: this.account,
-        name: this.name
+        name: this.name,
+        login_type: this.type
       }
 
       if (this.type === 'phys') {
