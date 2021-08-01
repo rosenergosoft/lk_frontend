@@ -70,7 +70,7 @@ export default {
 
   auth: {
     strategies: {
-      'laravelJWT': {
+      laravelJWT: {
         provider: 'laravel/jwt',
         url: process.env.LARAVEL_API_BASE_URL,
         token: {
@@ -79,8 +79,8 @@ export default {
         },
         refreshToken: {
           maxAge: 20160 * 60
-        },
-      },
+        }
+      }
     },
     redirect: {
       login: '/login',
