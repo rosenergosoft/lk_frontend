@@ -323,7 +323,8 @@ export default {
         email: this.email,
         account: this.account,
         name: this.name,
-        login_type: this.type
+        login_type: this.type,
+        phone: this.phone
       }
 
       if (this.type === 'phys') {
