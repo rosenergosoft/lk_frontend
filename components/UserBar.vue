@@ -9,10 +9,12 @@
     <div class="user-account d-flex">
       <div class="person" />
       <div>
-        <a href="/account">
+        <NuxtLink to="/account">
           Владимир Спутников
-          <p class="">Менеджер</p>
-        </a>
+          <p class="">
+            Менеджер
+          </p>
+        </NuxtLink>
       </div>
     </div>
     <div class="logout-button">

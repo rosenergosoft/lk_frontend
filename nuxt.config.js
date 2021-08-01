@@ -1,4 +1,7 @@
 export default {
+  generate: {
+    dir: 'dist/' + process.env.APP_CLIENT || 'default'
+  },
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
@@ -33,7 +36,10 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~/plugins/v-mask.js'
+    '~/plugins/v-mask.js',
+    { src: '~/plugins/vue-datepicker.js', mode: 'client' },
+    '~/plugins/nuxt-dadata.js',
+    '~/plugins/vue-autosuggest.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -66,7 +72,7 @@ export default {
     strategies: {
       'laravelJWT': {
         provider: 'laravel/jwt',
-        url: 'http://api.user-dashboard.local',
+        url: process.env.LARAVEL_API_BASE_URL,
         token: {
           property: 'access_token',
           maxAge: 60 * 60
@@ -92,5 +98,8 @@ export default {
   },
   router: {
     middleware: ['auth']
+  },
+  env: {
+    LARAVEL_API_BASE_URL: process.env.LARAVEL_API_BASE_URL
   }
 }

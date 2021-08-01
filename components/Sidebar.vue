@@ -1,7 +1,9 @@
 <template>
   <div class="sidebar">
     <div class="logo">
-      <a href=""><img src="/images/logo.svg" alt="" title=""></a>
+      <NuxtLink to="/">
+        <img src="/images/logo.svg" alt="" title="">
+      </NuxtLink>
     </div>
     <div class="separator" />
     <nav>
@@ -19,7 +21,9 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a href="" class="nav-link"><i class="users" /> Пользователи</a>
+          <NuxtLink to="/users" class="nav-link">
+            <i class="users" />Пользователи
+          </NuxtLink>
         </li>
         <li class="nav-item">
           <a href="" class="nav-link"><i class="info" /> Раскрытие</a>
