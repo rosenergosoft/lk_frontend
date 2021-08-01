@@ -1,20 +1,6 @@
 <template>
   <b-modal id="modal-yur-data" centered title="Данные о Юридическом лице или ИП">
     <div class="inputs form-group">
-      <v-autocomplete
-        v-model="model"
-        :items="items"
-        :search-input.sync="search"
-        color="white"
-        hide-no-data
-        hide-selected
-        item-text="value"
-        item-value="data"
-        label="Public APIs"
-        placeholder="Start typing to Search"
-        prepend-icon="mdi-database-search"
-        return-object
-      ></v-autocomplete>
       <vue-autosuggest
         :suggestions="suggestions"
         :input-props="{id:'autosuggest__input', placeholder:'Название компании/ИП/ИНН'}"
@@ -47,7 +33,9 @@ export default {
     return {
       suggestions: [
         {
-          data: []
+          data: [
+            {}
+          ]
         }
       ],
       model: null,
@@ -58,7 +46,6 @@ export default {
   watch: {
     search (value) {
       this.$dadata.companySuggestion(value).then((data) => {
-        console.log(data)
         Object.assign(this.items, data.suggestions)
       })
     }
@@ -69,15 +56,12 @@ export default {
     },
     onInputChange (query) {
       this.$dadata.companySuggestion(query).then((data) => {
-        console.log(data)
-        Object.assign(this.suggestions[0].data, data.suggestions)
+        this.suggestions[0].data = data.suggestions
       })
     },
     selectHandler (value) {
-      console.log(value)
     },
     clickHandler (value) {
-      console.log(value)
     }
   }
 }
