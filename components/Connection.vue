@@ -8,6 +8,11 @@
         /
       </div>
       <div><a href="">Обращения</a></div>
+      <div class="ml-auto">
+        <button class="btn blue-button" @click="$router.push('/request/new')">
+          Новая заявка
+        </button>
+      </div>
     </div>
     <div class="row justify-content-between funnel align-middle">
       <div class="col status-1 status d-flex align-items-center justify-content-center">
@@ -223,7 +228,7 @@
           </tr>
         </tbody>
       </table>
-      <div class="separator"></div>
+      <div class="separator" />
     </div>
   </div>
 </template>

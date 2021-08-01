@@ -430,3 +430,19 @@ h4 {
 .mdi-paperclip::before {
   color: $defaultFontColor;
 }
+.notice {
+  font-size: 12px;
+  color: $orderStatusColor;
+}
+.personal-data {
+  .label {
+    margin-bottom: 5px;
+  }
+  .separator {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+}
+.button-wrapper {
+  margin-top: 55px;
+}

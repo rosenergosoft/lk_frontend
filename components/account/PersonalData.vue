@@ -86,13 +86,6 @@ export default {
 
 <style scoped lang="scss">
 .personal-data {
-  .label {
-    margin-bottom: 5px;
-  }
-  .separator {
-    margin-top: 15px;
-    margin-bottom: 15px;
-  }
   .red-warning {
     color: $redWarning;
     font-size: 12px;
