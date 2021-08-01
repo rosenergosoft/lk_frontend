@@ -8,6 +8,9 @@ body {
   background-color: $bodyBackgroundColor;
   padding-left: 10px;
 }
+a {
+  cursor: pointer;
+}
 body.login {
   padding: 0;
   background: url('/images/sign-up/main-slide2.jpg') center center;
