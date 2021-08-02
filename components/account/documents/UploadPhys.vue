@@ -43,6 +43,7 @@ export default {
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user/documents', formData)
         .then((res) => {
           if (res.data.success) {
+            this.$emit('uploaded')
             this.$bvModal.hide('modal-phys-docs')
           }
         })
