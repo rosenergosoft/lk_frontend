@@ -36,22 +36,31 @@ body.login {
     &:hover {
       color: $LinkHoverColor;
       i.book {
-        background: url('/images/hover/bi_book.svg') no-repeat;
+        background: url('/images/hover/bi_book.svg') no-repeat center center;
+      }
+      i.user {
+        background: url('/images/hover/mdi_account.svg') no-repeat center center;
+      }
+      i.counter {
+        background: url('/images/hover/mdi_counter.svg') no-repeat center center;
+      }
+      i.payment {
+        background: url('/images/hover/mdi_credit-card-outline.svg') no-repeat center center;
       }
       i.connect {
-        background: url('/images/hover/raphael_connect.svg') no-repeat;
+        background: url('/images/hover/raphael_connect.svg') no-repeat center center;
       }
       i.questions {
-        background: url('/images/hover/mdi_frequently-asked-questions.svg') no-repeat;
+        background: url('/images/hover/mdi_frequently-asked-questions.svg') no-repeat center center;
       }
       i.users {
-        background: url('/images/hover/gridicons_multiple-users.svg') no-repeat;
+        background: url('/images/hover/gridicons_multiple-users.svg') no-repeat center center;
       }
       i.info {
-        background: url('/images/hover/ant-design_info-circle-outlined.svg') no-repeat;
+        background: url('/images/hover/ant-design_info-circle-outlined.svg') no-repeat center center;
       }
       i.settings {
-        background: url('/images/hover/ci_settings.svg') no-repeat;
+        background: url('/images/hover/ci_settings.svg') no-repeat center center;
       }
     }
   }
@@ -76,6 +85,7 @@ body.login {
       background-color: #444B76;
       content: " ";
       display: block;
+      margin-top: 8px;
       margin-left: -20px;
     }
   }
@@ -121,12 +131,39 @@ body.login {
   margin-right: 13px;
 }
 .book {
-  background: url('/images/bi_book.svg') no-repeat;
-  width: 16px;
-  height: 16px;
+  background: url('/images/bi_book.svg') no-repeat center center;
+  width: 24px;
+  height: 24px;
   display: inline-block;
   position: relative;
-  top: 4px;
+  top: 8px;
+  margin-right: 4px;
+}
+.user {
+  background: url('/images/mdi_account.svg') no-repeat;
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  position: relative;
+  top: 6px;
+  margin-right: 4px;
+}
+.counter {
+  background: url('/images/mdi_counter.svg') no-repeat;
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  position: relative;
+  top: 7px;
+  margin-right: 4px;
+}
+.payment {
+  background: url('/images/mdi_credit-card-outline.svg') no-repeat;
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  position: relative;
+  top: 7px;
   margin-right: 4px;
 }
 .connect {
@@ -148,31 +185,31 @@ body.login {
   margin-right: 7px;
 }
 .users {
-  background: url('/images/gridicons_multiple-users.svg') no-repeat;
-  width: 19px;
-  height: 19px;
+  background: url('/images/gridicons_multiple-users.svg') no-repeat center center;
+  width: 24px;
+  height: 24px;
   display: inline-block;
   position: relative;
   top: 6px;
-  margin-right: 2px;
+  margin-right: 7px;
 }
 .info {
-  background: url('/images/ant-design_info-circle-outlined.svg') no-repeat;
-  width: 20px;
-  height: 20px;
-  display: inline-block;
-  position: relative;
-  top: 5px;
-  margin-right: 2px;
-}
-.settings {
-  background: url('/images/ci_settings.svg') no-repeat;
-  width: 23px;
-  height: 23px;
+  background: url('/images/ant-design_info-circle-outlined.svg') no-repeat center center;
+  width: 24px;
+  height: 24px;
   display: inline-block;
   position: relative;
   top: 7px;
-  margin-right: 2px;
+  margin-right: 4px;
+}
+.settings {
+  background: url('/images/ci_settings.svg') no-repeat center center;
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  position: relative;
+  top: 7px;
+  margin-right: 4px;
 }
 .separator {
   border-bottom: 1px solid $separatorColor;

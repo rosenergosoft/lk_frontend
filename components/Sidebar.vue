@@ -7,6 +7,18 @@
     </div>
     <div class="separator" />
     <nav>
+      <label>Управление</label>
+      <ul class="nav d-block">
+        <li class="nav-item">
+          <a href="/account" class="nav-link"><i class="user" /> Мой аккаунт</a>
+        </li>
+        <li class="nav-item">
+          <a href="/" class="nav-link"><i class="counter" /> Подать показания счетчиков</a>
+        </li>
+        <li class="nav-item">
+          <a href="/" class="nav-link"><i class="payment" /> Оплата счетов</a>
+        </li>
+      </ul>
       <label>Администрирование</label>
       <ul class="nav d-block">
         <li class="nav-item active">
