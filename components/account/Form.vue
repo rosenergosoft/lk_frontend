@@ -7,8 +7,9 @@
         <input v-if="type === 'yur'" v-model="formData.ogrn" type="text" placeholder="ОГРН" class="form-control">
         <input v-if="type === 'ip'" v-model="formData.ogrn" type="text" placeholder="ОГРНИП" class="form-control">
       </div>
-      <div class="form-group">
-        <input v-model="formData.email" type="email" placeholder="Имейл" class="form-control">
+      <div class="form-group d-flex justify-content-between">
+        <input v-model="formData.email" type="email" placeholder="Имейл" class="form-control mr-20">
+        <input v-model="formData.phone" v-mask="'+7 (###) ###-##-##'" type="tel" placeholder="Номер телефона" class="form-control">
       </div>
       <label class="label">Смена пароля</label>
       <div class="form-group">
@@ -38,6 +39,7 @@ export default {
       formData: {
         snils: '',
         email: '',
+        phone: '',
         ogrn: '',
         ogrnip: ''
       },
