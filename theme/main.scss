@@ -68,6 +68,9 @@ body.login {
     margin-bottom: 15px;
   }
   .subnav {
+    a:before {
+      display: none !important;
+    }
     margin-top: 15px;
     margin-left: 20px;
   }
@@ -534,5 +537,35 @@ input[type=radio] {
       top: -3px;
       margin-bottom: 0;
     }
+  }
+}
+a.active {
+  color: $LinkHoverColor !important;
+  i.book {
+    background: url('/images/hover/bi_book.svg') no-repeat center center;
+  }
+  i.user {
+    background: url('/images/hover/mdi_account.svg') no-repeat center center;
+  }
+  i.counter {
+    background: url('/images/hover/mdi_counter.svg') no-repeat center center;
+  }
+  i.payment {
+    background: url('/images/hover/mdi_credit-card-outline.svg') no-repeat center center;
+  }
+  i.connect {
+    background: url('/images/hover/raphael_connect.svg') no-repeat center center;
+  }
+  i.questions {
+    background: url('/images/hover/mdi_frequently-asked-questions.svg') no-repeat center center;
+  }
+  i.users {
+    background: url('/images/hover/gridicons_multiple-users.svg') no-repeat center center;
+  }
+  i.info {
+    background: url('/images/hover/ant-design_info-circle-outlined.svg') no-repeat center center;
+  }
+  i.settings {
+    background: url('/images/hover/ci_settings.svg') no-repeat center center;
   }
 }
