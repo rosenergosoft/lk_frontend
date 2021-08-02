@@ -569,3 +569,13 @@ a.active {
     background: url('/images/hover/ci_settings.svg') no-repeat center center;
   }
 }
+.form-control:disabled, .form-control[readonly] {
+  background-color: $wrapperBackgroundColor;
+}
+.vdp-datepicker__calendar {
+  color: $defaultFontColor !important;
+}
+.vdp-datepicker__calendar .cell.selected {
+  background-color: $LinkHoverColor !important;
+  color: $wrapperBackgroundColor !important;
+}
