@@ -10,7 +10,13 @@
       <label>Управление</label>
       <ul class="nav d-block">
         <li class="nav-item">
-          <a href="/account" class="nav-link"><i class="user" /> Мой аккаунт</a>
+          <NuxtLink
+            to="/account"
+            class="nav-link"
+            :class="{ active : $nuxt.$route.name === 'account'}"
+          >
+            <i class="user" /> Мой аккаунт
+          </NuxtLink>
         </li>
         <li class="nav-item">
           <a href="/" class="nav-link"><i class="counter" /> Подать показания счетчиков</a>
@@ -21,11 +27,23 @@
       </ul>
       <label>Администрирование</label>
       <ul class="nav d-block">
-        <li class="nav-item active">
-          <a href="/" class="nav-link"><i class="book" /> Заявки</a>
+        <li class="nav-item">
+          <NuxtLink
+            to="/"
+            class="nav-link"
+            :class="{ active : $nuxt.$route.name === 'index'}"
+          >
+            <i class="book" /> Заявки
+          </NuxtLink>
           <ul class="nav d-block subnav">
             <li class="nav-item">
-              <a href="/" class="nav-link"><i class="connect" /> Технологическое подключение</a>
+              <NuxtLink
+                to="/"
+                class="nav-link"
+                :class="{ active : $nuxt.$route.name === 'index'}"
+              >
+                <i class="connect" /> Технологическое подключение
+              </NuxtLink>
             </li>
             <li class="nav-item">
               <a href="" class="nav-link"><i class="questions" /> Обращения</a>
@@ -33,7 +51,11 @@
           </ul>
         </li>
         <li class="nav-item">
-          <NuxtLink to="/users" class="nav-link">
+          <NuxtLink
+            to="/users"
+            class="nav-link"
+            :class="{ active : $nuxt.$route.name === 'users'}"
+          >
             <i class="users" />Пользователи
           </NuxtLink>
         </li>

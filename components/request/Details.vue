@@ -8,10 +8,10 @@
     </div>
     <div class="details">
       <div class="form-group">
-        <input id="phys" v-model="details.requester" type="radio" value="" name="requester-type"><label for="phys">Физическое лицо</label>
+        <input id="phys" v-model="details.requester" type="radio" value="phys" name="requester-type"><label for="phys">Физическое лицо</label>
       </div>
       <div class="form-group">
-        <input id="yur" v-model="details.requester" type="radio" value="" name="requester-type"><label for="yur">Юридическое лицо</label>
+        <input id="yur" v-model="details.requester" type="radio" value="yur" name="requester-type"><label for="yur">Юридическое лицо</label>
       </div>
       <div class="separator" />
     </div>
@@ -31,7 +31,7 @@
       <div class="form-group">
         <input id="short-move" v-model="details.connectionType" type="radio" value="2" name="connection_type"><label for="short-move">Временное подключение передвижного объекта</label>
       </div>
-      <div v-if="connectionType === '1'">
+      <div v-if="details.connectionType === '1'">
         <div class="inputs">
           <div class="form-group">
             <input v-model="details.contractNumber" class="form-control" type="text" placeholder="Номер текущего договора">
@@ -48,7 +48,7 @@
           </div>
         </div>
       </div>
-      <div v-if="connectionType === '2'">
+      <div v-if="details.connectionType === '2'">
         <div class="inputs">
           <div class="form-group">
             <input v-model="details.connectionDuration" class="form-control" type="text" placeholder="Продолжительность подключения в днях">
@@ -76,7 +76,7 @@
         </div>
         <div class="form-group select-wrapper">
           <select v-model="details.constructionReason" class="form-control">
-            <option value="0">
+            <option value="">
               Новое строительство
             </option>
             <option value="1">
@@ -118,7 +118,7 @@
         </div>
         <div class="form-group select-wrapper">
           <select v-model="details.integrityCategory" class="form-control">
-            <option value="0">
+            <option value="">
               Категория надежности
             </option>
             <option value="1">
@@ -134,7 +134,7 @@
         </div>
         <div class="form-group select-wrapper">
           <select v-model="details.powerLevel" class="form-control">
-            <option value="0">
+            <option value="">
               Уровень напряжения
             </option>
             <option value="1">
@@ -153,7 +153,7 @@
         </div>
         <div class="form-group select-wrapper">
           <select v-model="details.loadType" class="form-control">
-            <option value="0">
+            <option value="">
               Характер нагрузки (вид экономической деятельности)
             </option>
             <option value="1">
@@ -225,8 +225,8 @@
           <label>Энергопринимающие устройства, которые могут быть присоединены к устройствам противоаварийной автоматики</label>
         </div>
         <div class="form-group">
-          <input id="emergency_auto_yes" v-model="details.emergencyAuto" type="radio" value="" name="emergency_auto"><label for="emergency_auto_yes" class="mr-20">Есть</label>
-          <input id="emergency_auto_no" v-model="details.emergencyAuto" type="radio" value="" name="emergency_auto"><label for="emergency_auto_no">Нет</label>
+          <input id="emergency_auto_yes" v-model="details.emergencyAuto" type="radio" value="1" name="emergency_auto"><label for="emergency_auto_yes" class="mr-20">Есть</label>
+          <input id="emergency_auto_no" v-model="details.emergencyAuto" type="radio" value="0" name="emergency_auto"><label for="emergency_auto_no">Нет</label>
         </div>
       </div>
     </div>
@@ -240,7 +240,7 @@
       <div class="inputs">
         <div class="form-group select-wrapper">
           <select v-model="details.estimationYear" class="form-control">
-            <option value="0">
+            <option value="">
               Год
             </option>
             <option value="1">
@@ -280,7 +280,7 @@
         </div>
         <div class="form-group select-wrapper">
           <select v-model="details.estimationQuater" class="form-control">
-            <option value="0">
+            <option value="">
               Квартал
             </option>
             <option value="1">
@@ -312,7 +312,7 @@
       <div class="inputs">
         <div class="form-group select-wrapper">
           <select v-model="details.energoCompanyName" class="form-control">
-            <option value="0">
+            <option value="">
               Наименование энергосбытовой компании
             </option>
             <option value="1">
@@ -330,22 +330,22 @@
           <label>Ценовая категория</label>
         </div>
         <div class="form-group">
-          <input id="tarif_1" v-model="details.pricing" type="radio" value="" name="tarif"><label for="tarif_1" class="mr-20">1 (Расчет = цена * объем потребления. Тариф по передаче эл.эн. одноставочный)</label>
+          <input id="tarif_1" v-model="details.pricing" type="radio" value="1" name="tarif"><label for="tarif_1" class="mr-20">1 (Расчет = цена * объем потребления. Тариф по передаче эл.эн. одноставочный)</label>
         </div>
         <div class="form-group">
-          <input id="tarif_2" v-model="details.pricing" type="radio" value="" name="tarif"><label for="tarif_2">2 (Расчет = сумма стоимости эл.эн для каждой зоны суток. Тариф по передаче эл.эн. одноставочный)</label>
+          <input id="tarif_2" v-model="details.pricing" type="radio" value="2" name="tarif"><label for="tarif_2">2 (Расчет = сумма стоимости эл.эн для каждой зоны суток. Тариф по передаче эл.эн. одноставочный)</label>
         </div>
         <div class="form-group">
-          <input id="tarif_3" v-model="details.pricing" type="radio" value="" name="tarif"><label for="tarif_3">3 (Расчет = сумма стоимости эл.эн. за каждый час плюс стоимость мощности. Тариф по передаче эл.эн. одноставочный)</label>
+          <input id="tarif_3" v-model="details.pricing" type="radio" value="3" name="tarif"><label for="tarif_3">3 (Расчет = сумма стоимости эл.эн. за каждый час плюс стоимость мощности. Тариф по передаче эл.эн. одноставочный)</label>
         </div>
         <div class="form-group">
-          <input id="tarif_4" v-model="details.pricing" type="radio" value="" name="tarif"><label for="tarif_4">4 (Расчет = сумма стоимости эл.эн. за каждый час плюс стоимость мощности. Тариф по передаче эл.эн. двухставочный)</label>
+          <input id="tarif_4" v-model="details.pricing" type="radio" value="4" name="tarif"><label for="tarif_4">4 (Расчет = сумма стоимости эл.эн. за каждый час плюс стоимость мощности. Тариф по передаче эл.эн. двухставочный)</label>
         </div>
         <div class="form-group">
-          <input id="tarif_5" v-model="details.pricing" type="radio" value="" name="tarif"><label for="tarif_5">5 (Расчет = сумма фактической стоимости эл.эн. по каждому часу, сумма отклонений от плана и стоимости мощности. Тариф одноставочный)</label>
+          <input id="tarif_5" v-model="details.pricing" type="radio" value="5" name="tarif"><label for="tarif_5">5 (Расчет = сумма фактической стоимости эл.эн. по каждому часу, сумма отклонений от плана и стоимости мощности. Тариф одноставочный)</label>
         </div>
         <div class="form-group">
-          <input id="tarif_6" v-model="details.pricing" type="radio" value="" name="tarif"><label for="tarif_6">6 (Расчет = сумма фактической стоимости эл.эн. по каждому часу, сумма отклонений от плана и стоимости мощности. Тариф двухставочный)</label>
+          <input id="tarif_6" v-model="details.pricing" type="radio" value="6" name="tarif"><label for="tarif_6">6 (Расчет = сумма фактической стоимости эл.эн. по каждому часу, сумма отклонений от плана и стоимости мощности. Тариф двухставочный)</label>
         </div>
       </div>
     </div>
@@ -371,7 +371,7 @@ export default {
     return {
       ru,
       details: {
-        connectionType: 1,
+        connectionType: '',
         requester: '',
         contractNumber: '',
         contractDate: '',
@@ -379,18 +379,18 @@ export default {
         objectName: '',
         objectLocation: '',
         kadastrNum: '',
-        constructionReason: '0',
+        constructionReason: '',
         connectorsCount: '',
         maxPower: '',
         previousMaxPower: '',
-        integrityCategory: '0',
-        powerLevel: '0',
-        loadType: '0',
+        integrityCategory: '',
+        powerLevel: '',
+        loadType: '',
         emergencyAuto: '',
-        estimationYear: '0',
-        estimationQuater: '0',
+        estimationYear: '',
+        estimationQuater: '',
         power: '',
-        energoCompanyName: '0',
+        energoCompanyName: '',
         pricing: '',
         other: ''
       }
