@@ -35,10 +35,10 @@
           <label class="label">Юридическое лицо или ИП</label>
         </div>
         <div class="text-content">
-          ОАО "ПЕРВЫЙ ХЛАДОКОМБИНАТ"
+          {{ companyName }}
         </div>
         <div class="text-details">
-          ИНН 7708046767 107140, г Москва, Красносельский р-н, ул Верхняя Красносельская, д 3А
+          {{ innAndAddress }}
         </div>
         <div class="red-warning">
           Банковские реквизиты не указаны
@@ -66,7 +66,8 @@ export default {
   computed: {
     ...mapGetters([
       'user',
-      'userProfile'
+      'userProfile',
+      'userCompany'
     ]),
     customerName () {
       if (this.userProfile) {
@@ -79,6 +80,18 @@ export default {
         return 'Паспорт: ' + this.userProfile.pasport
       }
       return 'Паспортные данные не указаны'
+    },
+    companyName () {
+      if (this.userCompany) {
+        return this.userCompany.opf + ' "' + this.userCompany.name + '"'
+      }
+      return ''
+    },
+    innAndAddress () {
+      if (this.userCompany) {
+        return 'ИНН' + this.userCompany.inn + ' ' + this.userCompany.address
+      }
+      return ''
     }
   }
 }

@@ -138,6 +138,7 @@ export default {
         return false
       }
       const data = Object.assign({}, this.companyData, this.bankData)
+      data.id = this.id
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user/company', data)
         .then((res) => {
           if (res.data.success) {

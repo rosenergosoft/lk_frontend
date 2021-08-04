@@ -22,26 +22,17 @@
             </div>
             <Documents />
             <div class="text-left button-wrapper">
-              <button class="btn blue-button float-none" @click="nextTo(1)">
+              <button class="btn blue-button float-none" @click="secondStep">
                 Далее
               </button>
             </div>
           </div>
           <div v-if="currentStep === 1">
             <h4>2. Заявка на подключение</h4>
-            <Details />
-            <div class="d-flex justify-content-between">
-              <div class="text-left button-wrapper">
-                <button class="btn blue-button float-none">
-                  Отправить заявку
-                </button>
-              </div>
-              <div class="text-left button-wrapper">
-                <button class="btn blue-button float-none" @click="nextTo(0)">
-                  Назад
-                </button>
-              </div>
-            </div>
+            <Details
+              :application-id="application_id"
+              @back="nextTo"
+            />
           </div>
         </div>
       </div>
@@ -61,10 +52,36 @@ export default {
   },
   data () {
     return {
-      currentStep: 0
+      currentStep: 0,
+      application_id: null
     }
   },
+  mounted () {
+    this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/application/draft')
+      .then((res) => {
+        if (res.data.id) {
+          this.application_id = res.data.id
+          this.nextTo(1)
+        }
+      })
+  },
   methods: {
+    createDraft () {
+      this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/application/draft')
+        .then((res) => {
+          if (res.data.success) {
+            this.application_id = res.data.application.id
+            this.nextTo(1)
+          }
+        })
+    },
+    secondStep () {
+      if (this.application_id) {
+        this.nextTo(1)
+      } else {
+        this.createDraft()
+      }
+    },
     nextTo (to = false) {
       this.currentStep = to
       window.scrollTo(0, 0)

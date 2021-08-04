@@ -6,7 +6,7 @@
     <div class="text-content">
       У вас указано не только физ. лицо, но и юридическое (или ИП), выберите на кого будет заключать договор.
     </div>
-    <div class="details">
+    <div v-if="userCompany" class="details">
       <div class="form-group">
         <input id="phys" v-model="details.requester" type="radio" value="phys" name="requester-type"><label for="phys">Физическое лицо</label>
       </div>
@@ -243,37 +243,37 @@
             <option value="">
               Год
             </option>
-            <option value="1">
+            <option value="2020">
               2020
             </option>
-            <option value="2">
+            <option value="2021">
               2021
             </option>
-            <option value="3">
+            <option value="2022">
               2022
             </option>
-            <option value="4">
+            <option value="2023">
               2023
             </option>
-            <option value="5">
+            <option value="2024">
               2024
             </option>
-            <option value="6">
+            <option value="2025">
               2025
             </option>
-            <option value="7">
+            <option value="2026">
               2026
             </option>
-            <option value="8">
+            <option value="2027">
               2027
             </option>
-            <option value="9">
+            <option value="2028">
               2028
             </option>
-            <option value="10">
+            <option value="2029">
               2029
             </option>
-            <option value="11">
+            <option value="2030">
               2030
             </option>
           </select>
@@ -360,13 +360,32 @@
         <textarea v-model="details.other" class="form-control" />
       </div>
     </div>
+    <div class="d-flex justify-content-between">
+      <div class="text-left button-wrapper">
+        <button class="btn blue-button float-none" @click="submitDetails">
+          Отправить заявку
+        </button>
+      </div>
+      <div class="text-left button-wrapper">
+        <button class="btn blue-button float-none" @click="goBack">
+          Назад
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { ru } from 'vuejs-datepicker/dist/locale'
 export default {
   name: 'Details',
+  props: {
+    applicationId: {
+      type: [Number, null],
+      default: null
+    }
+  },
   data () {
     return {
       ru,
@@ -396,14 +415,29 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters([
+      'userCompany'
+    ])
+  },
+  mounted () {
+    if (!this.userCompany) {
+      this.requester = 'phys'
+    }
+  },
   methods: {
     submitDetails () {
-      this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/request/details', this.details)
+      this.details.id = this.applicationId
+      this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/application/create', this.details)
         .then((response) => {
           if (response.data.success) {
+            console.log(response.data.application)
             // todo: редирект на страницу заявки где можно посмотреть что ты заполнил и увидеть статус
           }
         })
+    },
+    goBack () {
+      this.$emit('back', 0)
     }
   }
 }
