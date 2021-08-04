@@ -34,14 +34,17 @@
         <div>
           <label class="label">Юридическое лицо или ИП</label>
         </div>
-        <div class="text-content">
-          ОАО "ПЕРВЫЙ ХЛАДОКОМБИНАТ"
+        <div v-if="companyName">
+          <div class="text-content">
+            {{ companyName }}
+          </div>
+          <div class="text-details">
+            {{ companyInfo }}
+          </div>
         </div>
-        <div class="text-details">
-          ИНН 7708046767 107140, г Москва, Красносельский р-н, ул Верхняя Красносельская, д 3А
-        </div>
-        <div class="red-warning">
-          Банковские реквизиты не указаны
+        <div v-if="companyInfo" class="red-warning" v-html="bankInfo" />
+        <div v-else>
+          Нет данных
         </div>
       </div>
       <div class="text-right">
@@ -66,13 +69,32 @@ export default {
   computed: {
     ...mapGetters([
       'user',
-      'userProfile'
+      'userProfile',
+      'userCompany'
     ]),
     customerName () {
       if (this.userProfile) {
         return this.userProfile.last_name + ' ' + this.userProfile.first_name + ' ' + this.userProfile.middle_name
       }
       return ''
+    },
+    companyName () {
+      if (this.userCompany) {
+        return this.userCompany.opf + ' "' + this.userCompany.name + '"'
+      }
+      return ''
+    },
+    companyInfo () {
+      if (this.userCompany) {
+        return this.userCompany.inn + ' ' + this.userCompany.address
+      }
+      return ''
+    },
+    bankInfo () {
+      if (this.userCompany && this.userCompany.bank_name && this.userCompany.check_account) {
+        return '<div>' + this.userCompany.bank_name + '</div><div>Р/с: ' + this.userCompany.check_account + '</div>'
+      }
+      return 'Банковские реквизиты не указаны'
     },
     passportData () {
       if (this.userProfile && this.userProfile.pasport) {

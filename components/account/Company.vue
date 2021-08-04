@@ -43,9 +43,18 @@
       </div>
     </div>
     <template #modal-footer>
-      <button type="button" class="btn blue-button" @click="submitCompany">
-        Сохранить
-      </button>
+      <div class="d-flex justify-content-between">
+        <div v-if="userCompany">
+          <button type="button" class="btn blue-button" @click="removeCompanyData">
+            Очистить
+          </button>
+        </div>
+        <div>
+          <button type="button" class="btn blue-button" @click="submitCompany">
+            Сохранить
+          </button>
+        </div>
+      </div>
     </template>
   </b-modal>
 </template>
@@ -128,7 +137,7 @@ export default {
       }
     },
     submitCompany () {
-      if (!this.bankData || !this.companyData || !this.bankData.check_account) {
+      if (!this.companyData || !this.bankData.check_account) {
         return false
       }
       const data = Object.assign({}, this.companyData, this.bankData)
@@ -139,6 +148,17 @@ export default {
             this.$bvModal.hide('modal-yur-data')
           }
         })
+    },
+    removeCompanyData () {
+      if (this.userCompany && this.userCompany.name) {
+        this.$axios.delete(process.env.LARAVEL_API_BASE_URL + '/api/user/company', { params: { id: this.id } })
+          .then((res) => {
+            if (res.data.success) {
+              this.$store.commit('DELETE_USER_COMPANY', {})
+              this.$bvModal.hide('modal-yur-data')
+            }
+          })
+      }
     }
   }
 }
