@@ -1,8 +1,8 @@
 <template>
   <div class="uploaded-files d-flex mt-20 align-items-center justify-content-between">
     <div class="d-flex align-items-center">
-      <div class="mr-20">
-        <a href=""><img :src="getUrl()" alt="" title="" class="document_image"></a>
+      <div class="mr-20 document-preview">
+        <a href=""><img :src="getUrl()" alt="" title=""></a>
       </div>
       <div>
         {{ getType() }}
