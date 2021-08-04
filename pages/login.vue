@@ -29,7 +29,7 @@
                   <input v-model="loginData.email" :placeholder="placeholder" type="text" class="form-control">
                 </div>
                 <div class="form-group">
-                  <input v-model="loginData.password" type="password" class="form-control" placeholder="Пароль">
+                  <input v-model="loginData.password" type="password" class="form-control" placeholder="Пароль" @keyup.enter="submitLogin">
                 </div>
               </div>
             </div>
