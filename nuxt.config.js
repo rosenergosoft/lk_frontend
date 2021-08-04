@@ -39,7 +39,8 @@ export default {
     '~/plugins/v-mask.js',
     { src: '~/plugins/vue-datepicker.js', mode: 'client' },
     '~/plugins/nuxt-dadata.js',
-    '~/plugins/vue-autosuggest.js'
+    '~/plugins/vue-autosuggest.js',
+    '~/plugins/vue-notification.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
