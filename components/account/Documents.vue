@@ -27,7 +27,7 @@
         <button v-b-modal.modal-yur-docs type="button" class="btn blue-button">
           Загрузить
         </button>
-        <upload-yur />
+        <upload-yur @uploaded="reloadDocs" />
       </div>
       <DocumentsItem
         v-for="doc in documents.yur"

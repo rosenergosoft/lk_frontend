@@ -1,42 +1,42 @@
 <template>
   <b-modal id="modal-yur-docs" centered size="xl" title="Загрузка документов">
     <v-file-input
-      v-model="companyProxy"
+      v-model="yur_proxy"
       show-size
       single-line
       label="Документ подтверждающий полномочия представителя заявителя"
       hint="Документ подтверждающий полномочия представителя заявителя"
     />
     <v-file-input
-      v-model="ustav"
+      v-model="yur_ustav"
       show-size
       single-line
       label="Устав, решение учредителей о создании юр. лица и т.п."
       hint="Устав, решение учредителей о создании юр. лица и т.п."
     />
     <v-file-input
-      v-model="ceoOrder"
+      v-model="yur_prikaz"
       show-size
       single-line
       label="Приказ, выписка из протокола, решение учредителей о назначении директора"
       hint="Приказ, выписка из протокола, решение учредителей о назначении директора"
     />
     <v-file-input
-      v-model="gosReg"
+      v-model="yur_sgr"
       show-size
       single-line
       label="Выписка или свидетельство о государственной регистрации заявителя в качестве юридического лица или ип"
       hint="Выписка или свидетельство о государственной регистрации заявителя в качестве юридического лица или ип"
     />
     <v-file-input
-      v-model="fnsReg"
+      v-model="yur_pszun"
       show-size
       single-line
       label="Свидетельство о постановке заявителя на учет в налоговом органе"
       hint="Свидетельство о постановке заявителя на учет в налоговом органе"
     />
     <template #modal-footer>
-      <button type="button" class="btn blue-button">
+      <button type="button" class="btn blue-button" @click="upload">
         Загрузить
       </button>
     </template>
@@ -48,30 +48,30 @@ export default {
   name: 'UploadYur',
   data () {
     return {
-      companyProxy: null,
-      ustav: null,
-      ceoOrder: null,
-      gosReg: null,
-      fnsReg: null
+      yur_proxy: null,
+      yur_ustav: null,
+      yur_prikaz: null,
+      yur_sgr: null,
+      yur_pszun: null
     }
   },
   methods: {
     upload () {
       const formData = new FormData()
-      if (this.companyProxy) {
-        formData.append('company_proxy', this.companyProxy, this.companyProxy.name)
+      if (this.yur_proxy) {
+        formData.append('yur_proxy', this.yur_proxy, this.yur_proxy.name)
       }
-      if (this.ustav) {
-        formData.append('proxy', this.ustav, this.ustav.name)
+      if (this.yur_ustav) {
+        formData.append('yur_ustav', this.yur_ustav, this.yur_ustav.name)
       }
-      if (this.ceoOrder) {
-        formData.append('ceoOrder', this.ceoOrder, this.ceoOrder.name)
+      if (this.yur_prikaz) {
+        formData.append('yur_prikaz', this.yur_prikaz, this.yur_prikaz.name)
       }
-      if (this.gosReg) {
-        formData.append('gosReg', this.gosReg, this.gosReg.name)
+      if (this.yur_sgr) {
+        formData.append('yur_sgr', this.yur_sgr, this.yur_sgr.name)
       }
-      if (this.fnsReg) {
-        formData.append('fnsReg', this.fnsReg, this.fnsReg.name)
+      if (this.yur_pszun) {
+        formData.append('yur_pszun', this.yur_pszun, this.yur_pszun.name)
       }
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user/documents', formData)
         .then((res) => {

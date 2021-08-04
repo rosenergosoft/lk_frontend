@@ -40,7 +40,7 @@ export default {
     { src: '~/plugins/vue-datepicker.js', mode: 'client' },
     '~/plugins/nuxt-dadata.js',
     '~/plugins/vue-autosuggest.js',
-    '~/plugins/vue-notification.js'
+    { src: '~/plugins/vue-notification.js', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
