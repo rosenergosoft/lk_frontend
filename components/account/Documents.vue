@@ -18,8 +18,8 @@
         :doc="doc"
       />
     </div>
-    <div class="separator sep-15" />
     <div v-if="userCompany" class="personal-data">
+      <div class="separator sep-15" />
       <div>
         <label class="label">Документы по юридическому лицу или ИП</label>
       </div>

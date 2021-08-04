@@ -579,3 +579,42 @@ a.active {
   background-color: $LinkHoverColor !important;
   color: $wrapperBackgroundColor !important;
 }
+.document-preview img{
+  width: 74px;
+}
+.modal-body .inputs span {
+  display: block;
+}
+.autosuggest__results-container {
+  position: relative;
+}
+.autosuggest__results {
+  width: 100%;
+  position: absolute;
+  margin: -15px 0 0 0;
+  z-index: 100;
+  overflow-y: scroll;
+  max-height: 300px;
+  background-color: $wrapperBackgroundColor;
+  border-left: 1px solid $radioColor;
+  border-right: 1px solid $radioColor;
+  border-bottom: 1px solid $radioColor;
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+}
+
+.autosuggest__results .autosuggest__results-item {
+  cursor: pointer;
+  padding: 15px;
+  &:hover {
+    background-color: $separatorColor;
+  }
+  span {
+    color: $defaultFontColor;
+  }
+}
+.account-number {
+  margin-top: 15px;
+}

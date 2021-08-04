@@ -4,7 +4,7 @@
       <vue-autosuggest
         v-if="!companyData"
         :suggestions="suggestions"
-        :input-props="{id:'autosuggest__input', placeholder:'Название компании/ИП/ИНН'}"
+        :input-props="{ id:'autosuggest__input', placeholder:'Название компании/ИП/ИНН', 'class': 'form-control' }"
         :get-suggestion-value="getSuggestionValue"
         @input="onInputChange"
         @selected="selectHandler"
@@ -24,7 +24,7 @@
       <vue-autosuggest
         v-if="!bankData"
         :suggestions="bankSuggestions"
-        :input-props="{id:'bank__autosuggest__input', placeholder:'БИК'}"
+        :input-props="{id:'bank__autosuggest__input', placeholder:'БИК', 'class': 'form-control'}"
         :get-suggestion-value="getSuggestionValue"
         @input="bankOnInputChange"
         @selected="bankSelectHandler"
@@ -38,7 +38,9 @@
         <span>{{ bankData.bank_name }}</span>
         <span>Корр. счет {{ bankData.bank_corr_account }}</span>
       </div>
-      <input v-if="bankData" v-model="bankData.check_account" type="text" class="form-control" placeholder="Расч. счет">
+      <div class="account-number">
+        <input v-if="bankData" v-model="bankData.check_account" type="text" class="form-control" placeholder="Расчетный счет">
+      </div>
     </div>
     <template #modal-footer>
       <button type="button" class="btn blue-button" @click="submitCompany">
@@ -50,24 +52,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
 export default {
   name: 'Company',
   data () {
     return {
-      suggestions: [
-        {
-          data: [
-            {}
-          ]
-        }
-      ],
-      bankSuggestions: [
-        {
-          data: [
-            {}
-          ]
-        }
-      ],
+      suggestions: [],
+      bankSuggestions: [],
       id: null,
       companyData: null,
       bankData: null,
@@ -101,12 +92,15 @@ export default {
     },
     onInputChange (query) {
       this.$dadata.companySuggestion(query).then((data) => {
-        this.suggestions[0].data = data.suggestions
+        this.suggestions = []
+        this.suggestions.push({ data: data.suggestions })
+        // this.suggestions[0].data = data.suggestions
       })
     },
     bankOnInputChange (query) {
       this.$dadata.bankSuggestion(query).then((data) => {
-        this.bankSuggestions[0].data = data.suggestions
+        this.bankSuggestions = []
+        this.bankSuggestions.push({ data: data.suggestions })
       })
     },
     getSuggestionValue (suggestion) {
