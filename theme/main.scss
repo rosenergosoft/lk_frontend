@@ -518,6 +518,11 @@ h4 {
     margin-top: 15px;
     margin-bottom: 15px;
   }
+  .uploaded-files{
+    img.document_image {
+      width: 80px;
+    }
+  }
 }
 .button-wrapper {
   margin-top: 55px;
@@ -617,6 +622,9 @@ a.active {
 }
 .account-number {
   margin-top: 15px;
+}
+.company-info {
+  font-size: 12px;
 }
 #modal-yur-data___BV_modal_footer_ {
   display: block;

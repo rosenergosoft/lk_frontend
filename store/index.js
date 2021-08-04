@@ -26,5 +26,8 @@ export const mutations = {
   },
   increment (state) {
     state.counter++
+  },
+  DELETE_USER_COMPANY (state) {
+    state.auth.user.company = null
   }
 }

@@ -29,81 +29,11 @@
         </button>
         <upload-yur />
       </div>
-      <div class="uploaded-files d-flex mt-20 align-items-center justify-content-between">
-        <div class="d-flex align-items-center">
-          <div class="mr-20">
-            <a href=""><img src="/images/image-2.jpg" alt="" title=""></a>
-          </div>
-          <div>
-            Документ подтверждающий полномочия представителя заявителя
-          </div>
-        </div>
-        <div>
-          <a href=""><img src="/images/upload.svg" alt="" title=""></a>
-          <a href=""><img src="/images/confirm.svg" alt="" title=""></a>
-          <a href=""><img src="/images/remove.svg" alt="" title=""></a>
-        </div>
-      </div>
-      <div class="uploaded-files d-flex mt-20 align-items-center justify-content-between">
-        <div class="d-flex align-items-center">
-          <div class="mr-20">
-            <a href=""><img src="/images/image-1.jpg" alt="" title=""></a>
-          </div>
-          <div>
-            Устав, решение учредителей о создании юр. лица и т.п.
-          </div>
-        </div>
-        <div>
-          <a href=""><img src="/images/upload.svg" alt="" title=""></a>
-          <a href=""><img src="/images/confirm.svg" alt="" title=""></a>
-          <a href=""><img src="/images/remove.svg" alt="" title=""></a>
-        </div>
-      </div>
-      <div class="uploaded-files d-flex mt-20 align-items-center justify-content-between">
-        <div class="d-flex align-items-center">
-          <div class="mr-20">
-            <a href=""><img src="/images/image-1.jpg" alt="" title=""></a>
-          </div>
-          <div>
-            Приказ, выписка из протокола, решение учредителей о назначении директора
-          </div>
-        </div>
-        <div>
-          <a href=""><img src="/images/upload.svg" alt="" title=""></a>
-          <a href=""><img src="/images/confirm.svg" alt="" title=""></a>
-          <a href=""><img src="/images/remove.svg" alt="" title=""></a>
-        </div>
-      </div>
-      <div class="uploaded-files d-flex mt-20 align-items-center justify-content-between">
-        <div class="d-flex align-items-center">
-          <div class="mr-20">
-            <a href=""><img src="/images/image-1.jpg" alt="" title=""></a>
-          </div>
-          <div>
-            Выписка или свидетельство о государственной регистрации заявителя в качестве юридического лица или ип
-          </div>
-        </div>
-        <div>
-          <a href=""><img src="/images/upload.svg" alt="" title=""></a>
-          <a href=""><img src="/images/confirm.svg" alt="" title=""></a>
-          <a href=""><img src="/images/remove.svg" alt="" title=""></a>
-        </div>
-      </div>
-      <div class="uploaded-files d-flex mt-20 align-items-center justify-content-between">
-        <div class="d-flex align-items-center">
-          <div class="mr-20">
-            <a href=""><img src="/images/image-1.jpg" alt="" title=""></a>
-          </div>
-          <div>
-            Свидетельство о постановке заявителя на учет в налоговом органе
-          </div>
-        </div>
-        <div>
-          <a href=""><img src="/images/upload.svg" alt="" title=""></a>
-          <a href=""><img src="/images/confirm.svg" alt="" title=""></a>
-          <a href=""><img src="/images/remove.svg" alt="" title=""></a>
-        </div>
-      </div>
+      <DocumentsItem
+        v-for="doc in documents.yur"
+        :key="doc.id"
+        :doc="doc"
+      />
     </div>
   </div>
 </template>

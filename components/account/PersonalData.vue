@@ -42,7 +42,7 @@
             {{ companyInfo }}
           </div>
         </div>
-        <div v-if="companyInfo" class="red-warning" v-html="bankInfo" />
+        <div v-if="companyInfo" v-html="bankInfo" class="company-info"/>
         <div v-else>
           Нет данных
         </div>
