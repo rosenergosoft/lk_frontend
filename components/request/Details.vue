@@ -76,7 +76,7 @@
         </div>
         <div class="form-group select-wrapper">
           <select v-model="details.constructionReason" class="form-control">
-            <option value="">
+            <option value="0">
               Новое строительство
             </option>
             <option value="1">
@@ -398,7 +398,7 @@ export default {
         objectName: '',
         objectLocation: '',
         kadastrNum: '',
-        constructionReason: '',
+        constructionReason: 0,
         connectorsCount: '',
         maxPower: '',
         previousMaxPower: '',
