@@ -60,7 +60,13 @@
           </NuxtLink>
         </li>
         <li class="nav-item">
-          <a href="" class="nav-link"><i class="info" /> Раскрытие</a>
+          <NuxtLink
+            to="/disclosure"
+            class="nav-link"
+            :class="{ active : $nuxt.$route.name === 'disclosure'}"
+          >
+            <i class="info" /> Раскрытие
+          </NuxtLink>
         </li>
         <li class="nav-item">
           <a href="" class="nav-link"><i class="settings" /> Настройки</a>

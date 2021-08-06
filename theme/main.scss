@@ -377,12 +377,12 @@ div.table table.table {
   .order-address {
     width: 282px;
   }
-  .orange-status {
-    color: $orangeStatus;
-  }
-  .green-status {
-    color: $greenStatus;
-  }
+}
+.orange-status {
+  color: $orangeStatus;
+}
+.green-status {
+  color: $greenStatus;
 }
 .boxes {
   margin-top: 15px;
@@ -466,7 +466,7 @@ h4 {
 .mt-20 {
   margin-top: 20px;
 }
-.connection {
+.connection, .disclosure {
   padding-left: 20px;
   padding-right: 20px;
 }
@@ -631,4 +631,37 @@ a.active {
 }
 .v-cloak {
   display: none;
+}
+.doc-status {
+  margin-left: auto;
+}
+.disclosure-documents {
+  .personal-data {
+    padding-top: 25px;
+    cursor: pointer;
+    padding-left: 20px;
+    padding-right: 20px;
+    .text-content {
+      margin-right: 20px;
+      margin-left: 20px;
+    }
+    .separator {
+      margin-bottom: 0;
+    }
+    &:hover {
+      background-color: $separatorColor;
+    }
+  }
+}
+.pl-20 {
+  padding-left: 20px;
+}
+.pl-0 {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+.type-icon {
+  font-size: 12px;
+  font-weight: bold;
+  width: 25px;
 }
