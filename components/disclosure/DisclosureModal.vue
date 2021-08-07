@@ -7,10 +7,10 @@
         :options="quillOptions"
       />
     </div>
-    <div class="d-flex">
+    <div class="d-flex v-application">
       <v-switch
         v-model="is_processed"
-        label="Пункт выполнен"
+        label=""
       />
     </div>
     <template #modal-footer>
