@@ -9,7 +9,7 @@
     <nav>
       <label>Управление</label>
       <ul class="nav d-block">
-        <li class="nav-item">
+        <li v-if="can('myAccount_edit')" class="nav-item">
           <NuxtLink
             to="/account"
             class="nav-link"
@@ -18,16 +18,16 @@
             <i class="user" /> Мой аккаунт
           </NuxtLink>
         </li>
-        <li class="nav-item">
+        <li v-if="can('metersData*')" class="nav-item">
           <a href="/" class="nav-link"><i class="counter" /> Подать показания счетчиков</a>
         </li>
-        <li class="nav-item">
+        <li v-if="can('bills*')" class="nav-item">
           <a href="/" class="nav-link"><i class="payment" /> Оплата счетов</a>
         </li>
       </ul>
       <label>Администрирование</label>
       <ul class="nav d-block">
-        <li class="nav-item">
+        <li v-if="can('applications_*') || can('requests_*')" class="nav-item">
           <NuxtLink
             to="/"
             class="nav-link"
@@ -36,7 +36,7 @@
             <i class="book" /> Заявки
           </NuxtLink>
           <ul class="nav d-block subnav">
-            <li class="nav-item">
+            <li v-if="can('applications_*')" class="nav-item">
               <NuxtLink
                 to="/"
                 class="nav-link"
@@ -45,12 +45,12 @@
                 <i class="connect" /> Технологическое подключение
               </NuxtLink>
             </li>
-            <li class="nav-item">
+            <li v-if="can('requests_*')" class="nav-item">
               <a href="" class="nav-link"><i class="questions" /> Обращения</a>
             </li>
           </ul>
         </li>
-        <li class="nav-item">
+        <li v-if="can('users*')" class="nav-item">
           <NuxtLink
             to="/users"
             class="nav-link"
@@ -59,7 +59,7 @@
             <i class="users" />Пользователи
           </NuxtLink>
         </li>
-        <li class="nav-item">
+        <li v-if="can('disclosure*')" class="nav-item">
           <NuxtLink
             to="/disclosure"
             class="nav-link"
@@ -68,7 +68,7 @@
             <i class="info" /> Раскрытие
           </NuxtLink>
         </li>
-        <li class="nav-item">
+        <li v-if="can('settings')" class="nav-item">
           <a href="" class="nav-link"><i class="settings" /> Настройки</a>
         </li>
       </ul>
