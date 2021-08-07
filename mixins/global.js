@@ -11,6 +11,9 @@ export default {
   },
   methods: {
     can (key) {
+      if (this.isSuper) {
+        return true
+      }
       if (this.userPermissions) {
         if (key.includes('*')) {
           const isMatch = wcmatch(key)
@@ -23,9 +26,6 @@ export default {
         } else {
           return this.userPermissions.includes(key)
         }
-      }
-      if (this.isSuper) {
-        return true
       }
       return false
     }
