@@ -41,6 +41,7 @@ export default {
     '~/plugins/nuxt-dadata.js',
     '~/plugins/vue-autosuggest.js',
     { src: '~/plugins/vue-notification.js', mode: 'client' },
+    { src: '~/plugins/vue-quill-editor.js', mode: 'client' },
     '~/plugins/globalMixin.js'
   ],
 

@@ -2,19 +2,19 @@
   <div class="personal-data pl-20">
     <div class="doc-item d-flex align-items-center">
       <div class="type-icon">
-        {{ type }}
+        {{ item.type_label }}
       </div>
       <div class="text-content text-truncate">
-        {{ content }}
-        <div v-if="deadline" class="notice">
-          {{ deadline }}
+        {{ item.title }}
+        <div v-if="item.deadline" class="notice">
+          {{ item.deadline }}
         </div>
       </div>
       <div class="doc-status h5">
         <b-icon icon="check-circle" :class="getStatus()" />
       </div>
     </div>
-    <div v-if="!last" class="separator" />
+    <div class="separator" />
   </div>
 </template>
 
@@ -28,25 +28,14 @@ export default {
     BIconCheckCircle
   },
   props: {
-    type: {
-      type: String,
-      default: ''
-    },
-    content: {
-      type: String,
-      default: ''
+    item: {
+      type_label: '',
+      title: '',
+      deadline: ''
     },
     status: {
       type: String,
       default: 'green'
-    },
-    deadline: {
-      type: String,
-      default: ''
-    },
-    last: {
-      type: Boolean,
-      default: false
     }
   },
   methods: {
