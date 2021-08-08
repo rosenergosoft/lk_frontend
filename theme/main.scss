@@ -384,6 +384,9 @@ div.table table.table {
 .green-status {
   color: $greenStatus;
 }
+.red-status {
+  color: $redWarning;
+}
 .boxes {
   margin-top: 15px;
 }
@@ -696,4 +699,17 @@ a.active {
 }
 .modal-footer {
   display: block;
+}
+.docs {
+  a {
+    color: $LinkHoverColor;
+  }
+  :last-child {
+    .separator {
+      display: none;
+    }
+  }
+}
+.mt-25 {
+  margin-top: 25px;
 }
