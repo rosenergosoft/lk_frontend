@@ -28,13 +28,13 @@
             v-for="item in disclosureList"
             :key="item.id"
             :item="item"
-            status="green"
             @click.native="openDisclosureModal(item.type)"
           />
         </div>
       </div>
     </div>
     <DisclosureModal
+      @disclosure-list-update="getDisclosureList(0)"
       :content="modalContent"
     />
   </div>

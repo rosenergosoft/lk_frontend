@@ -147,7 +147,6 @@ export default {
         disclosure_id: this.disclosureId,
         doc_id: fileData.id
       }
-      console.log(formData)
       this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/disclosure/fileDelete', formData).then(
         (res) => {
           //
@@ -167,6 +166,7 @@ export default {
       }
       this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/disclosure/save', formData).then(
         (res) => {
+          this.$emit('disclosure-list-update')
           this.$bvModal.hide('disclosure-modal')
         }
       )

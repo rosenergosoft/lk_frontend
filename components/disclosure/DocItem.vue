@@ -11,7 +11,8 @@
         </div>
       </div>
       <div class="doc-status h5">
-        <b-icon icon="check-circle" :class="getStatus()" />
+        <b-icon v-if="getStatusValue() === 'green'" icon="check-circle" :class="getStatus()" />
+        <b-icon v-if="getStatusValue() === 'red'" icon="exclamation-circle" :class="getStatus()" />
       </div>
     </div>
     <div class="separator" />
@@ -19,28 +20,37 @@
 </template>
 
 <script>
-import { BIcon, BIconCheckCircle } from 'bootstrap-vue'
+import { BIcon, BIconCheckCircle, BIconExclamationCircle } from 'bootstrap-vue'
 export default {
   name: 'DocItem',
   components: {
     BIcon,
     // eslint-disable-next-line vue/no-unused-components
-    BIconCheckCircle
+    BIconCheckCircle,
+    // eslint-disable-next-line vue/no-unused-components
+    BIconExclamationCircle
   },
   props: {
     item: {
       type_label: '',
       title: '',
       deadline: ''
-    },
-    status: {
-      type: String,
-      default: 'green'
+    }
+  },
+  data () {
+    return {
     }
   },
   methods: {
     getStatus () {
-      return this.status + '-status'
+      return this.getStatusValue() + '-status'
+    },
+    getStatusValue () {
+      if (this.item.is_processed) {
+        return 'green'
+      } else {
+        return 'red'
+      }
     }
   }
 }

@@ -6,7 +6,9 @@
           <div class="notice">
             {{ doc.name }}
           </div>
-          <div class="notice">Дата: {{ $moment(doc.document_date).format('DD MMMM yyyy') }}</div>
+          <div class="notice">
+            Дата: {{ $moment(doc.document_date).format('DD MMMM yyyy') }}
+          </div>
           <a>
             {{ doc.original_name }}
           </a>
@@ -16,7 +18,7 @@
         <a @click="removeMe(index, $vnode.key)"><img src="/images/remove.svg" alt="" title=""></a>
       </div>
     </div>
-    <div class="separator mt-25"></div>
+    <div class="separator mt-25" />
   </div>
 </template>
 <script>
