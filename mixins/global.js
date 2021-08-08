@@ -7,6 +7,12 @@ export default {
     },
     isSuper () {
       return this.$store.getters.user.roles.find(item => item.name === 'super')
+    },
+    userRoles () {
+      return this.$store.getters.user.roles.map(item => item.name)
+    },
+    isExecutive () {
+      return !!(this.isSuper || this.userRoles.includes('admin') || this.userRoles.includes('vendor'))
     }
   },
   methods: {

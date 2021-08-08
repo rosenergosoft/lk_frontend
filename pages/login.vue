@@ -33,6 +33,11 @@
                 </div>
               </div>
             </div>
+            <div v-if="loginError">
+              <div class="alert alert-danger">
+                Проверьте данные для входа. Если ошибка повторятся, обратитесь к администратору
+              </div>
+            </div>
             <div class="form-group d-flex justify-content-between">
               <div>
                 <button class="btn submit" @click="submitLogin">
@@ -253,6 +258,7 @@ export default {
   layout: 'auth',
   data () {
     return {
+      loginError: false,
       currentStep: 0,
       notaclient: false,
       loginData: {
@@ -313,8 +319,13 @@ export default {
   },
   methods: {
     async submitLogin () {
+      this.loginError = false
       await this.$auth.login({
         data: this.loginData
+      }).catch((error) => {
+        if (error.response.status === 401) {
+          this.loginError = true
+        }
       })
     },
     submitRegistration () {

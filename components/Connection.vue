@@ -14,31 +14,31 @@
         </button>
       </div>
     </div>
-    <div class="row justify-content-between funnel align-middle">
+    <div v-if="isExecutive" class="row justify-content-between funnel align-middle">
       <div class="col status-1 status d-flex align-items-center justify-content-center">
         <div>
           <div class="count">
-            10
+            {{ counts.accepted }}
           </div>
           <div class="status-text">
-            На рассмотрении
+            В работе
           </div>
         </div>
       </div>
       <div class="col status-2 status d-flex align-items-center justify-content-center">
         <div>
           <div class="count">
-            3
+            {{ counts.waiting_company_resp }}
           </div>
           <div class="status-text">
-            Заявка аннулирована
+            Ожидает ответа компании
           </div>
         </div>
       </div>
       <div class="col status-3 status d-flex align-items-center justify-content-center">
         <div>
           <div class="count">
-            1
+            {{ counts.preparing }}
           </div>
           <div class="status-text">
             Подготовка тех условий
@@ -48,7 +48,7 @@
       <div class="col status-4 status d-flex align-items-center justify-content-center">
         <div>
           <div class="count">
-            7
+            {{ counts.invoice }}
           </div>
           <div class="status-text">
             Счет на оплату
@@ -58,7 +58,7 @@
       <div class="col status-5 status d-flex align-items-center justify-content-center">
         <div>
           <div class="count">
-            2
+            {{ counts.in_progress }}
           </div>
           <div class="status-text">
             Исполняется
@@ -68,10 +68,10 @@
       <div class="col status-6 status d-flex align-items-center justify-content-center">
         <div>
           <div class="count">
-            3
+            {{ counts.completed }}
           </div>
           <div class="status-text">
-            Договор расторгнут
+            Выполнен
           </div>
         </div>
       </div>
@@ -107,128 +107,46 @@
         </div>
       </div>
     </div>
-    <div class="table">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>№</th>
-            <th>Участники</th>
-            <th>Тип заявки</th>
-            <th>Статус</th>
-            <th>Дата создания</th>
-            <th>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              1
-            </td>
-            <td>
-              <div>
-                <strong>От:</strong> Иванов Петр Васильевич
-              </div>
-              <div>
-                <strong>Кому:</strong> "ООО Росэлектросеть"
-              </div>
-            </td>
-            <td>
-              <div class="order-status">
-                Технологическое присоединение
-              </div>
-              <div class="order-address">
-                Тульская обл, Щекинский р-н с, Карамышево ул. Южная д,1 ряд 2, гараж №5
-              </div>
-              <div class="order-details">
-                Постоянное подключение, Изменение точки присоединения, 0.22 кВ
-              </div>
-              <div class="order-updated-at">
-                26 июля 2021 г.: Заявка обновлена.
-              </div>
-            </td>
-            <td>
-              <div class="orange-status">
-                Ожидает ответа компании
-              </div>
-            </td>
-            <td>
-              <div>26 июля 2021 г.</div>
-            </td>
-            <td><a><img src="" alt="" title=""></a></td>
-          </tr>
-          <tr class="odd">
-            <td>
-              2
-            </td>
-            <td>
-              <div>
-                <strong>От:</strong> Иванов Петр Васильевич
-              </div>
-              <div>
-                <strong>Кому:</strong> "ООО Росэлектросеть"
-              </div>
-            </td>
-            <td>
-              <div class="order-status">
-                Технологическое присоединение
-              </div>
-              <div class="order-address">
-                Тульская обл, Щекинский р-н с, Карамышево ул. Южная д,1 ряд 2, гараж №5
-              </div>
-              <div class="order-details">
-                Постоянное подключение, Изменение точки присоединения, 0.22 кВ
-              </div>
-              <div class="order-updated-at">
-                26 июля 2021 г.: Заявка обновлена.
-              </div>
-            </td>
-            <td>
-              <div>Черновик</div>
-            </td>
-            <td>
-              <div>26 июля 2021 г.</div>
-            </td>
-            <td><a><img src="" alt="" title=""></a></td>
-          </tr>
-          <tr>
-            <td>
-              3
-            </td>
-            <td>
-              <div>
-                <strong>От:</strong> Иванов Петр Васильевич
-              </div>
-              <div>
-                <strong>Кому:</strong> "ООО Росэлектросеть"
-              </div>
-            </td>
-            <td>
-              <div class="order-status">
-                Технологическое присоединение
-              </div>
-              <div class="order-address">
-                Тульская обл, Щекинский р-н с, Карамышево ул. Южная д,1 ряд 2, гараж №5
-              </div>
-              <div class="order-details">
-                Постоянное подключение, Изменение точки присоединения, 0.22 кВ
-              </div>
-              <div class="order-updated-at">
-                26 июля 2021 г.: Заявка обновлена.
-              </div>
-            </td>
-            <td>
-              <div class="green-status">
-                Выполнена
-              </div>
-            </td>
-            <td>
-              <div>26 июля 2021 г.</div>
-            </td>
-            <td><a><img src="" alt="" title=""></a></td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="separator" />
+    <div class="v-application mt-4">
+      <v-data-table
+        :headers="headers"
+        :items="applications"
+        :options.sync="options"
+        :server-items-length="totalApplications"
+        :items-per-page="perPage"
+        class="elevation-1 w-100"
+      >
+        <template v-slot:[`item.members`]="{ item }">
+          <div>
+            <strong>От:</strong> {{ getMemberFrom(item) }}
+          </div>
+          <div>
+            <strong>Кому:</strong> {{ item.vendor.name }}
+          </div>
+        </template>
+        <template v-slot:[`item.type`]="{ item }">
+          <div class="order-status">
+            Технологическое присоединение
+          </div>
+          <div class="order-address">
+            {{ item.objectLocation }}
+          </div>
+          <div class="order-details">
+            {{ getConnectionType(item) }}, {{ getConstructionReason(item) }}, {{ getPowerLevel(item) }}
+          </div>
+          <div class="order-updated-at">
+            {{ $moment(item.updated_at).format('DD MMM YYYY') }} г.: Заявка обновлена.
+          </div>
+        </template>
+        <template v-slot:[`item.status`]="{ item }">
+          <div :class="getStatusClass(item)">
+            {{ getStatus(item) }}
+          </div>
+        </template>
+        <template v-slot:[`item.created_at`]="{ item }">
+          {{ $moment(item.created_at).format('DD MMM YYYY') }} г.
+        </template>
+      </v-data-table>
     </div>
   </div>
 </template>
@@ -237,8 +155,120 @@
 import { mapGetters } from 'vuex'
 export default {
   name: 'Connection',
+  data () {
+    return {
+      perPage: 10,
+      totalApplications: 0,
+      options: {},
+      headers: [
+        { text: '№', value: 'id' },
+        { text: 'Участники', value: 'members' },
+        { text: 'Тип заявки', value: 'type' },
+        { text: 'Статус', value: 'status' },
+        { text: 'Дата создания', value: 'created_at' }
+      ],
+      applications: [],
+      counts: {}
+    }
+  },
   computed: {
     ...mapGetters(['user'])
+  },
+  mounted () {
+    this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/application/list')
+      .then((res) => {
+        this.applications = res.data.data
+        this.totalApplications = res.data.total
+      })
+    if (this.isExecutive) {
+      this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/application/counts')
+        .then((res) => {
+          this.counts = res.data.counts
+        })
+    }
+  },
+  methods: {
+    getMemberFrom (application) {
+      if (application.requester === 'phys') {
+        const profile = application.user.profile
+        return profile.last_name + ' ' + profile.first_name + ' ' + profile.middle_name
+      } else {
+        const company = application.user.company
+        return company.opf + ' "' + company.name + '"'
+      }
+    },
+    getConnectionType (application) {
+      switch (application.connectionType) {
+        case 0:
+          return 'Постоянное подключение'
+        case 1:
+          return 'Временное на период выполнения постоянной схемы электроснабжения'
+        case 2:
+          return 'Временное подключение передвижного объекта'
+      }
+    },
+    getConstructionReason (application) {
+      switch (application.constructionReason) {
+        case 0:
+          return 'Новое строительство'
+        case 1:
+          return 'Увеличение максимальной мощности'
+        case 2:
+          return 'Изменение точки присоединения'
+        case 3:
+          return 'Изменение категории надежности'
+        case 4:
+          return 'Увеличение максимальной мощности и изменение точки присоединения'
+        case 5:
+          return 'Увеличение максимальной мощности и изменение категории надежности'
+      }
+    },
+    getPowerLevel (application) {
+      switch (application.powerLevel) {
+        case 1:
+          return '0.22 кВт'
+        case 2:
+          return '0.38 кВт'
+        case 3:
+          return '6 кВт'
+        case 4:
+          return '10 кВт'
+      }
+    },
+    getStatus (application) {
+      switch (application.status) {
+        case 'draft':
+          return 'Черновик'
+        case 'declined':
+          return 'Отклонен'
+        case 'completed':
+          return 'Выполнен'
+        case 'waiting_company_resp':
+          return 'Ожидает ответа компании'
+        case 'invoice':
+          return 'Счет на оплату'
+        case 'preparing':
+          return 'Подготовока тех условий'
+        case 'in_progress':
+          return 'Исполняется'
+        case 'accepted':
+          return 'В работе'
+      }
+    },
+    getStatusClass (application) {
+      switch (application.status) {
+        case 'accepted':
+        case 'in_progress':
+        case 'invoice':
+        case 'waiting_company_resp':
+          return 'orange-status'
+        case 'completed':
+          return 'green-status'
+        case 'draft':
+        default:
+          return ''
+      }
+    }
   }
 }
 </script>

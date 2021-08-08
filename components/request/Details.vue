@@ -311,7 +311,7 @@
     <div class="details">
       <div class="inputs">
         <div class="form-group select-wrapper">
-          <select v-model="details.energoCompanyName" class="form-control">
+          <select v-model="details.vendor_id" class="form-control">
             <option value="">
               Наименование энергосбытовой компании
             </option>
@@ -409,7 +409,7 @@ export default {
         estimationYear: '',
         estimationQuater: '',
         power: '',
-        energoCompanyName: '',
+        vendor_id: '',
         pricing: '',
         other: ''
       }
