@@ -674,3 +674,26 @@ a.active {
 #disclosure-modal___BV_modal_footer_ {
   display: block;
 }
+.v-application .accent--text {
+  color: $LinkHoverColor !important;
+}
+.v-input--selection-controls.v-input .v-label {
+  top: 4px;
+}
+.v-input--selection-controls:not(.v-input--hide-details) .v-input__slot {
+  margin-bottom: 0;
+}
+.switches {
+  .notice {
+    width: 250px;
+  }
+}
+.v-input {
+  margin-left: 0;
+}
+.mt-17 {
+  margin-top: 17px;
+}
+.modal-footer {
+  display: block;
+}

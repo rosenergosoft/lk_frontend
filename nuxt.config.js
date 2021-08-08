@@ -78,7 +78,7 @@ export default {
         url: process.env.LARAVEL_API_BASE_URL,
         token: {
           property: 'access_token',
-          maxAge: 60 * 60
+          maxAge: 60 * 60 * 24
         },
         refreshToken: {
           maxAge: 20160 * 60
