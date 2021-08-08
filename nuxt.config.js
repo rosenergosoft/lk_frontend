@@ -37,13 +37,14 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '~/plugins/v-mask.js',
-    { src: '~/plugins/vue-datepicker.js', mode: 'client' },
     '~/plugins/nuxt-dadata.js',
     '~/plugins/vue-autosuggest.js',
     { src: '~/plugins/vue-notification.js', mode: 'client' },
     { src: '~/plugins/vue-quill-editor.js', mode: 'client' },
     { src: '~/plugins/cryptopro.js', mode: 'client' },
-    '~/plugins/globalMixin.js'
+    '~/plugins/globalMixin.js',
+    '@plugins/vuetify',
+    { src: '~/plugins/vue-datepicker.js', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -52,8 +53,7 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
-    '@nuxtjs/eslint-module',
-    '@nuxtjs/vuetify'
+    '@nuxtjs/eslint-module'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -79,7 +79,7 @@ export default {
         url: process.env.LARAVEL_API_BASE_URL,
         token: {
           property: 'access_token',
-          maxAge: 60 * 60
+          maxAge: 60 * 60 * 24
         },
         refreshToken: {
           maxAge: 20160 * 60

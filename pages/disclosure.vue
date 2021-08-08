@@ -52,7 +52,11 @@ export default {
   data () {
     return {
       disclosureList: '',
-      modalContent: {}
+      modalContent: {
+        disclosure: {},
+        disclosureListItem: {},
+        docs: {}
+      }
     }
   },
   created () {
@@ -62,7 +66,9 @@ export default {
     async openDisclosureModal (type) {
       const res = await this.$axios.$get(process.env.LARAVEL_API_BASE_URL + '/api/disclosure/getByType/0/' + type)
       if (res) {
-        this.modalContent = res.disclosure
+        this.modalContent.disclosure = res.disclosure
+        this.modalContent.disclosureListItem = res.disclosureListItem
+        this.modalContent.docs = res.docs
       }
       this.$bvModal.show('disclosure-modal')
     },
