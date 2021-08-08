@@ -7,7 +7,7 @@
       <div class="text-content text-truncate">
         {{ item.title }}
         <div v-if="item.deadline" class="notice">
-          {{ item.deadline }}
+          {{ itemVal.deadline }}
         </div>
       </div>
       <div class="doc-status h5">
@@ -39,7 +39,12 @@ export default {
   },
   data () {
     return {
+      itemVal: ''
     }
+  },
+  created () {
+    this.itemVal = this.item
+    this.processItems()
   },
   methods: {
     getStatus () {
@@ -50,6 +55,28 @@ export default {
         return 'green'
       } else {
         return 'red'
+      }
+    },
+    processItems () {
+      if (this.item.is_processed && this.item.frequency === 'yearly') {
+        this.itemVal.deadline = this.item.deadline.replace('[YEAR]', this.$moment().add(1, 'years').format('yy'))
+      } else {
+        this.itemVal.deadline = this.item.deadline.replace('[YEAR]', this.$moment().format('yy'))
+      }
+      let frequency
+      if (this.item.frequency === 'yearly') {
+        frequency = ' (ежегодно) '
+      } else if (this.item.frequency === 'quarterly') {
+        frequency = ' (ежеквартально) '
+      } else if (this.item.frequency === 'semiannual') {
+        frequency = ' (каждые полгода) '
+      } else {
+        frequency = ''
+      }
+      if (this.itemVal.deadline.includes('[FREQUENCY]') !== -1) {
+        this.itemVal.deadline = this.itemVal.deadline.replace('[FREQUENCY]', frequency)
+      } else {
+        this.itemVal.deadline += frequency
       }
     }
   }
