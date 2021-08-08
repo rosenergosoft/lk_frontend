@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="add-document-modal" title="Добавить документ">
+  <b-modal id="add-document-modal" title="Добавить документ" @show="initVars">
     <div class="inputs">
       <v-file-input
         v-model="file.fileData"
@@ -18,7 +18,6 @@
           :monday-first="true"
           input-class="form-control"
           placeholder="Дата документа"
-          @selected="formatDate"
         />
       </div>
     </div>
@@ -65,9 +64,12 @@ export default {
     }
   },
   methods: {
-    formatDate () {
-      // const test = this.$moment(this.pickedDate).format('DD.MM.YYYY')
-      // console.log(test)
+    initVars () {
+      this.file = {
+        fileData: null,
+        fileName: null
+      }
+      this.pickedDate = ''
     },
     async upload () {
       const formData = new FormData()
@@ -87,7 +89,10 @@ export default {
         }
         const res = await this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/disclosure/fileUpload', formData)
         if (res.success) {
-          //
+          this.$emit('file-upload-after', res)
+          this.$bvModal.hide('add-document-modal')
+          this.file = Object
+          this.pickedDate = ''
         }
       }
     }
