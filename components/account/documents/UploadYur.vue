@@ -1,6 +1,7 @@
 <template>
   <b-modal id="modal-yur-docs" centered size="xl" title="Загрузка документов">
     <v-file-input
+      v-if="!docs.find(item => item.typw === 'yur_proxy')"
       v-model="yur_proxy"
       show-size
       single-line
@@ -8,6 +9,7 @@
       hint="Документ подтверждающий полномочия представителя заявителя"
     />
     <v-file-input
+      v-if="!docs.find(item => item.typw === 'yur_ustav')"
       v-model="yur_ustav"
       show-size
       single-line
@@ -15,6 +17,7 @@
       hint="Устав, решение учредителей о создании юр. лица и т.п."
     />
     <v-file-input
+      v-if="!docs.find(item => item.typw === 'yur_prikaz')"
       v-model="yur_prikaz"
       show-size
       single-line
@@ -22,6 +25,7 @@
       hint="Приказ, выписка из протокола, решение учредителей о назначении директора"
     />
     <v-file-input
+      v-if="!docs.find(item => item.typw === 'yur_sgr')"
       v-model="yur_sgr"
       show-size
       single-line
@@ -29,6 +33,7 @@
       hint="Выписка или свидетельство о государственной регистрации заявителя в качестве юридического лица или ип"
     />
     <v-file-input
+      v-if="!docs.find(item => item.typw === 'yur_pszun')"
       v-model="yur_pszun"
       show-size
       single-line
@@ -46,6 +51,9 @@
 <script>
 export default {
   name: 'UploadYur',
+  props: {
+    docs: Array
+  },
   data () {
     return {
       yur_proxy: null,
@@ -76,6 +84,11 @@ export default {
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user/documents', formData)
         .then((res) => {
           if (res.data.success) {
+            this.yur_proxy = null
+            this.yur_ustav = null
+            this.yur_prikaz = null
+            this.yur_sgr = null
+            this.yur_pszun = null
             this.$emit('uploaded')
             this.$bvModal.hide('modal-yur-docs')
           }

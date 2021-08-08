@@ -9,7 +9,7 @@
       </div>
       <div class="form-group d-flex justify-content-between">
         <input v-model="formData.email" type="email" placeholder="Имейл" class="form-control mr-20">
-        <input v-model="formData.phone" v-mask="'+7 (###) ###-##-##'" type="tel" placeholder="Номер телефона" class="form-control">
+        <input v-model="displayedPhone" v-mask="'+7 (###) ###-##-##'" type="tel" placeholder="Номер телефона" class="form-control">
       </div>
       <label class="label">Смена пароля</label>
       <div class="form-group">
@@ -43,6 +43,7 @@ export default {
         ogrn: '',
         ogrnip: ''
       },
+      displayedPhone: '',
       passwordData: {
         oldPassword: '',
         newPassword: '',
@@ -57,6 +58,11 @@ export default {
     ]),
     type () {
       return this.user.login_type
+    }
+  },
+  watch: {
+    'displayedPhone' (val) {
+      this.formData.phone = val.replace(/[^0-9]/g, '')
     }
   },
   mounted () {

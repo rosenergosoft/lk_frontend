@@ -8,16 +8,23 @@
         {{ getType() }}
       </div>
     </div>
-    <div>
+    <div v-if="!doc.signature">
       <a href=""><img src="/images/upload.svg" alt="" title=""></a>
-      <a href=""><img src="/images/confirm.svg" alt="" title=""></a>
-      <a href=""><img src="/images/remove.svg" alt="" title=""></a>
+      <a @click.prevent="signDoc"><img src="/images/confirm.svg" alt="" title=""></a>
+      <a @click.prevent="deleteDocument"><img src="/images/remove.svg" alt="" title=""></a>
     </div>
+    <Signing
+      :doc="doc"
+    />
   </div>
 </template>
 <script>
+import Signing from './Signing'
 export default {
   name: 'DocumentsItem',
+  components: {
+    Signing
+  },
   props: {
     doc: Object
   },
@@ -40,6 +47,17 @@ export default {
     },
     getType () {
       return this.types[this.doc.type]
+    },
+    deleteDocument () {
+      this.$axios.delete(process.env.LARAVEL_API_BASE_URL + '/api/user/documents?id=' + this.doc.id)
+        .then((res) => {
+          if (res.data.success) {
+            this.$emit('deleted')
+          }
+        })
+    },
+    signDoc () {
+      this.$bvModal.show('doc-signing')
     }
   }
 }

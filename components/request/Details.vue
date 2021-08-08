@@ -431,8 +431,7 @@ export default {
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/application/create', this.details)
         .then((response) => {
           if (response.data.success) {
-            console.log(response.data.application)
-            // todo: редирект на страницу заявки где можно посмотреть что ты заполнил и увидеть статус
+            this.$router.push('/request/show/' + response.data.application.id)
           }
         })
     },

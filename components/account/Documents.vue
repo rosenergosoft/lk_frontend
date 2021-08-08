@@ -9,6 +9,7 @@
           Загрузить
         </button>
         <upload-phys
+          :docs="documents.phys"
           @uploaded="reloadDocs"
         />
       </div>
@@ -16,6 +17,9 @@
         v-for="doc in documents.phys"
         :key="doc.id"
         :doc="doc"
+        @deleted="handleDelete"
+        @signed="handleSigned"
+        @unsigned="reloadDocs"
       />
     </div>
     <div v-if="userCompany" class="personal-data">
@@ -27,12 +31,18 @@
         <button v-b-modal.modal-yur-docs type="button" class="btn blue-button">
           Загрузить
         </button>
-        <upload-yur @uploaded="reloadDocs" />
+        <upload-yur
+          :docs="documents.yur"
+          @uploaded="reloadDocs"
+        />
       </div>
       <DocumentsItem
         v-for="doc in documents.yur"
         :key="doc.id"
         :doc="doc"
+        @deleted="handleDelete"
+        @signed="handleSigned"
+        @unsigned="reloadDocs"
       />
     </div>
   </div>
@@ -75,6 +85,12 @@ export default {
             this.documents = res.data.docs
           }
         })
+    },
+    handleDelete () {
+      this.reloadDocs()
+    },
+    handleSigned () {
+      this.reloadDocs()
     }
   }
 }

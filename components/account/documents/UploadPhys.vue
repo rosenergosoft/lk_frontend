@@ -1,6 +1,7 @@
 <template>
   <b-modal id="modal-phys-docs" centered size="xl" title="Загрузка документов">
     <v-file-input
+      v-if="!docs.find(item => item.type === 'personal_id')"
       v-model="personal_id"
       show-size
       single-line
@@ -8,6 +9,7 @@
       hint="Документ удостоверяющий личность заявителя"
     />
     <v-file-input
+      v-if="!docs.find(item => item.type === 'proxy')"
       v-model="proxy"
       show-size
       single-line
@@ -25,6 +27,9 @@
 <script>
 export default {
   name: 'UploadPhys',
+  props: {
+    docs: Array
+  },
   data () {
     return {
       personal_id: null,
@@ -43,6 +48,8 @@ export default {
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user/documents', formData)
         .then((res) => {
           if (res.data.success) {
+            this.personal_id = null
+            this.proxy = null
             this.$emit('uploaded')
             this.$bvModal.hide('modal-phys-docs')
           }

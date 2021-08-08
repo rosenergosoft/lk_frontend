@@ -42,6 +42,7 @@ export default {
     '~/plugins/vue-autosuggest.js',
     { src: '~/plugins/vue-notification.js', mode: 'client' },
     { src: '~/plugins/vue-quill-editor.js', mode: 'client' },
+    { src: '~/plugins/cryptopro.js', mode: 'client' },
     '~/plugins/globalMixin.js'
   ],
 

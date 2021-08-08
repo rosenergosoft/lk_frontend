@@ -105,6 +105,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import DocumentsItem from '~/components/account/documents/DocumentsItem'
 export default {
   name: 'Index',
@@ -114,7 +115,6 @@ export default {
   data () {
     return {
       application: {},
-      userProfile: {},
       company: {},
       documents: {
         phys: [],
@@ -202,6 +202,9 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters(['userProfile'])
+  },
   created () {
     this.getApplication()
   },
@@ -226,8 +229,9 @@ export default {
       }
     },
     formatDate (date) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' }
-      return new Date(date).toLocaleDateString('ru', options)
+      return this.$moment.utc(date).format('DD-MM-YYYY')
+      // const options = { year: 'numeric', month: 'long', day: 'numeric' }
+      // return new Date(date).toLocaleDateString('ru', options)
     },
     async getDocuments () {
       const res = await this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/user/documents')
