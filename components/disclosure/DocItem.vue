@@ -1,5 +1,5 @@
 <template>
-  <div class="personal-data pl-20">
+  <div class="personal-data pl-20" @load="processItems">
     <div class="doc-item d-flex align-items-center">
       <div class="type-icon">
         {{ item.type_label }}
@@ -58,25 +58,90 @@ export default {
       }
     },
     processItems () {
-      if (this.item.is_processed && this.item.frequency === 'yearly') {
-        this.itemVal.deadline = this.item.deadline.replace('[YEAR]', this.$moment().add(1, 'years').format('yy'))
-      } else {
-        this.itemVal.deadline = this.item.deadline.replace('[YEAR]', this.$moment().format('yy'))
+      this.processYearly()
+      this.processSemiannual()
+      this.processQuarterly()
+      this.processFrequency()
+    },
+    processQuarterly () {
+      if (this.item.frequency === 'quarterly') {
+        const currentMonth = this.$moment().format('MM')
+        let nextQuarter
+        let additionalYear = 0
+        if (currentMonth >= 1 && currentMonth < 4) {
+          nextQuarter = 4
+        } else if (currentMonth >= 4 && currentMonth < 7) {
+          nextQuarter = 7
+        } else if (currentMonth >= 7 && currentMonth < 10) {
+          nextQuarter = 10
+        } else if (currentMonth >= 10) {
+          additionalYear = 1
+          nextQuarter = 4
+        }
+        if (this.item.is_processed) {
+          if (nextQuarter === 1) {
+            nextQuarter = 4
+          } else if (nextQuarter === 4) {
+            nextQuarter = 7
+          } else if (nextQuarter === 7) {
+            nextQuarter = 10
+          } else if (nextQuarter === 10) {
+            additionalYear = 1
+            nextQuarter = 1
+          }
+        }
+        this.itemVal.deadline = this.item.deadline.replace('[YEAR]', this.$moment().add(additionalYear, 'years').format('yy'))
+        this.itemVal.deadline = this.item.deadline.replace('[NEXT_QUARTER_MONTH]', this.$moment(nextQuarter, 'MM').format('MMMM'))
       }
-      let frequency
+    },
+    processSemiannual () {
+      if (this.item.frequency === 'semiannual') {
+        const currentMonth = this.$moment().format('MM')
+        let additionalYear = 0
+        let nextDeadlineMonth
+        if (currentMonth >= 6) {
+          nextDeadlineMonth = 12
+        } else {
+          nextDeadlineMonth = 6
+        }
+        if (this.item.is_processed) {
+          if (nextDeadlineMonth === 6) {
+            nextDeadlineMonth = 12
+          } else {
+            nextDeadlineMonth = 6
+            additionalYear++
+          }
+        }
+        this.itemVal.deadline = this.item.deadline.replace('[YEAR]', this.$moment().add(additionalYear, 'years').format('yy'))
+        this.itemVal.deadline = this.item.deadline.replace('[NEXT_SEMIANNUAL]', this.$moment(nextDeadlineMonth, 'MM').format('MMMM'))
+      }
+    },
+    processFrequency () {
+      let frequency = ''
       if (this.item.frequency === 'yearly') {
         frequency = ' (ежегодно) '
       } else if (this.item.frequency === 'quarterly') {
         frequency = ' (ежеквартально) '
       } else if (this.item.frequency === 'semiannual') {
         frequency = ' (каждые полгода) '
-      } else {
-        frequency = ''
       }
-      if (this.itemVal.deadline.includes('[FREQUENCY]') !== -1) {
-        this.itemVal.deadline = this.itemVal.deadline.replace('[FREQUENCY]', frequency)
-      } else {
+      if (this.itemVal.deadline.includes('[FREQUENCY]') === false) {
         this.itemVal.deadline += frequency
+      } else {
+        this.itemVal.deadline = this.itemVal.deadline.replace('[FREQUENCY]', frequency)
+      }
+    },
+    processYearly () {
+      if (this.item.frequency === 'yearly') {
+        let additionalYear = 0
+        if (this.item.is_processed) {
+          additionalYear++
+        }
+        const currentMonth = this.$moment().format('MM')
+        if (currentMonth >= this.item.deadline_month) {
+          additionalYear++
+        }
+        this.itemVal.deadline = this.item.deadline.replace('[YEAR]', this.$moment().add(additionalYear, 'years').format('yy'))
       }
     }
   }
