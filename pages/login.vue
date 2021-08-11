@@ -351,7 +351,7 @@ export default {
         data.ogrnip = this.ogrnip
       }
 
-      this.$axios.post('http://api.user-dashboard.local/api/registration', data).then((resp) => {
+      this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/registration', data).then((resp) => {
         if (resp.data.success) {
           this.currentStep = 0
         }
