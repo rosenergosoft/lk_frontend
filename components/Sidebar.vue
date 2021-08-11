@@ -31,7 +31,7 @@
           <NuxtLink
             to="/"
             class="nav-link"
-            :class="{ active : $nuxt.$route.name === 'index'}"
+            :class="{ active : $nuxt.$route.name === 'index' || $nuxt.$route.name === 'appeals' }"
           >
             <i class="book" /> Заявки
           </NuxtLink>
@@ -46,7 +46,13 @@
               </NuxtLink>
             </li>
             <li v-if="can('requests_*')" class="nav-item">
-              <a href="" class="nav-link"><i class="questions" /> Обращения</a>
+              <NuxtLink
+                to="/appeals"
+                class="nav-link"
+                :class="{ active : $nuxt.$route.name === 'appeals'}"
+              >
+                <i class="questions" /> Обращения
+              </NuxtLink>
             </li>
           </ul>
         </li>

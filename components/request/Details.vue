@@ -1,19 +1,21 @@
 <template>
   <div class="personal-data">
-    <div>
-      <label class="label">Выбор заявителя</label>
-    </div>
-    <div class="text-content">
-      У вас указано не только физ. лицо, но и юридическое (или ИП), выберите на кого будет заключать договор.
-    </div>
     <div v-if="userCompany" class="details">
-      <div class="form-group">
-        <input id="phys" v-model="details.requester" type="radio" value="phys" name="requester-type"><label for="phys">Физическое лицо</label>
+      <div>
+        <label class="label">Выбор заявителя</label>
       </div>
-      <div class="form-group">
-        <input id="yur" v-model="details.requester" type="radio" value="yur" name="requester-type"><label for="yur">Юридическое лицо</label>
+      <div class="text-content">
+        У вас указано не только физ. лицо, но и юридическое (или ИП), выберите на кого будет заключать договор.
       </div>
-      <div class="separator" />
+      <div>
+        <div class="form-group">
+          <input id="phys" v-model="details.requester" type="radio" value="phys" name="requester-type"><label for="phys">Физическое лицо</label>
+        </div>
+        <div class="form-group">
+          <input id="yur" v-model="details.requester" type="radio" value="yur" name="requester-type"><label for="yur">Юридическое лицо</label>
+        </div>
+        <div class="separator" />
+      </div>
     </div>
     <div>
       <label class="label">Тип подключения</label>
@@ -422,7 +424,7 @@ export default {
   },
   mounted () {
     if (!this.userCompany) {
-      this.requester = 'phys'
+      this.details.requester = 'phys'
     }
   },
   methods: {
