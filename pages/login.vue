@@ -158,7 +158,7 @@
                   <input v-model="email" type="text" class="form-control" placeholder="Электронная почта для связи">
                 </div>
                 <div class="form-group">
-                  <input v-model="phone" v-mask="'+7 (###) ###-###-##'" type="tel" class="form-control" placeholder="Телефон для уведомлений">
+                  <input v-model="display.phone" v-mask="'+7 (###) ###-###-##'" type="tel" class="form-control" placeholder="Телефон для уведомлений">
                 </div>
               </div>
             </div>
@@ -256,6 +256,10 @@ export default {
   name: 'Login',
   mixins: [dataValidation],
   layout: 'auth',
+  asyncData ({ req }) {
+    const host = req.headers.host
+    return { host }
+  },
   data () {
     return {
       loginError: false,
@@ -335,7 +339,8 @@ export default {
         account: this.account,
         name: this.name,
         login_type: this.type,
-        phone: this.phone
+        phone: this.phone,
+        host: this.host
       }
 
       if (this.type === 'phys') {
