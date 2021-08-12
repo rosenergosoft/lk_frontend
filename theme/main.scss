@@ -546,6 +546,12 @@ input[type=radio] {
       top: -3px;
       margin-bottom: 0;
     }
+
+    .manual-input{
+      position: absolute;
+      right: 10px;
+      top: 5px;
+    }
   }
 }
 a.active {
@@ -590,6 +596,7 @@ a.active {
 }
 .document-preview img{
   width: 74px;
+  cursor: pointer;
 }
 .modal-body .inputs.form-group div span {
   display: block;
