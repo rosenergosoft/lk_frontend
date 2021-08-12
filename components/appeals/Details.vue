@@ -1,6 +1,6 @@
 <template>
   <div class="personal-data">
-    <div v-if="userCompany" >
+    <div v-if="userCompany">
       <div>
         <label class="label">Выбор заявителя</label>
       </div>
@@ -25,9 +25,25 @@
     </div>
     <div class="details">
       <div class="inputs">
-        <textarea v-model="details.question" class="form-control" placeholder="Ваш вопрос"/>
+        <textarea v-model="details.question" class="form-control" placeholder="Ваш вопрос" />
       </div>
     </div>
+    <div class="details">
+      <button v-b-modal.add-document-modal class="blue-button">
+        Добавить документ
+      </button>
+    </div>
+    <div class="clearfix" />
+    <div class="details">
+      <DocumentsItem
+        v-for="(doc, index) in docs"
+        :key="doc.id"
+        :doc="doc"
+        :index="index"
+        @remove-file="removeFile"
+      />
+    </div>
+    <div class="clearfix" />
     <div class="d-flex justify-content-between">
       <div class="text-left button-wrapper">
         <button class="btn blue-button float-none" @click="submitDetails">
@@ -40,13 +56,23 @@
         </button>
       </div>
     </div>
+    <AddDocumentModal
+      :appeal-id="appealId"
+      @file-upload-after="updateDocs"
+    />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import AddDocumentModal from '@/components/appeals/AddDocumentModal'
+import DocumentsItem from '@/components/disclosure/DocumentsItem'
 export default {
   name: 'Details',
+  components: {
+    AddDocumentModal,
+    DocumentsItem
+  },
   props: {
     appealId: {
       type: [Number, null],
@@ -55,6 +81,7 @@ export default {
   },
   data () {
     return {
+      docs: {},
       details: {
         requester: '',
         question: ''
@@ -70,6 +97,7 @@ export default {
     if (!this.userCompany) {
       this.details.requester = 'phys'
     }
+    this.getDocs()
   },
   methods: {
     submitDetails () {
@@ -83,6 +111,27 @@ export default {
     },
     goBack () {
       this.$emit('back', 0)
+    },
+    updateDocs (res) {
+      this.docs = res.docs
+    },
+    async getDocs () {
+      const res = await this.$axios.$get(process.env.LARAVEL_API_BASE_URL + '/api/appeals/getDocs/' + this.appealId)
+      if (res) {
+        this.docs = res.docs
+      }
+    },
+    removeFile (fileData) {
+      const formData = {
+        appeal_id: this.appealId,
+        doc_id: fileData.id
+      }
+      this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/appeals/fileDelete', formData).then(
+        (res) => {
+          //
+        }
+      )
+      this.docs.splice(fileData.index, 1)
     }
   }
 }

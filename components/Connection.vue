@@ -114,9 +114,11 @@
         :options.sync="options"
         :server-items-length="totalApplications"
         :items-per-page="perPage"
+        no-results-text="Нет данных"
+        no-data-text="Нет данных"
         class="elevation-1 w-100"
       >
-        <template v-slot:[`item.members`]="{ item }">
+        <template #[`item.members`]="{ item }">
           <div>
             <strong>От:</strong> {{ getMemberFrom(item) }}
           </div>
@@ -124,7 +126,7 @@
             <strong>Кому:</strong> {{ item.vendor.name }}
           </div>
         </template>
-        <template v-slot:[`item.type`]="{ item }">
+        <template #[`item.type`]="{ item }">
           <div class="order-status">
             Технологическое присоединение
           </div>
@@ -138,12 +140,12 @@
             {{ $moment(item.updated_at).format('DD MMM YYYY') }} г.: Заявка обновлена.
           </div>
         </template>
-        <template v-slot:[`item.status`]="{ item }">
+        <template #[`item.status`]="{ item }">
           <div :class="getStatusClass(item)">
             {{ getStatus(item) }}
           </div>
         </template>
-        <template v-slot:[`item.created_at`]="{ item }">
+        <template #[`item.created_at`]="{ item }">
           {{ $moment(item.created_at).format('DD MMM YYYY') }} г.
         </template>
       </v-data-table>

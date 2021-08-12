@@ -678,8 +678,15 @@ a.active {
 #disclosure-modal___BV_modal_footer_ {
   display: block;
 }
-.v-application .accent--text {
-  color: $LinkHoverColor !important;
+.v-application
+{
+  .elevation-1 {
+    box-shadow: none !important;
+  }
+  font-family: Arial, sans-serif;
+  .accent--text {
+    color: $LinkHoverColor !important;
+  }
 }
 .v-input--selection-controls.v-input .v-label {
   top: 4px;
@@ -713,4 +720,7 @@ a.active {
 }
 .mt-25 {
   margin-top: 25px;
+}
+.show-content div {
+  line-height: 30px;
 }

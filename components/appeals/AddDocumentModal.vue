@@ -1,0 +1,66 @@
+<template>
+  <b-modal id="add-document-modal" title="Добавить документ">
+    <div class="inputs">
+      <v-file-input
+        v-model="file.fileData"
+        show-size
+        single-line
+        label="Выбрать файл на компьютере"
+      />
+    </div>
+    <template #modal-footer class="d-block">
+      <div class="d-flex justify-content-between">
+        <div>
+          <button type="button" class="btn blue-button">
+            Назад
+          </button>
+        </div>
+        <div>
+          <button type="button" class="btn blue-button" @click="upload">
+            Загрузить
+          </button>
+        </div>
+      </div>
+    </template>
+  </b-modal>
+</template>
+
+<script>
+export default {
+  name: 'AddDocumentModal',
+  props: {
+    appealId: {
+      type: Number,
+      default: null
+    }
+  },
+  data () {
+    return {
+      file: {
+        fileData: null,
+        fileName: null
+      }
+    }
+  },
+  methods: {
+    async upload () {
+      const formData = new FormData()
+      if (this.file.fileData) {
+        formData.append('file_data', this.file.fileData, this.file.fileData.name)
+        if (this.appealId) {
+          formData.append('appeal_id', this.appealId)
+        }
+        const res = await this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/appeals/fileUpload', formData)
+        if (res.success) {
+          this.$emit('file-upload-after', res)
+          this.$bvModal.hide('add-document-modal')
+          this.file = Object
+        }
+      }
+    }
+  }
+}
+</script>
+
+<style scoped lang="scss">
+</style>

@@ -6,31 +6,43 @@
           <div class="notice">
             {{ doc.name }}
           </div>
-          <div class="notice">
+          <div v-if="doc.document_date" class="notice">
             Дата: {{ $moment(doc.document_date).format('DD MMMM yyyy') }}
           </div>
-          <a>
+          <a v-if="doc.original_name">
             {{ doc.original_name }}
           </a>
         </div>
       </div>
       <div>
-        <a @click="removeMe(index, $vnode.key)"><img src="/images/remove.svg" alt="" title=""></a>
+        <div v-if="(!doc.user_id || doc.user_id === user.id) && !hideDeleteButton">
+          <a @click="removeMe(index, $vnode.key)"><img src="/images/remove.svg" alt="" title=""></a>
+        </div>
       </div>
     </div>
     <div class="separator mt-25" />
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'DocumentsItem',
   props: {
     doc: Object,
-    index: Number
+    index: Number,
+    hideDeleteButton: {
+      type: Boolean,
+      default: false
+    }
   },
   data () {
     return {
     }
+  },
+  computed: {
+    ...mapGetters([
+      'user'
+    ])
   },
   methods: {
     removeMe (index, id) {

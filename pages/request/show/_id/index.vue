@@ -68,7 +68,7 @@
             <div>
               <div>
                 <label class="label">Параметры подключения</label>
-                <div class="text-content">
+                <div class="text-content show-content">
                   <div>Тип подключения: {{ connectionType[application.connectionType] }}</div>
                   <div v-if="application.connectionType === 1">
                     <div>Номер текущего договора: {{ application.contractNumber }}</div>

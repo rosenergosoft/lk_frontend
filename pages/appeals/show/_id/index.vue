@@ -66,13 +66,22 @@
           </div>
           <div class="personal-data">
             <div>
-              <div>
+              <div v-if="appeal.question">
                 <label class="label">Ваш вопрос</label>
                 <div class="text-content">
                   <div>{{ appeal.question }}</div>
                 </div>
               </div>
             </div>
+          </div>
+          <div class="docs">
+            <UploadedDocumentsItem
+              v-for="(doc, index) in docs"
+              :key="doc.id"
+              :doc="doc"
+              :index="index"
+              :hide-delete-button="true"
+            />
           </div>
         </div>
       </div>
@@ -81,21 +90,23 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import DocumentsItem from '~/components/account/documents/DocumentsItem'
+import UploadedDocumentsItem from '~/components/disclosure/DocumentsItem'
 export default {
   name: 'Index',
   components: {
-    DocumentsItem
+    DocumentsItem,
+    UploadedDocumentsItem
   },
   data () {
     return {
-      application: {},
+      appeal: {},
       company: {},
       documents: {
         phys: [],
         yur: []
       },
+      docs: {},
       loaded: false,
       status: {
         draft: 'Черновик',
@@ -106,11 +117,9 @@ export default {
       }
     }
   },
-  computed: {
-    ...mapGetters(['userProfile'])
-  },
   created () {
     this.getAppeal()
+    this.getDocs()
   },
   methods: {
     async getAppeal () {
@@ -134,6 +143,13 @@ export default {
     },
     formatDate (date) {
       return this.$moment.utc(date).format('DD-MM-YYYY')
+    },
+    async getDocs () {
+      const id = this.$route.params.id
+      const res = await this.$axios.$get(process.env.LARAVEL_API_BASE_URL + '/api/appeals/getDocs/' + id)
+      if (res) {
+        this.docs = res.docs
+      }
     },
     async getDocuments () {
       const res = await this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/user/documents')

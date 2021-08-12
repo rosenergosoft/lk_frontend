@@ -70,7 +70,7 @@ export default {
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/appeals/draft')
         .then((res) => {
           if (res.data.success) {
-            this.appeal_id = res.data.id
+            this.appeal_id = res.data.appeal.id
             this.nextTo(1)
           }
         })
