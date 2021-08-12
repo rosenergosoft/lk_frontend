@@ -70,8 +70,23 @@
         <div class="form-group">
           <input v-model="details.objectName" class="form-control" type="text" placeholder="Наименование присоединяемых объектов (жилой дом, гараж и т.п.)">
         </div>
-        <div class="form-group">
-          <input v-model="details.objectLocation" class="form-control" type="text" placeholder="Местоположение объекта"> <!-- address autosuggest -->
+        <div class="form-group position-relative">
+          <vue-autosuggest
+            v-if="!manualInput"
+            :suggestions="suggestions"
+            :input-props="{ id:'autosuggest__input', placeholder:'Местоположение объекта', 'class': 'form-control' }"
+            :get-suggestion-value="getSuggestionValue"
+            @input="onInputChange"
+            @selected="selectHandler"
+          >
+            <template slot-scope="{suggestion}">
+              <span class="my-suggestion-item">{{ suggestion.item.value }}</span>
+            </template>
+          </vue-autosuggest>
+          <button v-if="showManualInput" class="manual-input" @click="manualInput = true">
+            Ввести вручную
+          </button>
+          <input v-if="manualInput" v-model="details.objectLocation" class="form-control" type="text" placeholder="Местоположение объекта"> <!-- address autosuggest -->
         </div>
         <div class="form-group">
           <input v-model="details.kadastrNum" class="form-control" type="text" placeholder="Кадастровый номер земельного участка">
@@ -391,6 +406,8 @@ export default {
   data () {
     return {
       ru,
+      suggestions: [],
+      manualInput: false,
       details: {
         connectionType: '',
         requester: '',
@@ -420,7 +437,10 @@ export default {
   computed: {
     ...mapGetters([
       'userCompany'
-    ])
+    ]),
+    showManualInput () {
+      return (this.details.objectLocation && !this.manualInput)
+    }
   },
   mounted () {
     if (!this.userCompany) {
@@ -439,6 +459,21 @@ export default {
     },
     goBack () {
       this.$emit('back', 0)
+    },
+    getSuggestionValue (suggestion) {
+      return suggestion.item.value
+    },
+    onInputChange (query) {
+      this.$dadata.addressSuggestion(query).then((data) => {
+        this.suggestions = []
+        this.suggestions.push({ data: data.suggestions })
+        // this.suggestions[0].data = data.suggestions
+      })
+    },
+    selectHandler (suggestion) {
+      if (suggestion) {
+        this.details.objectLocation = suggestion.item.value
+      }
     }
   }
 }
