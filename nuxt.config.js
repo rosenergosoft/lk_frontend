@@ -39,12 +39,13 @@ export default {
     '~/plugins/v-mask.js',
     '~/plugins/nuxt-dadata.js',
     '~/plugins/vue-autosuggest.js',
+    '~/plugins/globalMixin.js',
+    '@plugins/vuetify',
     { src: '~/plugins/vue-notification.js', mode: 'client' },
     { src: '~/plugins/vue-quill-editor.js', mode: 'client' },
     { src: '~/plugins/cryptopro.js', mode: 'client' },
-    '~/plugins/globalMixin.js',
-    '@plugins/vuetify',
-    { src: '~/plugins/vue-datepicker.js', mode: 'client' }
+    { src: '~/plugins/vue-datepicker.js', mode: 'client' },
+    { src: '~/plugins/v-viewer.js', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
