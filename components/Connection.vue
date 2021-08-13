@@ -190,6 +190,9 @@ export default {
     }
   },
   methods: {
+    handleClick () {
+      console.log(123)
+    },
     getMemberFrom (application) {
       if (application.requester === 'phys') {
         const profile = application.user.profile

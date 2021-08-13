@@ -41,11 +41,12 @@ export default {
     '~/plugins/vue-autosuggest.js',
     '~/plugins/globalMixin.js',
     '@plugins/vuetify',
-    { src: '~/plugins/vue-notification.js', mode: 'client' },
     { src: '~/plugins/vue-quill-editor.js', mode: 'client' },
     { src: '~/plugins/cryptopro.js', mode: 'client' },
     { src: '~/plugins/vue-datepicker.js', mode: 'client' },
-    { src: '~/plugins/v-viewer.js', mode: 'client' }
+    { src: '~/plugins/v-viewer.js', mode: 'client' },
+    { src: '~/plugins/notifications-ssr', ssr: true },
+    { src: '~/plugins/notifications-client', ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

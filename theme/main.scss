@@ -731,3 +731,10 @@ a.active {
 .show-content div {
   line-height: 30px;
 }
+
+tbody tr:nth-of-type(even) {
+  background-color: $tableBackgroundColor;
+}
+tr {
+  cursor: pointer;
+}

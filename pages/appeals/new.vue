@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import PersonalData from '~/components/account/PersonalData'
 import Documents from '~/components/account/Documents'
 import Details from '~/components/appeals/Details'
@@ -56,6 +57,9 @@ export default {
       appeal_id: null
     }
   },
+  computed: {
+    ...mapGetters(['userProfile'])
+  },
   mounted () {
     this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/appeals/draft')
       .then((res) => {
@@ -66,14 +70,24 @@ export default {
       })
   },
   methods: {
+    validateFirstStep () {
+      if (this.userProfile) {
+        return true
+      } else {
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните даные о пользователе' })
+        return false
+      }
+    },
     createDraft () {
-      this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/appeals/draft')
-        .then((res) => {
-          if (res.data.success) {
-            this.appeal_id = res.data.appeal.id
-            this.nextTo(1)
-          }
-        })
+      if (this.validateFirstStep()) {
+        this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/appeals/draft')
+          .then((res) => {
+            if (res.data.success) {
+              this.appeal_id = res.data.appeal.id
+              this.nextTo(1)
+            }
+          })
+      }
     },
     secondStep () {
       if (this.appeal_id) {

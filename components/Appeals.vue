@@ -114,50 +114,52 @@
       </div>
     </div>
     <div class="v-application mt-4">
-      <v-data-table
-        :headers="headers"
-        :items="applications"
-        :options.sync="options"
-        :server-items-length="totalApplications"
-        :items-per-page="perPage"
-        class="elevation-1 w-100"
-        no-results-text="Нет данных"
-        no-data-text="Нет данных"
-        :footer-props="{
-          itemsPerPageText: 'Элементов на странице'
-        }"
-      >
-        <template #[`item.members`]="{ item }">
-          <div>
-            <strong>От:</strong> {{ getMemberFrom(item) }}
-          </div>
-          <div>
-            <strong>Кому:</strong>
-          </div>
-        </template>
-        <template #[`item.type`]="{ item }">
-          <div class="order-status">
-            Технологическое присоединение
-          </div>
-          <div class="order-address">
-            {{ item.objectLocation }}
-          </div>
-          <div class="order-details">
-            {{ getConnectionType(item) }}, {{ getConstructionReason(item) }}, {{ getPowerLevel(item) }}
-          </div>
-          <div class="order-updated-at">
-            {{ $moment(item.updated_at).format('DD MMM YYYY') }} г.: Заявка обновлена.
-          </div>
-        </template>
-        <template #[`item.status`]="{ item }">
-          <div :class="getStatusClass(item)">
-            {{ getStatus(item) }}
-          </div>
-        </template>
-        <template #[`item.created_at`]="{ item }">
-          {{ $moment(item.created_at).format('DD MMM YYYY') }} г.
-        </template>
-      </v-data-table>
+      <client-only>
+        <v-data-table
+          :headers="headers"
+          :items="appeals"
+          :options.sync="options"
+          :server-items-length="totalAppeals"
+          :items-per-page="perPage"
+          class="elevation-1 w-100"
+          no-results-text="Нет данных"
+          no-data-text="Нет данных"
+          @click:row="handleClick"
+          :footer-props="{
+            itemsPerPageText: 'Элементов на странице'
+          }"
+        >
+          <template #[`item.question`]="{ item }">
+            <div>
+              {{ item.question }}
+            </div>
+          </template>
+          <template #[`item.status`]="{ item }">
+            <div :class="getStatusClass(item)">
+              {{ getStatus(item) }}
+            </div>
+          </template>
+          <template #[`item.created_at`]="{ item }">
+            {{ $moment(item.created_at).format('DD MMM YYYY') }} г.
+          </template>
+          <template #[`item.actions`]="{ item }">
+            Edit
+            <v-icon
+              small
+              class="mr-2"
+              @click="editItem(item)"
+            >
+              mdi-pencil
+            </v-icon>
+            <v-icon
+              small
+              @click="deleteItem(item)"
+            >
+              mdi-delete
+            </v-icon>
+          </template>
+        </v-data-table>
+      </client-only>
     </div>
   </div>
 </template>
@@ -169,16 +171,15 @@ export default {
   data () {
     return {
       perPage: 10,
-      totalApplications: 0,
+      totalAppeals: 0,
       options: {},
       headers: [
-        { text: '№', value: 'id' },
-        { text: 'Участники', value: 'members' },
-        { text: 'Тип заявки', value: 'type' },
+        { text: '№ обращения', value: 'id' },
+        { text: 'Вопрос', value: 'question' },
         { text: 'Статус', value: 'status' },
         { text: 'Дата создания', value: 'created_at' }
       ],
-      applications: [],
+      appeals: [],
       counts: {}
     }
   },
@@ -186,88 +187,30 @@ export default {
     ...mapGetters(['user'])
   },
   mounted () {
-    this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/application/list')
+    this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/appeals/list')
       .then((res) => {
-        this.applications = res.data.data
-        this.totalApplications = res.data.total
+        this.appeals = res.data.data
+        this.totalAppeals = res.data.total
       })
-    if (this.isExecutive) {
-      this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/application/counts')
-        .then((res) => {
-          this.counts = res.data.counts
-        })
-    }
   },
   methods: {
-    getMemberFrom (application) {
-      if (application.requester === 'yur') {
-        const company = application.user.company
-        return company.opf + ' "' + company.name + '"'
-      } else {
-        const profile = application.user.profile
-        return profile.last_name + ' ' + profile.first_name + ' ' + profile.middle_name
-      }
+    handleClick (value) {
+      this.$router.push('/appeals/show/' + value.id)
     },
-    getConnectionType (application) {
-      switch (application.connectionType) {
-        case 0:
-          return 'Постоянное подключение'
-        case 1:
-          return 'Временное на период выполнения постоянной схемы электроснабжения'
-        case 2:
-          return 'Временное подключение передвижного объекта'
-      }
-    },
-    getConstructionReason (application) {
-      switch (application.constructionReason) {
-        case 0:
-          return 'Новое строительство'
-        case 1:
-          return 'Увеличение максимальной мощности'
-        case 2:
-          return 'Изменение точки присоединения'
-        case 3:
-          return 'Изменение категории надежности'
-        case 4:
-          return 'Увеличение максимальной мощности и изменение точки присоединения'
-        case 5:
-          return 'Увеличение максимальной мощности и изменение категории надежности'
-      }
-    },
-    getPowerLevel (application) {
-      switch (application.powerLevel) {
-        case 1:
-          return '0.22 кВт'
-        case 2:
-          return '0.38 кВт'
-        case 3:
-          return '6 кВт'
-        case 4:
-          return '10 кВт'
-      }
-    },
-    getStatus (application) {
-      switch (application.status) {
+    getStatus (appeal) {
+      switch (appeal.status) {
         case 'draft':
           return 'Черновик'
-        case 'declined':
-          return 'Отклонен'
         case 'completed':
           return 'Выполнен'
-        case 'waiting_company_resp':
-          return 'Ожидает ответа компании'
-        case 'invoice':
-          return 'Счет на оплату'
-        case 'preparing':
-          return 'Подготовока тех условий'
-        case 'in_progress':
-          return 'Исполняется'
+        case 'replied':
+          return 'Ожидает ответа пользователя'
         case 'accepted':
           return 'В работе'
       }
     },
-    getStatusClass (application) {
-      switch (application.status) {
+    getStatusClass (appeal) {
+      switch (appeal.status) {
         case 'accepted':
         case 'in_progress':
         case 'invoice':

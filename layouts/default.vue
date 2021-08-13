@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper">
     <div>
+      <notifications />
       <div class="row">
         <div class="col-3">
           <Sidebar />
