@@ -20,6 +20,7 @@
     "cookie-universal-nuxt": "^2.1.5",
     "core-js": "^3.15.1",
     "crypto-pro": "^2.2.0",
+    "js-file-download": "^0.4.12",
     "nuxt": "^2.15.7",
     "v-mask": "^2.2.4",
     "v-viewer": "^1.6.4",

@@ -7,9 +7,36 @@
     </div>
     <div v-if="loaded" class="new-request">
       <div class="boxes">
+        <div class="box status-6">
+          <h4>Управление</h4>
+          <div class="personal-data">
+            <div class="inputs">
+              <label class="label">Сменить статус</label>
+              <div class="select-wrapper">
+                <select v-model="appeal.status" class="form-control" @change="changeStatus">
+                  <option value="accepted">
+                    В работе
+                  </option>
+                  <option value="replied">
+                    Ожидает ответа пользователя
+                  </option>
+                  <option value="completed">
+                    Выполнено
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="box status-2">
           <h4>Заявка | <span class="red-warning">{{ status[appeal.status] }}</span></h4>
           <div class="personal-data">
+            <div>
+              <div class="notice">
+                Заявка создана: {{ $moment(appeal.created_at).format('DD MMMM yyyy') }}
+              </div>
+            </div>
+            <div class="separator" />
             <div class="d-flex justify-content-between">
               <div>
                 <div>
@@ -74,6 +101,9 @@
               </div>
             </div>
           </div>
+        </div>
+        <div v-if="docs" class="box status-1">
+          <h4>Загруженные файлы</h4>
           <div class="docs">
             <UploadedDocumentsItem
               v-for="(doc, index) in docs"
@@ -81,6 +111,7 @@
               :doc="doc"
               :index="index"
               :hide-delete-button="true"
+              @download-file="downloadFile"
             />
           </div>
         </div>
@@ -90,6 +121,7 @@
 </template>
 
 <script>
+import fileDownload from 'js-file-download'
 import DocumentsItem from '~/components/account/documents/DocumentsItem'
 import UploadedDocumentsItem from '~/components/disclosure/DocumentsItem'
 export default {
@@ -100,7 +132,9 @@ export default {
   },
   data () {
     return {
-      appeal: {},
+      appeal: {
+        created_at: ''
+      },
       company: {},
       documents: {
         phys: [],
@@ -112,7 +146,7 @@ export default {
         draft: 'Черновик',
         accepted: 'В работе',
         in_progress: 'Исполняется',
-        waiting_admin_resp: 'Ожидает ответа админа',
+        replied: 'Ожидает ответа пользователя',
         completed: 'Выполнен'
       }
     }
@@ -122,6 +156,28 @@ export default {
     this.getDocs()
   },
   methods: {
+    downloadFile (fileData) {
+      this.$axios.$get(process.env.LARAVEL_API_BASE_URL + '/api/appeals/downloadFile/' + fileData.id, {
+        responseType: 'blob'
+      })
+        .then((res) => {
+          if (res) {
+            fileDownload(res, fileData.name)
+          }
+        })
+    },
+    changeStatus () {
+      const formData = {
+        appeal_id: this.appeal.id,
+        status: this.appeal.status
+      }
+      this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/appeals/changeStatus', formData)
+        .then((res) => {
+          if (res.success) {
+            this.$notify({ type: 'success', title: 'Успех', text: 'Статус изменен' })
+          }
+        })
+    },
     async getAppeal () {
       const id = this.$route.params.id
       try {
@@ -138,7 +194,7 @@ export default {
         await this.getDocuments()
         this.loaded = true
       } catch (e) {
-        console.log(e)
+        // console.log(e)
       }
     },
     formatDate (date) {

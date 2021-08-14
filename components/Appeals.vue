@@ -82,37 +82,6 @@
         </div>
       </div>
     </div>
-    <div class="filters d-flex">
-      <div class="">
-        <div class="select-wrapper">
-          <select>
-            <option>Статус заявки</option>
-            <option>Черновики</option>
-            <option>В работе</option>
-            <option>Ожидает ответа компании</option>
-            <option>Выполнены</option>
-            <option>Отклонены</option>
-            <option>Все заявки</option>
-          </select>
-        </div>
-      </div>
-      <div class="">
-        <div class="search-wrapper">
-          <input type="text" placeholder="Поиск">
-        </div>
-      </div>
-      <div class="">
-        <div class="select-wrapper">
-          <select>
-            <option>Тип заявки</option>
-            <option>Вода</option>
-            <option>Элеткричество</option>
-            <option>Тепло</option>
-            <option>Все заявки</option>
-          </select>
-        </div>
-      </div>
-    </div>
     <div class="v-application mt-4">
       <client-only>
         <v-data-table
@@ -124,15 +93,18 @@
           class="elevation-1 w-100"
           no-results-text="Нет данных"
           no-data-text="Нет данных"
-          @click:row="handleClick"
+          loading="isLoading"
+          loading-text="Загрузка данных"
           :footer-props="{
             itemsPerPageText: 'Элементов на странице'
           }"
+          @click:row="handleClick"
         >
           <template #[`item.question`]="{ item }">
-            <div>
+            <div v-if="item.question">
               {{ item.question }}
             </div>
+            <div v-else>- Вопрос не задан -</div>
           </template>
           <template #[`item.status`]="{ item }">
             <div :class="getStatusClass(item)">
@@ -171,6 +143,7 @@ export default {
   data () {
     return {
       perPage: 10,
+      isLoading: true,
       totalAppeals: 0,
       options: {},
       headers: [
@@ -191,11 +164,16 @@ export default {
       .then((res) => {
         this.appeals = res.data.data
         this.totalAppeals = res.data.total
+        this.isLoading = false
       })
   },
   methods: {
     handleClick (value) {
-      this.$router.push('/appeals/show/' + value.id)
+      if (value.status !== 'draft') {
+        this.$router.push('/appeals/show/' + value.id)
+      } else {
+        this.$router.push('/appeals/new/')
+      }
     },
     getStatus (appeal) {
       switch (appeal.status) {

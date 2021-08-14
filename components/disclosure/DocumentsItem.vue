@@ -9,8 +9,8 @@
           <div v-if="doc.document_date" class="notice">
             Дата: {{ $moment(doc.document_date).format('DD MMMM yyyy') }}
           </div>
-          <a v-if="doc.original_name">
-            {{ doc.original_name }}
+          <a v-if="doc.original_name" class="file-link" @click="downloadFile(doc.id, doc.original_name)">
+            <b-icon-file-richtext class="bootstrap-icon" />{{ doc.original_name }}
           </a>
         </div>
       </div>
@@ -25,8 +25,12 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import { BIconFileRichtext } from 'bootstrap-vue'
 export default {
   name: 'DocumentsItem',
+  components: {
+    BIconFileRichtext
+  },
   props: {
     doc: Object,
     index: Number,
@@ -45,6 +49,10 @@ export default {
     ])
   },
   methods: {
+    downloadFile (id, name) {
+      const fileData = { id, name }
+      this.$emit('download-file', fileData)
+    },
     removeMe (index, id) {
       const fileData = {
         index,
