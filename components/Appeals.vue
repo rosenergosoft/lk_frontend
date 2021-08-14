@@ -104,7 +104,9 @@
             <div v-if="item.question">
               {{ item.question }}
             </div>
-            <div v-else>- Вопрос не задан -</div>
+            <div v-else>
+              - Вопрос не задан -
+            </div>
           </template>
           <template #[`item.status`]="{ item }">
             <div :class="getStatusClass(item)">

@@ -32,7 +32,9 @@ export default {
     BIconFileRichtext
   },
   props: {
+    // eslint-disable-next-line vue/require-default-prop
     doc: Object,
+    // eslint-disable-next-line vue/require-default-prop
     index: Number,
     hideDeleteButton: {
       type: Boolean,

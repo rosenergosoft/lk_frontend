@@ -748,3 +748,18 @@ tr {
 .file-link {
   color: $LinkHoverColor;
 }
+.dark-green {
+  color: $darkGreen;
+}
+.w40-square {
+  width: 40px;
+  height: 40px;
+  background-size: cover;
+}
+.private-messages {
+  :last-child {
+    .separator {
+      display: none;
+    }
+  }
+}

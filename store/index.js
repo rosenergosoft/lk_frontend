@@ -26,7 +26,11 @@ export const mutations = {
     }
   },
   UPDATE_USER_COMPANY (state, company) {
-    Object.assign(state.auth.user.company, company)
+    if (state.auth.user.company) {
+      Object.assign(state.auth.user.company, company)
+    } else {
+      state.auth.user.company = company
+    }
   },
   increment (state) {
     state.counter++

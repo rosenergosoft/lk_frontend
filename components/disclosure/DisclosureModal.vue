@@ -65,7 +65,7 @@
     <template #modal-footer>
       <div class="d-flex justify-content-between">
         <div>
-          <button type="button" class="btn blue-button">
+          <button type="button" class="btn blue-button" @click="$bvModal.hide('disclosure-modal')">
             Назад
           </button>
         </div>
@@ -94,6 +94,7 @@ export default {
     DocumentsItem
   },
   props: {
+    // eslint-disable-next-line vue/require-default-prop,vue/require-prop-types
     content: {
       disclosure: {},
       disclosureListItem: {},

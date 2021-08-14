@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="doc-signing" centered size="xl" title="Подпись документа" @show="init">
+  <b-modal id="doc-signing" centered size="md" title="Подпись документа" @show="init">
     <template v-if="userCompany">
       <div v-if="doc.signature">
         <div>
@@ -20,18 +20,20 @@
         </div>
       </div>
       <div>
-        <div>
-          <span>Добавление подписи ЭЦП:</span>
-        </div>
         <div v-if="!userCertificates">
-          <div>Нет доступных ЭЦП для подписания документа. </div>
+          <div>Нет доступных ЭЦП для подписания документа.</div>
           <div class="d-flex">
-            <div />
             <div>
-              <ul>
-                <li>Скачайте и установите <a href="https://www.cryptopro.ru/" target="_blank">КриптоПРО</a> (вместе с плагином) согласно инструкции.</li>
-                <li>Убедитесь что токен загружен на ваш компьютер и/или вставлена флэшка с ЭЦП</li>
-                <li>Подтвердите запрос на доступ к контейнеру с ЭЦП</li>
+              <ul class="nav notice">
+                <li class="nav-item">
+                  Скачайте и установите <a href="https://www.cryptopro.ru/" target="_blank">КриптоПРО</a> (вместе с плагином) согласно инструкции.
+                </li>
+                <li class="nav-item">
+                  Убедитесь что токен загружен на ваш компьютер и/или вставлена флэшка с ЭЦП
+                </li>
+                <li class="nav-item">
+                  Подтвердите запрос на доступ к контейнеру с ЭЦП
+                </li>
               </ul>
             </div>
           </div>
@@ -46,23 +48,37 @@
       </div>
     </template>
     <template v-else>
-      <div>
-        <div>Подписать через SMS:</div>
-      </div>
       <div v-if="user.phone">
-        <template v-if="!smsSent">
-          <span>Мы отправим код на ваш номер телефона указнный в вашем профиле (+{{ user.phone }})</span>
-          <button @click="sendSMSCode">
-            Отправить
-          </button>
+        <template v-if="!smsSent" class="text-center">
+          <span>Мы отправим код на ваш номер телефона указнный в вашем профиле <strong>(+{{ user.phone }})</strong></span>
+          <div>
+            <button class="btn blue-button float-none mt-3" @click="sendSMSCode">
+              Отправить
+            </button>
+          </div>
         </template>
-        <template v-else>
+        <template v-else class="text-left">
           <label>Введите код из СМС:</label>
-          <input v-model="smsCode" type="number">
-          <button @click="confirmCode">
+          <div class="inputs">
+            <div class="form-group">
+              <input v-model="smsCode" type="text" class="form-control">
+            </div>
+          </div>
+        </template>
+      </div>
+    </template>
+    <template #modal-footer class="d-block">
+      <div class="d-flex justify-content-between">
+        <div>
+          <button type="button" class="btn blue-button" @click="$bvModal.hide('doc-signing')">
+            Назад
+          </button>
+        </div>
+        <div>
+          <button type="button" class="btn blue-button" @click="confirmCode">
             Подписать
           </button>
-        </template>
+        </div>
       </div>
     </template>
   </b-modal>
@@ -73,6 +89,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'Signing',
   props: {
+    // eslint-disable-next-line vue/require-default-prop
     doc: Object
   },
   data () {
@@ -97,7 +114,7 @@ export default {
           certificates = await this.$cryptopro.getUserCertificates()
           this.userCertificates = certificates
         } catch (error) {
-          console.log(error)
+          //
         }
       }
     },
@@ -145,6 +162,7 @@ export default {
         if (res.data.success) {
           this.$parent.$emit('signed')
           this.$bvModal.hide('doc-signing')
+          this.$notify({ type: 'success', title: 'Успех', text: 'Документ подписан' })
         }
       })
     }

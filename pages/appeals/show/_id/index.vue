@@ -27,6 +27,15 @@
               </div>
             </div>
           </div>
+          <div class="inputs">
+            <textarea v-model="text" class="form-control" placeholder="Ответить" />
+          </div>
+          <div class="mt-20">
+            <button class="btn blue-button" @click="sendMessage">
+              Отправить ответ
+            </button>
+          </div>
+          <div class="clearfix" />
         </div>
         <div class="box status-2">
           <h4>Заявка | <span class="red-warning">{{ status[appeal.status] }}</span></h4>
@@ -94,9 +103,28 @@
           <div class="personal-data">
             <div>
               <div v-if="appeal.question">
-                <label class="label">Ваш вопрос</label>
-                <div class="text-content">
-                  <div>{{ appeal.question }}</div>
+                <label class="label">Сообщения</label>
+                <div class="d-flex justify-content-between align-items-center mt-20">
+                  <div class="text-content d-flex">
+                    <div class="person w40-square"></div>
+                    <div class="">
+                      <div class="label">
+                        {{ userProfile.first_name }} {{ userProfile.last_name }}
+                      </div>
+                      <div>{{ appeal.question }}</div>
+                    </div>
+                  </div>
+                  <div class="notice">
+                    {{ $moment(appeal.created_at).format('hh:ss, DD MMMM yyyy') }}
+                  </div>
+                </div>
+                <div class="separator"></div>
+                <div class="private-messages">
+                  <Message
+                    v-for="message in messages"
+                    :key="message.item"
+                    :message="message"
+                  />
                 </div>
               </div>
             </div>
@@ -124,11 +152,13 @@
 import fileDownload from 'js-file-download'
 import DocumentsItem from '~/components/account/documents/DocumentsItem'
 import UploadedDocumentsItem from '~/components/disclosure/DocumentsItem'
+import Message from '~/components/appeals/Message'
 export default {
   name: 'Index',
   components: {
     DocumentsItem,
-    UploadedDocumentsItem
+    UploadedDocumentsItem,
+    Message
   },
   data () {
     return {
@@ -141,7 +171,10 @@ export default {
         yur: []
       },
       docs: {},
+      messages: {},
+      text: '',
       loaded: false,
+      userProfile: '',
       status: {
         draft: 'Черновик',
         accepted: 'В работе',
@@ -153,9 +186,30 @@ export default {
   },
   created () {
     this.getAppeal()
-    this.getDocs()
   },
   methods: {
+    getMessages () {
+      this.$axios.$get(process.env.LARAVEL_API_BASE_URL + '/api/appeals/getMessages/' + this.appeal.id)
+        .then((res) => {
+          if (res.success) {
+            this.messages = res.messages
+          }
+        })
+    },
+    sendMessage () {
+      const formData = {
+        appeal_id: this.appeal.id,
+        message: this.text
+      }
+      this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/appeals/sendMessage', formData)
+        .then((res) => {
+          if (res.success) {
+            this.text = ''
+            this.$notify({ type: 'success', title: 'Успех', text: 'Сообщение отправлено' })
+            this.messages = res.messages
+          }
+        })
+    },
     downloadFile (fileData) {
       this.$axios.$get(process.env.LARAVEL_API_BASE_URL + '/api/appeals/downloadFile/' + fileData.id, {
         responseType: 'blob'
@@ -192,6 +246,8 @@ export default {
           this.company = res.company
         }
         await this.getDocuments()
+        await this.getDocs()
+        this.getMessages()
         this.loaded = true
       } catch (e) {
         // console.log(e)
