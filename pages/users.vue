@@ -8,38 +8,40 @@
         </button>
       </div>
     </div>
-    <v-data-table
-      :headers="headers"
-      :items="users"
-      :options.sync="options"
-      :server-items-length="totalUsers"
-      :items-per-page="perPage"
-      :page="currentPage"
-      class="elevation-1"
-    >
-      <template v-slot:[`item.user`]="{ item }">
-        <User :user="item"/>
-      </template>
-      <template v-slot:[`item.phys`]="{ item }">
-        <template v-if="item.profile">
-          {{ getFullName(item.profile) }}
+    <client-only>
+      <v-data-table
+        :headers="headers"
+        :items="users"
+        :options.sync="options"
+        :server-items-length="totalUsers"
+        :items-per-page="perPage"
+        :page="currentPage"
+        class="elevation-1"
+      >
+        <template v-slot:[`item.user`]="{ item }">
+          <User :user="item"/>
         </template>
-        <template v-else>
-          <span>-</span>
+        <template v-slot:[`item.phys`]="{ item }">
+          <template v-if="item.profile">
+            {{ getFullName(item.profile) }}
+          </template>
+          <template v-else>
+            <span>-</span>
+          </template>
         </template>
-      </template>
-      <template v-slot:[`item.yur`]="{ item }">
-        <template v-if="item.company">
-          {{ item.company.opf }} "{{ item.company.name }}"
+        <template v-slot:[`item.yur`]="{ item }">
+          <template v-if="item.company">
+            {{ item.company.opf }} "{{ item.company.name }}"
+          </template>
+          <template v-else>
+            <span>-</span>
+          </template>
         </template>
-        <template v-else>
-          <span>-</span>
+        <template v-slot:[`item.actions`]="{ item }">
+          <a @click.prevent="openEdit(item.id)">Edit</a>
         </template>
-      </template>
-      <template v-slot:[`item.actions`]="{ item }">
-        <a @click.prevent="openEdit(item.id)">Edit</a>
-      </template>
-    </v-data-table>
+      </v-data-table>
+    </client-only>
     <Edit
       @updated="init"
     />

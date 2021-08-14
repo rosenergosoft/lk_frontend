@@ -9,79 +9,89 @@
     @hide="closeHandle"
   >
     <div class="content">
-      <div class="row">
-        <div class="col">
-          <div class="form-group">
-            <label>Тип пользователя</label>
-            <select v-model="userData.type" class="form-control">
-              <option value="">
-                Выберите тип пользователя
-              </option>
-              <option value="admin">
-                Администратор
-              </option>
-              <option value="vendor">
-                Гарантийный поставщик
-              </option>
-              <option value="customer">
-                Потребитель
-              </option>
-            </select>
+      <b-tabs content-class="mt-3">
+        <b-tab title="Основаня информация">
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label>Тип пользователя</label>
+                <select v-model="userData.type" class="form-control">
+                  <option value="">
+                    Выберите тип пользователя
+                  </option>
+                  <option value="admin">
+                    Администратор
+                  </option>
+                  <option value="vendor">
+                    Гарантийный поставщик
+                  </option>
+                  <option value="customer">
+                    Потребитель
+                  </option>
+                </select>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="form-group">
-            <label>Email</label>
-            <input v-model="userData.email" class="form-control" type="text" />
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label>Email</label>
+                <input v-model="userData.email" class="form-control" type="text" />
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label>Пароль</label>
+                <input v-model="userData.password" class="form-control" type="password" />
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="col">
-          <div class="form-group">
-            <label>Пароль</label>
-            <input v-model="userData.password" class="form-control" type="password" />
+          <div v-if="userData.type === 'vendor'" class="row">
+            <div class="col">
+              <div class="form-group">
+                <label>Название компании</label>
+                <input v-model="userData.vendor_name" type="text" class="form-control">
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div v-if="userData.type === 'vendor'" class="row">
-        <div class="col">
-          <div class="form-group">
-            <label>Название компании</label>
-            <input v-model="userData.vendor_name" type="text" class="form-control">
+          <div v-if="userData.type === 'customer'" class="row">
+            <div class="col">
+              <div class="form-group">
+                <label>СНИЛС</label>
+                <input v-model="userData.snils" type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label>ОГРН</label>
+                <input v-model="userData.ogrn" type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label>ОГРНИП</label>
+                <input v-model="userData.ogrnip" type="text" class="form-control">
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div v-if="userData.type === 'customer'" class="row">
-        <div class="col">
-          <div class="form-group">
-            <label>СНИЛС</label>
-            <input v-model="userData.snils" type="text" class="form-control">
+          <div class="row">
+            <div class="col">
+              <div class="v-application">
+                <v-switch
+                  v-model="userData.is_active"
+                  label="Активен"
+                />
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="col">
-          <div class="form-group">
-            <label>ОГРН</label>
-            <input v-model="userData.ogrn" type="text" class="form-control">
-          </div>
-        </div>
-        <div class="col">
-          <div class="form-group">
-            <label>ОГРНИП</label>
-            <input v-model="userData.ogrnip" type="text" class="form-control">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="v-application">
-            <v-switch
-              v-model="userData.is_active"
-              label="Активен"
-            />
-          </div>
-        </div>
-      </div>
+        </b-tab>
+        <b-tab v-if="userData.type === 'customer'" title="Профиль пользователя">
+          Тут какя-то инфа о ебучем пользователе
+        </b-tab>
+        <b-tab v-if="userData.type === 'customer'" title="Файлы пользователя">
+          Тут ебучие файлы пользователя
+        </b-tab>
+      </b-tabs>
     </div>
     <template #modal-footer>
       <div class="d-flex justify-content-between">

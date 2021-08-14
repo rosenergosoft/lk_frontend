@@ -332,14 +332,8 @@
             <option value="">
               Наименование энергосбытовой компании
             </option>
-            <option value="1">
-              ООО Ололо
-            </option>
-            <option value="2">
-              ООО Рога и копыта
-            </option>
-            <option value="3">
-              ООО Тыц Тыц
+            <option v-for="(name, key) in vendors" :key="key" :value="key">
+              {{ name }}
             </option>
           </select>
         </div>
@@ -431,7 +425,8 @@ export default {
         vendor_id: '',
         pricing: '',
         other: ''
-      }
+      },
+      vendors: []
     }
   },
   computed: {
@@ -446,6 +441,12 @@ export default {
     if (!this.userCompany) {
       this.details.requester = 'phys'
     }
+    this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/vendor/list')
+      .then((res) => {
+        if (res.data.success) {
+          this.vendors = res.data.vendors
+        }
+      })
   },
   methods: {
     submitDetails () {

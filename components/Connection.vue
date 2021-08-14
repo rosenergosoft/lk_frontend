@@ -79,20 +79,34 @@
     <div class="filters d-flex">
       <div class="">
         <div class="select-wrapper">
-          <select>
-            <option>Статус заявки</option>
-            <option>Черновики</option>
-            <option>В работе</option>
-            <option>Ожидает ответа компании</option>
-            <option>Выполнены</option>
-            <option>Отклонены</option>
-            <option>Все заявки</option>
+          <select v-model="filters.status" @change="getTableData">
+            <option :value="null">
+              Статус заявки
+            </option>
+            <option value="draft">
+              Черновики
+            </option>
+            <option value="accepted">
+              В работе
+            </option>
+            <option value="waiting_company_resp">
+              Ожидает ответа компании
+            </option>
+            <option value="completed">
+              Выполнены
+            </option>
+            <option value="declined">
+              Отклонены
+            </option>
+            <option value="all">
+              Все заявки
+            </option>
           </select>
         </div>
       </div>
       <div class="">
         <div class="search-wrapper">
-          <input type="text" placeholder="Поиск">
+          <input v-model="filters.query" type="text" placeholder="Поиск" @change="getTableData">
         </div>
       </div>
       <div class="">
@@ -108,47 +122,49 @@
       </div>
     </div>
     <div class="v-application mt-4">
-      <v-data-table
-        :headers="headers"
-        :items="applications"
-        :options.sync="options"
-        :server-items-length="totalApplications"
-        :items-per-page="perPage"
-        no-results-text="Нет данных"
-        no-data-text="Нет данных"
-        class="elevation-1 w-100"
-      >
-        <template #[`item.members`]="{ item }">
-          <div>
-            <strong>От:</strong> {{ getMemberFrom(item) }}
-          </div>
-          <div>
-            <strong>Кому:</strong> {{ item.vendor.name }}
-          </div>
-        </template>
-        <template #[`item.type`]="{ item }">
-          <div class="order-status">
-            Технологическое присоединение
-          </div>
-          <div class="order-address">
-            {{ item.objectLocation }}
-          </div>
-          <div class="order-details">
-            {{ getConnectionType(item) }}, {{ getConstructionReason(item) }}, {{ getPowerLevel(item) }}
-          </div>
-          <div class="order-updated-at">
-            {{ $moment(item.updated_at).format('DD MMM YYYY') }} г.: Заявка обновлена.
-          </div>
-        </template>
-        <template #[`item.status`]="{ item }">
-          <div :class="getStatusClass(item)">
-            {{ getStatus(item) }}
-          </div>
-        </template>
-        <template #[`item.created_at`]="{ item }">
-          {{ $moment(item.created_at).format('DD MMM YYYY') }} г.
-        </template>
-      </v-data-table>
+      <client-only>
+        <v-data-table
+          :headers="headers"
+          :items="applications"
+          :options.sync="options"
+          :server-items-length="totalApplications"
+          :items-per-page="perPage"
+          no-results-text="Нет данных"
+          no-data-text="Нет данных"
+          class="elevation-1 w-100"
+        >
+          <template #[`item.members`]="{ item }">
+            <div>
+              <strong>От:</strong> {{ getMemberFrom(item) }}
+            </div>
+            <div>
+              <strong>Кому:</strong> {{ (item.vendor) ? item.vendor.name : '' }}
+            </div>
+          </template>
+          <template #[`item.type`]="{ item }">
+            <div class="order-status">
+              Технологическое присоединение
+            </div>
+            <div class="order-address">
+              {{ item.objectLocation }}
+            </div>
+            <div class="order-details">
+              {{ getConnectionType(item) }}, {{ getConstructionReason(item) }}, {{ getPowerLevel(item) }}
+            </div>
+            <div class="order-updated-at">
+              {{ $moment(item.updated_at).format('DD MMM YYYY') }} г.: Заявка обновлена.
+            </div>
+          </template>
+          <template #[`item.status`]="{ item }">
+            <div :class="getStatusClass(item)">
+              {{ getStatus(item) }}
+            </div>
+          </template>
+          <template #[`item.created_at`]="{ item }">
+            {{ $moment(item.created_at).format('DD MMM YYYY') }} г.
+          </template>
+        </v-data-table>
+      </client-only>
     </div>
   </div>
 </template>
@@ -170,18 +186,32 @@ export default {
         { text: 'Дата создания', value: 'created_at' }
       ],
       applications: [],
-      counts: {}
+      counts: {},
+      filters: {
+        status: null,
+        query: ''
+      }
     }
   },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user']),
+    tableDataUrl () {
+      const query = {}
+      if (this.filters.status) {
+        query.status = this.filters.status
+      }
+      if (this.filters.query !== '') {
+        query.query = this.filters.query
+      }
+      if (JSON.stringify(query) !== '{}') {
+        return '/api/application/list?' + new URLSearchParams(query).toString()
+      } else {
+        return '/api/application/list?'
+      }
+    }
   },
   mounted () {
-    this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/application/list')
-      .then((res) => {
-        this.applications = res.data.data
-        this.totalApplications = res.data.total
-      })
+    this.getTableData()
     if (this.isExecutive) {
       this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/application/counts')
         .then((res) => {
@@ -192,6 +222,13 @@ export default {
   methods: {
     handleClick () {
       console.log(123)
+    },
+    getTableData () {
+      this.$axios.get(process.env.LARAVEL_API_BASE_URL + this.tableDataUrl)
+        .then((res) => {
+          this.applications = res.data.data
+          this.totalApplications = res.data.total
+        })
     },
     getMemberFrom (application) {
       if (application.requester === 'phys') {
