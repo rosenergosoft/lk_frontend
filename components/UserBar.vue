@@ -1,5 +1,12 @@
 <template>
   <div class="userBar d-flex">
+    <div v-if="isSuper" class="form-group mr-4">
+      <select v-model="current_client" class="form-control" @change="switchClient">
+        <option v-for="(value, key) of clients" :key="key" :value="key">
+          {{ value }}
+        </option>
+      </select>
+    </div>
     <div class="notifications">
       <a href=""><i class="bell" /></a>
     </div>
@@ -26,11 +33,38 @@
 <script>
 export default {
   name: 'UserBar',
+  data () {
+    return {
+      clients: [],
+      current_client: null
+    }
+  },
+  mounted () {
+    if (this.isSuper) {
+      this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/client/list')
+        .then((res) => {
+          if (res.data.success) {
+            this.clients = res.data.list
+            this.current_client = this.$store.getters.user.client_id
+          }
+        })
+    }
+  },
   methods: {
     logout () {
       this.$auth.logout().then(() => {
         this.$auth.redirect('/login')
       })
+    },
+    switchClient () {
+      if (this.isSuper) {
+        this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/client/switch', { client_id: this.current_client })
+          .then((res) => {
+            if (res.data.success) {
+              this.$router.go()
+            }
+          })
+      }
     }
   }
 }

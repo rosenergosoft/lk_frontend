@@ -330,6 +330,9 @@ export default {
         this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/registration', data).then((resp) => {
           if (resp.data.success) {
             this.currentStep = 0
+            this.$notify({ type: 'success', title: 'Успех', text: 'Теперь вы можете войти используя свои данные' })
+          } else {
+            this.$notify({ type: 'error', title: 'Ошибка', text: 'Перезагрузите страницу и попробуйте еще раз' })
           }
         })
       }
