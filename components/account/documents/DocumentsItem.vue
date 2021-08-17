@@ -57,7 +57,7 @@ export default {
         })
     },
     signDoc () {
-      this.$bvModal.show('doc-signing')
+      this.$bvModal.show('doc-signing-' + this.doc.id)
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="doc-signing" centered size="xl" title="Подпись документа" @show="init">
+  <b-modal :id="'doc-signing' + doc.id" centered size="xl" title="Подпись документа" @show="init">
     <template v-if="userCompany">
       <div v-if="doc.signature">
         <div>
