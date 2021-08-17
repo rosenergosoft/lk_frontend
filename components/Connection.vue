@@ -7,8 +7,12 @@
       <div class="l-separator">
         /
       </div>
-      <div><a href="">Обращения</a></div>
-      <div class="ml-auto">
+      <div>
+        <NuxtLink to="/appeals">
+          Обращения
+        </NuxtLink>
+      </div>
+      <div v-if="can('applications_add')" class="ml-auto">
         <button class="btn blue-button" @click="$router.push('/request/new')">
           Новая заявка
         </button>

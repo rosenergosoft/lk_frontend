@@ -11,8 +11,17 @@
       <div>
         <NuxtLink to="/account">
           Владимир Спутников
-          <p class="">
-            Менеджер
+          <p v-if="isSuper" class="">
+            Супер админ
+          </p>
+          <p v-if="isExecutive && !isSuper" class="">
+            Админ
+          </p>
+          <p v-if="isCustomer" class="">
+            Пользователь
+          </p>
+          <p v-if="isVendor" class="">
+            Поставщик
           </p>
         </NuxtLink>
       </div>

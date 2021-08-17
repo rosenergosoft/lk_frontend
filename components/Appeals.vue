@@ -14,72 +14,10 @@
       <div class="active">
         Обращения
       </div>
-      <div class="ml-auto">
+      <div v-if="can('appeals_add')" class="ml-auto">
         <button class="btn blue-button" @click="$router.push('/appeals/new')">
           Новое обращение
         </button>
-      </div>
-    </div>
-    <div v-if="isExecutive" class="row justify-content-between funnel align-middle">
-      <div class="col status-1 status d-flex align-items-center justify-content-center">
-        <div>
-          <div class="count">
-            {{ counts.accepted }}
-          </div>
-          <div class="status-text">
-            В работе
-          </div>
-        </div>
-      </div>
-      <div class="col status-2 status d-flex align-items-center justify-content-center">
-        <div>
-          <div class="count">
-            {{ counts.waiting_company_resp }}
-          </div>
-          <div class="status-text">
-            Ожидает ответа компании
-          </div>
-        </div>
-      </div>
-      <div class="col status-3 status d-flex align-items-center justify-content-center">
-        <div>
-          <div class="count">
-            {{ counts.preparing }}
-          </div>
-          <div class="status-text">
-            Подготовка тех условий
-          </div>
-        </div>
-      </div>
-      <div class="col status-4 status d-flex align-items-center justify-content-center">
-        <div>
-          <div class="count">
-            {{ counts.invoice }}
-          </div>
-          <div class="status-text">
-            Счет на оплату
-          </div>
-        </div>
-      </div>
-      <div class="col status-5 status d-flex align-items-center justify-content-center">
-        <div>
-          <div class="count">
-            {{ counts.in_progress }}
-          </div>
-          <div class="status-text">
-            Исполняется
-          </div>
-        </div>
-      </div>
-      <div class="col status-6 status d-flex align-items-center justify-content-center">
-        <div>
-          <div class="count">
-            {{ counts.completed }}
-          </div>
-          <div class="status-text">
-            Выполнен
-          </div>
-        </div>
       </div>
     </div>
     <div class="v-application mt-4">
@@ -94,7 +32,7 @@
           no-results-text="Нет данных"
           no-data-text="Нет данных"
           loading="isLoading"
-          loading-text="Загрузка данных"
+          :loading-text="loadingText"
           :footer-props="{
             itemsPerPageText: 'Элементов на странице'
           }"
@@ -146,6 +84,7 @@ export default {
     return {
       perPage: 10,
       isLoading: true,
+      loadingText: 'Загрузка данных',
       totalAppeals: 0,
       options: {},
       headers: [
@@ -161,15 +100,27 @@ export default {
   computed: {
     ...mapGetters(['user'])
   },
+  watch: {
+    isLoading (val) {
+      if (val) {
+        this.loadingText = 'Загрузка данных'
+      } else {
+        this.loadingText = 'Нет данных'
+      }
+    }
+  },
   mounted () {
-    this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/appeals/list')
-      .then((res) => {
-        this.appeals = res.data.data
-        this.totalAppeals = res.data.total
-        this.isLoading = false
-      })
+    this.loadData()
   },
   methods: {
+    async loadData () {
+      const res = await this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/appeals/list')
+      if (res) {
+        this.appeals = res.data.data
+        this.totalAppeals = res.data.total
+      }
+      this.isLoading = false
+    },
     handleClick (value) {
       if (value.status !== 'draft') {
         this.$router.push('/appeals/show/' + value.id)
