@@ -1,5 +1,5 @@
 <template>
-  <div class="box status-1 col-6 mr-20">
+  <div class="box status-1 mr-20" :class="{ 'col-6': isCustomer, 'col-12': isExecutive }">
     <h4>Доступ к личному кабинету</h4>
     <div class="inputs">
       <div v-if="type !== 'email'" class="form-group">

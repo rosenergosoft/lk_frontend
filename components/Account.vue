@@ -8,12 +8,12 @@
     <div class="account">
       <div class="d-flex boxes">
         <account-form />
-        <div class="box status-5 col-6">
+        <div v-if="!isExecutive" class="box status-5 col-6">
           <h4>Персональные данные</h4>
           <PersonalData />
         </div>
       </div>
-      <div class="box status-2 col-12">
+      <div v-if="!isExecutive" class="box status-2 col-12">
         <h4>Ваши документы</h4>
         <Documents />
       </div>

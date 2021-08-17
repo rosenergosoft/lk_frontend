@@ -221,7 +221,7 @@ export default {
   },
   methods: {
     handleClick () {
-      console.log(123)
+      // console.log(123)
     },
     getTableData () {
       this.$axios.get(process.env.LARAVEL_API_BASE_URL + this.tableDataUrl)
