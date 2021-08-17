@@ -232,9 +232,10 @@ export default {
   mixins: [dataValidation],
   layout: 'auth',
   asyncData ({ req }) {
-    console.log(req)
-    const host = req.headers.host
-    return { host }
+    if (req) {
+      const host = req.headers.host
+      return { host }
+    }
   },
   data () {
     return {
