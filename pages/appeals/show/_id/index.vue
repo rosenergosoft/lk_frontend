@@ -7,9 +7,45 @@
     </div>
     <div v-if="loaded" class="new-request">
       <div class="boxes">
+        <div class="box status-6">
+          <h4>Управление</h4>
+          <div class="personal-data">
+            <div class="inputs">
+              <label class="label">Сменить статус</label>
+              <div class="select-wrapper">
+                <select v-model="appeal.status" class="form-control" @change="changeStatus">
+                  <option value="accepted">
+                    В работе
+                  </option>
+                  <option value="replied">
+                    Ожидает ответа пользователя
+                  </option>
+                  <option value="completed">
+                    Выполнено
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="inputs">
+            <textarea v-model="text" class="form-control" placeholder="Ответить" />
+          </div>
+          <div class="mt-20">
+            <button class="btn blue-button" @click="sendMessage">
+              Отправить ответ
+            </button>
+          </div>
+          <div class="clearfix" />
+        </div>
         <div class="box status-2">
           <h4>Заявка | <span class="red-warning">{{ status[appeal.status] }}</span></h4>
           <div class="personal-data">
+            <div>
+              <div class="notice">
+                Заявка создана: {{ $moment(appeal.created_at).format('DD MMMM yyyy') }}
+              </div>
+            </div>
+            <div class="separator" />
             <div class="d-flex justify-content-between">
               <div>
                 <div>
@@ -67,13 +103,35 @@
           <div class="personal-data">
             <div>
               <div v-if="appeal.question">
-                <label class="label">Ваш вопрос</label>
-                <div class="text-content">
-                  <div>{{ appeal.question }}</div>
+                <label class="label">Сообщения</label>
+                <div class="d-flex justify-content-between align-items-center mt-20">
+                  <div class="text-content d-flex">
+                    <div class="person w40-square"></div>
+                    <div class="">
+                      <div class="label">
+                        {{ userProfile.first_name }} {{ userProfile.last_name }}
+                      </div>
+                      <div>{{ appeal.question }}</div>
+                    </div>
+                  </div>
+                  <div class="notice">
+                    {{ $moment(appeal.created_at).format('hh:ss, DD MMMM yyyy') }}
+                  </div>
+                </div>
+                <div class="separator"></div>
+                <div class="private-messages">
+                  <Message
+                    v-for="message in messages"
+                    :key="message.item"
+                    :message="message"
+                  />
                 </div>
               </div>
             </div>
           </div>
+        </div>
+        <div v-if="docs" class="box status-1">
+          <h4>Загруженные файлы</h4>
           <div class="docs">
             <UploadedDocumentsItem
               v-for="(doc, index) in docs"
@@ -81,6 +139,7 @@
               :doc="doc"
               :index="index"
               :hide-delete-button="true"
+              @download-file="downloadFile"
             />
           </div>
         </div>
@@ -90,38 +149,89 @@
 </template>
 
 <script>
+import fileDownload from 'js-file-download'
 import DocumentsItem from '~/components/account/documents/DocumentsItem'
 import UploadedDocumentsItem from '~/components/disclosure/DocumentsItem'
+import Message from '~/components/appeals/Message'
 export default {
   name: 'Index',
   components: {
     DocumentsItem,
-    UploadedDocumentsItem
+    UploadedDocumentsItem,
+    Message
   },
   data () {
     return {
-      appeal: {},
+      appeal: {
+        created_at: ''
+      },
       company: {},
       documents: {
         phys: [],
         yur: []
       },
       docs: {},
+      messages: {},
+      text: '',
       loaded: false,
+      userProfile: '',
       status: {
         draft: 'Черновик',
         accepted: 'В работе',
         in_progress: 'Исполняется',
-        waiting_admin_resp: 'Ожидает ответа админа',
+        replied: 'Ожидает ответа пользователя',
         completed: 'Выполнен'
       }
     }
   },
   created () {
     this.getAppeal()
-    this.getDocs()
   },
   methods: {
+    getMessages () {
+      this.$axios.$get(process.env.LARAVEL_API_BASE_URL + '/api/appeals/getMessages/' + this.appeal.id)
+        .then((res) => {
+          if (res.success) {
+            this.messages = res.messages
+          }
+        })
+    },
+    sendMessage () {
+      const formData = {
+        appeal_id: this.appeal.id,
+        message: this.text
+      }
+      this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/appeals/sendMessage', formData)
+        .then((res) => {
+          if (res.success) {
+            this.text = ''
+            this.$notify({ type: 'success', title: 'Успех', text: 'Сообщение отправлено' })
+            this.messages = res.messages
+          }
+        })
+    },
+    downloadFile (fileData) {
+      this.$axios.$get(process.env.LARAVEL_API_BASE_URL + '/api/appeals/downloadFile/' + fileData.id, {
+        responseType: 'blob'
+      })
+        .then((res) => {
+          if (res) {
+            fileDownload(res, fileData.name)
+          }
+        })
+    },
+    changeStatus () {
+      const formData = {
+        appeal_id: this.appeal.id,
+        status: this.appeal.status
+      }
+      this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/appeals/changeStatus', formData)
+        .then((res) => {
+          if (res.success) {
+            this.$notify({ type: 'success', title: 'Успех', text: 'Статус изменен' })
+          }
+        })
+    },
     async getAppeal () {
       const id = this.$route.params.id
       try {
@@ -136,9 +246,11 @@ export default {
           this.company = res.company
         }
         await this.getDocuments()
+        await this.getDocs()
+        this.getMessages()
         this.loaded = true
       } catch (e) {
-        console.log(e)
+        // console.log(e)
       }
     },
     formatDate (date) {

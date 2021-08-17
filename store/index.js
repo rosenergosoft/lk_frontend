@@ -19,10 +19,18 @@ export const mutations = {
     Object.assign(state.auth.user, user)
   },
   UPDATE_USER_PROFILE (state, profile) {
-    Object.assign(state.auth.user.profile, profile)
+    if (state.auth.user.profile) {
+      Object.assign(state.auth.user.profile, profile)
+    } else {
+      state.auth.user.profile = profile
+    }
   },
   UPDATE_USER_COMPANY (state, company) {
-    Object.assign(state.auth.user.company, company)
+    if (state.auth.user.company) {
+      Object.assign(state.auth.user.company, company)
+    } else {
+      state.auth.user.company = company
+    }
   },
   increment (state) {
     state.counter++

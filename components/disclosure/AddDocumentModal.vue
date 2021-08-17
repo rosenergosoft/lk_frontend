@@ -24,7 +24,7 @@
     <template #modal-footer class="d-block">
       <div class="d-flex justify-content-between">
         <div>
-          <button type="button" class="btn blue-button">
+          <button type="button" class="btn blue-button" @click="$bvModal.hide('add-document-modal')">
             Назад
           </button>
         </div>

@@ -33,11 +33,13 @@ export default {
           code: 2,
           message: 'ИНН может состоять только из цифр'
         }
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'ИНН может состоять только из цифр' })
       } else if (![10, 12].includes(inn.length)) {
         this.validationErrors.inn = {
           code: 3,
           message: 'ИНН может состоять только из 10 или 12 цифр'
         }
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'ИНН может состоять только из 10 или 12 цифр' })
       } else {
         const checkDigit = function (inn, coefficients) {
           let n = 0
@@ -64,6 +66,7 @@ export default {
             code: 4,
             message: 'Неправильное контрольное число'
           }
+          this.$notify({ type: 'error', title: 'Ошибка', text: 'Неправильное контрольное число' })
         }
       }
       return result
@@ -80,16 +83,19 @@ export default {
           code: 1,
           message: 'СНИЛС пуст'
         }
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'СНИЛС пуст' })
       } else if (/[^0-9]/.test(snils)) {
         this.validationErrors.snils = {
           code: 2,
           message: 'СНИЛС может состоять только из цифр'
         }
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'СНИЛС может состоять только из цифр' })
       } else if (snils.length !== 11) {
         this.validationErrors.snils = {
           code: 3,
           message: 'СНИЛС может состоять только из 11 цифр'
         }
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'СНИЛС может состоять только из 11 цифр' })
       } else {
         let sum = 0
         for (let i = 0; i < 9; i++) {
@@ -111,6 +117,7 @@ export default {
             code: 4,
             message: 'Неправильный СНИЛС'
           }
+          this.$notify({ type: 'error', title: 'Ошибка', text: 'Неправильный СНИЛС' })
         }
       }
       return result
@@ -127,16 +134,19 @@ export default {
           code: 1,
           message: 'ОГРН пуст'
         }
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'ОГРН пуст' })
       } else if (/[^0-9]/.test(ogrn)) {
         this.validationErrors.ogrn = {
           code: 2,
           message: 'ОГРН может состоять только из цифр'
         }
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'ОГРН может состоять только из цифр' })
       } else if (ogrn.length !== 13) {
         this.validationErrors.ogrn = {
           code: 3,
           message: 'ОГРН может состоять только из 13 цифр'
         }
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'ОГРН может состоять только из 13 цифр' })
       } else {
         const n13 = parseInt((parseInt(ogrn.slice(0, -1)) % 11).toString().slice(-1))
         if (n13 === parseInt(ogrn[12])) {
@@ -146,6 +156,7 @@ export default {
             code: 4,
             message: 'Неправильный ОГРН'
           }
+          this.$notify({ type: 'error', title: 'Ошибка', text: 'Неправильный ОГРН' })
         }
       }
       return result
@@ -162,16 +173,19 @@ export default {
           code: 1,
           message: 'ОГРНИП пуст'
         }
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'ОГРНИП пуст' })
       } else if (/[^0-9]/.test(ogrnip)) {
         this.validationErrors.ogrnip = {
           code: 2,
           message: 'ОГРНИП может состоять только из цифр'
         }
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'ОГРНИП может состоять только из цифр' })
       } else if (ogrnip.length !== 15) {
         this.validationErrors.ogrnip = {
           code: 3,
           message: 'ОГРНИП может состоять только из 15 цифр'
         }
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'ОГРНИП может состоять только из 15 цифр' })
       } else {
         const n15 = parseInt((parseInt(ogrnip.slice(0, -1)) % 13).toString().slice(-1))
         if (n15 === parseInt(ogrnip[14])) {
@@ -181,6 +195,7 @@ export default {
             code: 4,
             message: 'Неправильный ОГРНИП'
           }
+          this.$notify({ type: 'error', title: 'Ошибка', text: 'Неправильный ОГРНИП' })
         }
       }
       return result

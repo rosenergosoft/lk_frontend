@@ -11,7 +11,7 @@
     <template #modal-footer class="d-block">
       <div class="d-flex justify-content-between">
         <div>
-          <button type="button" class="btn blue-button">
+          <button type="button" class="btn blue-button" @click="$bvModal.hide('add-document-modal')">
             Назад
           </button>
         </div>
@@ -43,18 +43,28 @@ export default {
     }
   },
   methods: {
+    validateFile () {
+      if (!this.file.fileData) {
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Файл не выбран' })
+        return false
+      }
+      return true
+    },
     async upload () {
-      const formData = new FormData()
-      if (this.file.fileData) {
-        formData.append('file_data', this.file.fileData, this.file.fileData.name)
-        if (this.appealId) {
-          formData.append('appeal_id', this.appealId)
-        }
-        const res = await this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/appeals/fileUpload', formData)
-        if (res.success) {
-          this.$emit('file-upload-after', res)
-          this.$bvModal.hide('add-document-modal')
-          this.file = Object
+      if (this.validateFile()) {
+        const formData = new FormData()
+        if (this.file.fileData) {
+          formData.append('file_data', this.file.fileData, this.file.fileData.name)
+          if (this.appealId) {
+            formData.append('appeal_id', this.appealId)
+          }
+          const res = await this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/appeals/fileUpload', formData)
+          if (res.success) {
+            this.$emit('file-upload-after', res)
+            this.$notify({ type: 'success', title: 'Успех', text: 'Файл загружен' })
+            this.$bvModal.hide('add-document-modal')
+            this.file = Object
+          }
         }
       }
     }

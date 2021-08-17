@@ -46,13 +46,13 @@
     <div class="clearfix" />
     <div class="d-flex justify-content-between">
       <div class="text-left button-wrapper">
-        <button class="btn blue-button float-none" @click="submitDetails">
-          Отправить обращение
+        <button class="btn blue-button float-none" @click="goBack">
+          Назад
         </button>
       </div>
       <div class="text-left button-wrapper">
-        <button class="btn blue-button float-none" @click="goBack">
-          Назад
+        <button class="btn blue-button float-none" @click="submitDetails">
+          Отправить обращение
         </button>
       </div>
     </div>
@@ -100,14 +100,27 @@ export default {
     this.getDocs()
   },
   methods: {
+    validateDetails () {
+      if (!this.details.requester) {
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Заявитель не выбран' })
+        return false
+      }
+      if (!this.details.question) {
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Введите ваш вопрос' })
+        return false
+      }
+      return true
+    },
     submitDetails () {
-      this.details.id = this.appealId
-      this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/appeals/create', this.details)
-        .then((response) => {
-          if (response.data.success) {
-            this.$router.push('/appeals/show/' + response.data.appeal.id)
-          }
-        })
+      if (this.validateDetails()) {
+        this.details.id = this.appealId
+        this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/appeals/create', this.details)
+          .then((response) => {
+            if (response.data.success) {
+              this.$router.push('/appeals/show/' + response.data.appeal.id)
+            }
+          })
+      }
     },
     goBack () {
       this.$emit('back', 0)

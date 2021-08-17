@@ -72,14 +72,31 @@ export default {
     initProfile () {
       Object.assign(this.profileData, this.user.profile)
     },
+    validateProfile () {
+      if (!this.profileData.first_name ||
+        !this.profileData.middle_name ||
+        !this.profileData.last_name ||
+        !this.profileData.pasport ||
+        !this.profileData.pasport_granted_by ||
+        !this.profileData.pasport_date ||
+        !this.profileData.reg_address
+      ) {
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Все поля должны быть заполнены' })
+        return false
+      } else {
+        return true
+      }
+    },
     submitProfile () {
-      this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user/profile', this.profileData)
-        .then((response) => {
-          if (response.data.success) {
-            this.$store.commit('UPDATE_USER_PROFILE', response.data.user.profile)
-            this.$bvModal.hide('modal-phys-data')
-          }
-        })
+      if (this.validateProfile()) {
+        this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user/profile', this.profileData)
+          .then((response) => {
+            if (response.data.success) {
+              this.$store.commit('UPDATE_USER_PROFILE', response.data.user.profile)
+              this.$bvModal.hide('modal-phys-data')
+            }
+          })
+      }
     }
   }
 }

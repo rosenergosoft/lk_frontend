@@ -731,3 +731,35 @@ a.active {
 .show-content div {
   line-height: 30px;
 }
+
+tbody tr:nth-of-type(even) {
+  background-color: $tableBackgroundColor;
+}
+tr {
+  cursor: pointer;
+}
+.bootstrap-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  position: relative;
+  top: 2px;
+}
+.file-link {
+  color: $LinkHoverColor;
+}
+.dark-green {
+  color: $darkGreen;
+}
+.w40-square {
+  width: 40px;
+  height: 40px;
+  background-size: cover;
+}
+.private-messages {
+  :last-child {
+    .separator {
+      display: none;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 <template>
-  <div class="box status-1 col-6 mr-20">
+  <div class="box status-1 mr-20" :class="{ 'col-6': isCustomer, 'col-12': isExecutive }">
     <h4>Доступ к личному кабинету</h4>
     <div class="inputs">
       <div v-if="type !== 'email'" class="form-group">
@@ -9,7 +9,7 @@
       </div>
       <div class="form-group d-flex justify-content-between">
         <input v-model="formData.email" type="email" placeholder="Имейл" class="form-control mr-20">
-        <input v-model="displayedPhone" v-mask="'+7 (###) ###-##-##'" type="tel" placeholder="Номер телефона" class="form-control">
+        <input v-model="displayedPhone" v-mask="mask" type="tel" placeholder="Номер телефона" class="form-control">
       </div>
       <label class="label">Смена пароля</label>
       <div class="form-group">
@@ -43,6 +43,7 @@ export default {
         ogrn: '',
         ogrnip: ''
       },
+      mask: '+7 (###) ###-##-##',
       displayedPhone: '',
       passwordData: {
         oldPassword: '',
@@ -60,16 +61,16 @@ export default {
       return this.user.login_type
     }
   },
-  watch: {
-    'displayedPhone' (val) {
-      this.formData.phone = val.replace(/[^0-9]/g, '')
-    }
-  },
   mounted () {
+    if (this.user.phone) {
+      this.mask = '+# (###) ###-##-##'
+      this.displayedPhone = this.user.phone
+    }
     Object.assign(this.formData, this.user)
   },
   methods: {
     submitAccountForm () {
+      this.formData.phone = this.displayedPhone.replace(/[^\d]/g, '')
       const data = Object.assign({}, this.formData, this.passwordData)
       data.login_type = this.type
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user', data)
@@ -81,6 +82,7 @@ export default {
               newPassword: '',
               confirmNewPassword: ''
             })
+            this.$notify({ type: 'success', title: 'Успех', text: 'Данные сохранены' })
           }
         })
     }

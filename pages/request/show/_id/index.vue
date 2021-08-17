@@ -225,7 +225,7 @@ export default {
         await this.getDocuments()
         this.loaded = true
       } catch (e) {
-        console.log(e)
+        // console.log(e)
       }
     },
     formatDate (date) {

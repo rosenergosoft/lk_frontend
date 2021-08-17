@@ -9,9 +9,11 @@
       </div>
     </div>
     <div v-if="!doc.signature">
-      <a href=""><img src="/images/upload.svg" alt="" title=""></a>
       <a @click.prevent="signDoc"><img src="/images/confirm.svg" alt="" title=""></a>
       <a @click.prevent="deleteDocument"><img src="/images/remove.svg" alt="" title=""></a>
+    </div>
+    <div v-else class="dark-green">
+      <b-icon-check-circle class="bootstrap-icon" style="top: 3px;" /> Документ подписан
     </div>
     <Signing
       :doc="doc"
@@ -19,13 +21,16 @@
   </div>
 </template>
 <script>
+import { BIconCheckCircle } from 'bootstrap-vue'
 import Signing from './Signing'
 export default {
   name: 'DocumentsItem',
   components: {
-    Signing
+    Signing,
+    BIconCheckCircle
   },
   props: {
+    // eslint-disable-next-line vue/require-default-prop
     doc: Object
   },
   data () {
