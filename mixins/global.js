@@ -25,6 +25,9 @@ export default {
     },
     isCustomer () {
       return !(this.isSuper || this.userRoles.includes('admin') || this.userRoles.includes('vendor'))
+    },
+    isVendor () {
+      return !!(this.userRoles.includes('vendor'))
     }
   },
   methods: {

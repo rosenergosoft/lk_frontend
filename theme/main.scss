@@ -259,6 +259,12 @@ body.login {
     margin-right: 14px;
   }
   .active {
+    a {
+      color: $LinkHoverColor;
+      &:hover {
+        color: $LinkHoverColor;
+      }
+    }
     color: $defaultFontColor;
     border-bottom: 1px solid $defaultFontColor;
   }
