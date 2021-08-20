@@ -1,23 +1,23 @@
 <template>
-  <div class="userBar d-flex">
-    <div v-if="isSuper" class="form-group mr-4">
-      <select v-model="current_client" class="form-control" @change="switchClient">
+  <div class="userBar d-flex inputs">
+    <div v-if="isSuper" class="mr-20 select-wrapper">
+      <select v-model="current_client" @change="switchClient" class="form-control">
         <option v-for="(value, key) of clients" :key="key" :value="key">
           {{ value }}
         </option>
       </select>
     </div>
-    <div class="notifications">
+    <div class="notifications d-none">
       <a href=""><i class="bell" /></a>
     </div>
-    <div class="private-messages">
+    <div class="private-messages d-none">
       <a href=""><i class="messages" /></a>
     </div>
     <div class="user-account d-flex">
       <div class="person" />
       <div>
         <NuxtLink to="/account">
-          Владимир Спутников
+          {{ userName }}
           <p v-if="isSuper" class="">
             Супер админ
           </p>
@@ -40,12 +40,23 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'UserBar',
   data () {
     return {
       clients: [],
       current_client: null
+    }
+  },
+  computed: {
+    ...mapGetters(['user']),
+    userName () {
+      if (this.user.name) {
+        return this.user.name
+      } else {
+        return 'Пользователь'
+      }
     }
   },
   mounted () {
@@ -79,6 +90,13 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+  .select-wrapper {
+    position: relative;
+    top: -4px;
+    width: 150px;
+  }
+  .inputs .select-wrapper::before {
+    right: 15px;
+  }
 </style>

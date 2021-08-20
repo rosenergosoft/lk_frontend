@@ -14,7 +14,7 @@
       <div class="active">
         Обращения
       </div>
-      <div v-if="can('appeals_add')" class="ml-auto">
+      <div v-if="can('appeals_add') && !isSuper" class="ml-auto">
         <button class="btn blue-button" @click="$router.push('/appeals/new')">
           Новое обращение
         </button>
@@ -31,7 +31,7 @@
           class="elevation-1 w-100"
           no-results-text="Нет данных"
           no-data-text="Нет данных"
-          loading="isLoading"
+          :loading="isLoading"
           :loading-text="loadingText"
           :footer-props="{
             itemsPerPageText: 'Элементов на странице'

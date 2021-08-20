@@ -12,7 +12,7 @@
           Обращения
         </NuxtLink>
       </div>
-      <div v-if="can('applications_add')" class="ml-auto">
+      <div v-if="can('applications_add') && !isSuper" class="ml-auto">
         <button class="btn blue-button" @click="$router.push('/request/new')">
           Новая заявка
         </button>
@@ -136,6 +136,11 @@
           no-results-text="Нет данных"
           no-data-text="Нет данных"
           class="elevation-1 w-100"
+          :loading="isLoading"
+          :loading-text="loadingText"
+          :footer-props="{
+            itemsPerPageText: 'Элементов на странице'
+          }"
         >
           <template #[`item.members`]="{ item }">
             <div>
@@ -180,6 +185,8 @@ export default {
   data () {
     return {
       perPage: 10,
+      isLoading: true,
+      loadingText: 'Загрузка данных',
       totalApplications: 0,
       options: {},
       headers: [
@@ -214,6 +221,15 @@ export default {
       }
     }
   },
+  watch: {
+    isLoading (val) {
+      if (val) {
+        this.loadingText = 'Загрузка данных'
+      } else {
+        this.loadingText = 'Нет данных'
+      }
+    }
+  },
   mounted () {
     this.getTableData()
     if (this.isExecutive) {
@@ -227,12 +243,13 @@ export default {
     handleClick () {
       // console.log(123)
     },
-    getTableData () {
-      this.$axios.get(process.env.LARAVEL_API_BASE_URL + this.tableDataUrl)
-        .then((res) => {
-          this.applications = res.data.data
-          this.totalApplications = res.data.total
-        })
+    async getTableData () {
+      const res = await this.$axios.get(process.env.LARAVEL_API_BASE_URL + this.tableDataUrl)
+      if (res) {
+        this.applications = res.data.data
+        this.totalApplications = res.data.total
+      }
+      this.isLoading = false
     },
     getMemberFrom (application) {
       if (application.requester === 'phys') {
