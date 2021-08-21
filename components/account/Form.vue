@@ -73,8 +73,8 @@ export default {
     if (this.user.phone) {
       this.mask = '+# (###) ###-##-##'
       this.displayedPhone = this.user.phone
-      this.snils = this.user.snils
     }
+    this.snils = this.user.snils
     Object.assign(this.formData, this.user)
   },
   methods: {

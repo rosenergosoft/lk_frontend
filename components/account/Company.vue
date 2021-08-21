@@ -137,7 +137,12 @@ export default {
       }
     },
     submitCompany () {
-      if (!this.companyData || !this.bankData.check_account) {
+      if (!this.companyData || !this.bankData) {
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните данные о компании' })
+        return false
+      }
+      if (!this.bankData.check_account) {
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните рассчетный счет' })
         return false
       }
       const data = Object.assign({}, this.companyData, this.bankData)
@@ -147,6 +152,7 @@ export default {
           if (res.data.success) {
             this.$store.commit('UPDATE_USER_COMPANY', res.data.company)
             this.$bvModal.hide('modal-yur-data')
+            this.$notify({ type: 'success', title: 'Успех', text: 'Данные сохранены' })
           }
         })
     },

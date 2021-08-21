@@ -255,7 +255,7 @@ export default {
       if (application.requester === 'phys') {
         const profile = application.user.profile
         return profile.last_name + ' ' + profile.first_name + ' ' + profile.middle_name
-      } else {
+      } else if (application.requester === 'yur') {
         const company = application.user.company
         return company.opf + ' "' + company.name + '"'
       }

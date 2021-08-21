@@ -11,7 +11,7 @@
           <div v-if="currentStep === 0">
             <h4>1. Персональные данные</h4>
             <div class="notice">
-              Документы, необходимые для заключения договора
+              Необходимые данные
             </div>
             <div class="big-notice mb-1">
               Укажите данные по физическому и/или юридическому лицу, от которого создается обращение в компанию
@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     validateFirstStep () {
-      if (this.userProfile) {
+      if (this.userProfile.first_name && this.userProfile.last_name && this.userProfile.pasport && this.userProfile.pasport_granted_by && this.userProfile.pasport_date && this.userProfile.reg_address && this.userProfile.phys_address) {
         return true
       } else {
         this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните даные о пользователе' })

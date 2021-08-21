@@ -413,6 +413,11 @@ h4 {
   font-size: 18px;
 }
 .inputs {
+  a {
+    color: $LinkHoverColor;
+    padding: 0;
+    margin: 0;
+  }
   .select-wrapper::before {
     content: " ";
     width: 8px;

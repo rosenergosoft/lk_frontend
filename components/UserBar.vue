@@ -50,10 +50,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['user']),
+    ...mapGetters(['user', 'userProfile']),
     userName () {
       if (this.user.name) {
         return this.user.name
+      } else if (this.userProfile && this.userProfile.first_name && this.userProfile.last_name) {
+        return this.userProfile.first_name + ' ' + this.userProfile.last_name
       } else {
         return 'Пользователь'
       }
