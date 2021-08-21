@@ -74,7 +74,7 @@ export default {
     ]),
     customerName () {
       if (this.userProfile) {
-        return this.userProfile.last_name + ' ' + this.userProfile.first_name + ' ' + this.userProfile.middle_name
+        return this.userProfile.first_name + ' ' + this.userProfile.middle_name + ' ' + this.userProfile.last_name
       }
       return ''
     },

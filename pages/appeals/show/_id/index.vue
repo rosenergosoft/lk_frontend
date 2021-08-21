@@ -7,7 +7,7 @@
     </div>
     <div v-if="loaded" class="new-request">
       <div class="boxes">
-        <div class="box status-6">
+        <div v-if="isExecutive" class="box status-6">
           <h4>Управление</h4>
           <div class="personal-data">
             <div class="inputs">
@@ -107,18 +107,18 @@
                 <div class="d-flex justify-content-between align-items-center mt-20">
                   <div class="text-content d-flex">
                     <div class="person w40-square"></div>
-                    <div class="">
+                    <div class="w-90">
                       <div class="label">
                         {{ userProfile.first_name }} {{ userProfile.last_name }}
                       </div>
                       <div>{{ appeal.question }}</div>
                     </div>
                   </div>
-                  <div class="notice">
+                  <div class="notice w-30">
                     {{ $moment(appeal.created_at).format('hh:ss, DD MMMM yyyy') }}
                   </div>
                 </div>
-                <div class="separator"></div>
+                <div v-if="messages" class="separator"></div>
                 <div class="private-messages">
                   <Message
                     v-for="message in messages"

@@ -41,6 +41,7 @@
         :doc="doc"
         :index="index"
         @remove-file="removeFile"
+        @download-file="downloadFile"
       />
     </div>
     <div class="clearfix" />
@@ -65,6 +66,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import fileDownload from 'js-file-download'
 import AddDocumentModal from '@/components/appeals/AddDocumentModal'
 import DocumentsItem from '@/components/disclosure/DocumentsItem'
 export default {
@@ -145,6 +147,16 @@ export default {
         }
       )
       this.docs.splice(fileData.index, 1)
+    },
+    downloadFile (fileData) {
+      this.$axios.$get(process.env.LARAVEL_API_BASE_URL + '/api/appeals/downloadFile/' + fileData.id, {
+        responseType: 'blob'
+      })
+        .then((res) => {
+          if (res) {
+            fileDownload(res, fileData.name)
+          }
+        })
     }
   }
 }

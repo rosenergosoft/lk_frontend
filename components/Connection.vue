@@ -87,7 +87,7 @@
             <option :value="null">
               Статус заявки
             </option>
-            <option value="draft">
+            <option v-if="isCustomer" value="draft">
               Черновики
             </option>
             <option value="accepted">
@@ -142,12 +142,19 @@
             itemsPerPageText: 'Элементов на странице'
           }"
         >
-          <template #[`item.members`]="{ item }">
-            <div>
-              <strong>От:</strong> {{ getMemberFrom(item) }}
+          <template #[`item.id`]="{ item }">
+            <div class="count">
+              {{ item.id }}
             </div>
-            <div>
-              <strong>Кому:</strong> {{ (item.vendor) ? item.vendor.name : '' }}
+          </template>
+          <template #[`item.members`]="{ item }">
+            <div class="members">
+              <div>
+                <strong>От:</strong> {{ getMemberFrom(item) }}
+              </div>
+              <div>
+                <strong>Кому:</strong> {{ (item.vendor) ? item.vendor.name : item.client.name }}
+              </div>
             </div>
           </template>
           <template #[`item.type`]="{ item }">

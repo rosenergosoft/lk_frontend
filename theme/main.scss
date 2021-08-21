@@ -152,6 +152,15 @@ body.login {
   top: 6px;
   margin-right: 4px;
 }
+td .count {
+  width: 40px;
+}
+.members {
+  width: 195px;
+}
+.v-data-table td, .v-data-table th {
+  padding: 0 10px;
+}
 .counter {
   background: url('/images/mdi_counter.svg') no-repeat;
   width: 24px;
@@ -379,15 +388,25 @@ div.table table.table {
     border-bottom: 1px solid $separatorColor;
     background-color: $tableBackgroundColor;
   }
-  .order-status, .order-updated-at {
-    color: $orderStatusColor;
-  }
-  .order-details {
-    font-weight: bold;
-  }
-  .order-address {
-    width: 282px;
-  }
+}
+.order-status, .order-updated-at {
+  color: $orderStatusColor;
+}
+.v-data-table th {
+  height: 38px;
+}
+.v-data-table td {
+  font-size: 12px;
+}
+td.text-start {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+.order-details {
+  font-weight: bold;
+}
+.order-address {
+  width: 282px;
 }
 .orange-status {
   color: $orangeStatus;
@@ -780,4 +799,10 @@ tr {
 }
 .nav-tabs .nav-link {
   border-radius: 0;
+}
+.w-90 {
+  width: 90%
+}
+.w-30 {
+  width: 30%
 }
