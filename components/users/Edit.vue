@@ -38,7 +38,7 @@
             <div class="col-6">
               <div class="form-group">
                 <label>Email</label>
-                <input v-model="userData.email" class="form-control" type="text" />
+                <input v-model="userData.email" class="form-control" type="text">
               </div>
             </div>
             <div class="col-6">
@@ -52,7 +52,7 @@
             <div class="col">
               <div class="form-group">
                 <label>Пароль</label>
-                <input v-model="userData.password" class="form-control" type="password" />
+                <input v-model="userData.password" class="form-control" type="password">
               </div>
             </div>
           </div>

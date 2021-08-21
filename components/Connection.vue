@@ -141,6 +141,7 @@
           :footer-props="{
             itemsPerPageText: 'Элементов на странице'
           }"
+          @click:row="handleClick"
         >
           <template #[`item.id`]="{ item }">
             <div class="count">
@@ -249,8 +250,12 @@ export default {
     }
   },
   methods: {
-    handleClick () {
-      // console.log(123)
+    handleClick (value) {
+      if (value.status !== 'draft') {
+        this.$router.push('/request/show/' + value.id)
+      } else {
+        this.$router.push('/request/new/')
+      }
     },
     getTableData () {
       this.setLoading(true)

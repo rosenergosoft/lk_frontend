@@ -99,6 +99,42 @@
             </div>
           </div>
         </div>
+        <div v-if="isExecutive" class="box status-6">
+          <h4>Обращение</h4>
+          <div class="personal-data">
+            <div class="inputs">
+              <label class="label">Сменить статус</label>
+              <div class="select-wrapper">
+                <select v-model="application.status" class="form-control" @change="changeStatus">
+                  <option v-if="application.user_id === user.id" value="draft">
+                    Черновик
+                  </option>
+                  <option value="accepted">
+                    В работе
+                  </option>
+                  <option value="in_progress">
+                    Исполняется
+                  </option>
+                  <option value="preparing">
+                    Подготовка технических условий
+                  </option>
+                  <option value="invoice">
+                    Счет на оплату
+                  </option>
+                  <option value="waiting_company_resp">
+                    Ожидает ответа компании
+                  </option>
+                  <option value="completed">
+                    Выполнен
+                  </option>
+                  <option value="declined">
+                    Отклонен
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -112,8 +148,12 @@ export default {
   components: {
     DocumentsItem
   },
+  computed: {
+    ...mapGetters(['user'])
+  },
   data () {
     return {
+      userProfile: {},
       application: {},
       company: {},
       documents: {
@@ -202,9 +242,6 @@ export default {
       }
     }
   },
-  computed: {
-    ...mapGetters(['userProfile'])
-  },
   created () {
     this.getApplication()
   },
@@ -230,8 +267,18 @@ export default {
     },
     formatDate (date) {
       return this.$moment.utc(date).format('DD-MM-YYYY')
-      // const options = { year: 'numeric', month: 'long', day: 'numeric' }
-      // return new Date(date).toLocaleDateString('ru', options)
+    },
+    changeStatus () {
+      const formData = {
+        application_id: this.application.id,
+        status: this.application.status
+      }
+      this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/application/changeStatus', formData)
+        .then((res) => {
+          if (res.success) {
+            this.$notify({ type: 'success', title: 'Успех', text: 'Статус изменен' })
+          }
+        })
     },
     async getDocuments () {
       const res = await this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/user/documents')

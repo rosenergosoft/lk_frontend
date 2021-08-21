@@ -109,7 +109,6 @@ export default {
     },
     options: {
       handler (val) {
-        console.log(val)
         // this.getDataFromApi()
       },
       deep: true

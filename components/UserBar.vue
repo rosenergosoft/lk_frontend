@@ -1,7 +1,7 @@
 <template>
   <div class="userBar d-flex inputs">
     <div v-if="isSuper" class="mr-20 select-wrapper">
-      <select v-model="current_client" @change="switchClient" class="form-control">
+      <select v-model="current_client" class="form-control" @change="switchClient">
         <option v-for="(value, key) of clients" :key="key" :value="key">
           {{ value }}
         </option>

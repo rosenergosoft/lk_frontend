@@ -42,7 +42,12 @@ export default {
     BIconPersonFill
   },
   props: {
-    user: Object
+    user: {
+      type: Object,
+      default () {
+        return {}
+      }
+    }
   },
   computed: {
     formattedPhone () {
