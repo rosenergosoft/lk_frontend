@@ -4,7 +4,7 @@
       <div class="col">
         <div class="form-group">
           <label>Тип клиента</label>
-          <select v-model="clientType" class="form-control">
+          <select multiple v-model="clientType" class="form-control">
             <option value="">
               Выберите тип клиента
             </option>
@@ -39,7 +39,7 @@ export default {
   name: 'Settings',
   data () {
     return {
-      clientType: ''
+      clientType: []
     }
   },
   mounted () {
