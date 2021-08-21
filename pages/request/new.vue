@@ -86,7 +86,7 @@ export default {
         this.userProfile.reg_address &&
         this.userProfile.phys_address
       ) {
-        if (!this.docs.phys) {
+        if (!this.docs.phys[0]) {
           this.$notify({ type: 'error', title: 'Ошибка', text: 'Загрузите документы пользователя' })
           return false
         }
