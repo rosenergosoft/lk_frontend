@@ -1,17 +1,19 @@
 <template>
   <div class="disclosure">
     <div class="page-title d-flex">
-      <div class="active">
-        Электроэнергия
+      <div :class="{ active: disclosureGroup === 0 }" @click="setDisclosureGroup(0)">
+        <a>Электроэнергия</a>
       </div>
       <div class="l-separator">
         /
       </div>
-      <div><a href="">Водоснабжение</a></div>
+      <div :class="{ active: disclosureGroup === 1 }" @click="setDisclosureGroup(1)">
+        <a>Тепло</a>
+      </div>
       <div class="l-separator">
         /
       </div>
-      <div><a href="">Тепло</a></div>
+      <div><a>Вода</a></div>
     </div>
     <div class="disclosure-documents">
       <div class="boxes">
@@ -34,7 +36,7 @@
       </div>
     </div>
     <DisclosureModal
-      @disclosure-list-update="getDisclosureList(0)"
+      @disclosure-list-update="getDisclosureList(disclosureGroup)"
       :content="modalContent"
     />
   </div>
@@ -52,6 +54,7 @@ export default {
   data () {
     return {
       disclosureList: '',
+      disclosureGroup: 0,
       modalContent: {
         disclosure: {},
         disclosureListItem: {},
@@ -60,17 +63,21 @@ export default {
     }
   },
   created () {
-    this.getDisclosureList(0)
+    this.getDisclosureList(this.disclosureGroup)
   },
   methods: {
     async openDisclosureModal (type) {
-      const res = await this.$axios.$get(process.env.LARAVEL_API_BASE_URL + '/api/disclosure/getByType/0/' + type)
+      const res = await this.$axios.$get(process.env.LARAVEL_API_BASE_URL + '/api/disclosure/getByType/' + this.disclosureGroup + '/' + type)
       if (res) {
         this.modalContent.disclosure = res.disclosure
         this.modalContent.disclosureListItem = res.disclosureListItem
         this.modalContent.docs = res.docs
       }
       this.$bvModal.show('disclosure-modal')
+    },
+    setDisclosureGroup (group) {
+      this.disclosureGroup = group
+      this.getDisclosureList(this.disclosureGroup)
     },
     async getDisclosureList (group) {
       const res = await this.$axios.$get(process.env.LARAVEL_API_BASE_URL + '/api/disclosure/getList/' + group)

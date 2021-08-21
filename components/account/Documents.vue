@@ -84,6 +84,7 @@ export default {
           if (res.data.docs) {
             this.documents = res.data.docs
           }
+          this.$emit('docs', this.documents)
         })
     },
     handleDelete () {

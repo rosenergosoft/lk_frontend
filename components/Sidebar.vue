@@ -19,10 +19,20 @@
           </NuxtLink>
         </li>
         <li v-if="can('metersData*')" class="nav-item">
-          <a href="/" class="nav-link"><i class="counter" /> Подать показания счетчиков</a>
+          <NuxtLink
+            to="/development"
+            class="nav-link"
+          >
+            <i class="counter" /> Подать показания счетчиков
+          </NuxtLink>
         </li>
         <li v-if="can('bills*')" class="nav-item">
-          <a href="/" class="nav-link"><i class="payment" /> Оплата счетов</a>
+          <NuxtLink
+            to="/development"
+            class="nav-link"
+          >
+            <i class="payment" /> Оплата счетов
+          </NuxtLink>
         </li>
       </ul>
       <label>Администрирование</label>

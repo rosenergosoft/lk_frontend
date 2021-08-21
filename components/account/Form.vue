@@ -1,9 +1,16 @@
 <template>
-  <div class="box status-1 col-6 mr-20">
+  <div class="box status-1 mr-20" :class="{ 'col-6': isCustomer, 'col-12': isExecutive }">
     <h4>Доступ к личному кабинету</h4>
     <div class="inputs">
       <div v-if="type !== 'email'" class="form-group">
-        <input v-if="type === 'phys'" v-model="formData.snils" type="text" placeholder="СНИЛС" class="form-control">
+        <input
+          v-if="type === 'phys'"
+          v-model="snils"
+          v-mask="'###-###-### ##'"
+          type="text"
+          placeholder="СНИЛС"
+          class="form-control"
+        >
         <input v-if="type === 'yur'" v-model="formData.ogrn" type="text" placeholder="ОГРН" class="form-control">
         <input v-if="type === 'ip'" v-model="formData.ogrn" type="text" placeholder="ОГРНИП" class="form-control">
       </div>
@@ -43,6 +50,7 @@ export default {
         ogrn: '',
         ogrnip: ''
       },
+      snils: '',
       mask: '+7 (###) ###-##-##',
       displayedPhone: '',
       passwordData: {
@@ -66,11 +74,13 @@ export default {
       this.mask = '+# (###) ###-##-##'
       this.displayedPhone = this.user.phone
     }
+    this.snils = this.user.snils
     Object.assign(this.formData, this.user)
   },
   methods: {
     submitAccountForm () {
       this.formData.phone = this.displayedPhone.replace(/[^\d]/g, '')
+      this.formData.snils = this.snils.replace(/[^\d]/g, '')
       const data = Object.assign({}, this.formData, this.passwordData)
       data.login_type = this.type
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user', data)

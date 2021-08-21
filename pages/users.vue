@@ -1,50 +1,65 @@
 <template>
   <div>
     <div class="d-flex justify-content-between mb-4">
-      <div style="width: 100px"></div>
+      <div style="width: 100px" />
       <div class="mr-4">
         <button class="btn blue-button" @click="$bvModal.show('modal-users-edit')">
           Новый пользователь
         </button>
       </div>
     </div>
-    <client-only>
-      <v-data-table
-        :headers="headers"
-        :items="users"
-        :options.sync="options"
-        :server-items-length="totalUsers"
-        :items-per-page="perPage"
-        :page="currentPage"
-        class="elevation-1"
-      >
-        <template v-slot:[`item.user`]="{ item }">
-          <User :user="item"/>
-        </template>
-        <template v-slot:[`item.phys`]="{ item }">
-          <template v-if="item.profile">
-            {{ getFullName(item.profile) }}
+    <div class="v-application">
+      <client-only>
+        <v-data-table
+          :headers="headers"
+          :items="users"
+          :options.sync="options"
+          :server-items-length="totalUsers"
+          :items-per-page="perPage"
+          :page="currentPage"
+          no-results-text="Нет данных"
+          no-data-text="Нет данных"
+          class="elevation-1 w-100"
+          :loading="isLoading"
+          :loading-text="loadingText"
+          :footer-props="{
+            itemsPerPageText: 'Элементов на странице'
+          }"
+        >
+          <template #[`item.user`]="{ item }">
+            <User :user="item" />
           </template>
-          <template v-else>
-            <span>-</span>
+          <template #[`item.phys`]="{ item }">
+            <template v-if="item.profile">
+              {{ getFullName(item.profile) }}
+            </template>
+            <template v-else>
+              <span>-</span>
+            </template>
           </template>
-        </template>
-        <template v-slot:[`item.yur`]="{ item }">
-          <template v-if="item.company">
-            {{ item.company.opf }} "{{ item.company.name }}"
+          <template #[`item.yur`]="{ item }">
+            <template v-if="item.company">
+              {{ item.company.opf }} "{{ item.company.name }}"
+            </template>
+            <template v-else>
+              <span>-</span>
+            </template>
           </template>
-          <template v-else>
-            <span>-</span>
+          <template #[`item.actions`]="{ item }">
+            <v-icon
+              small
+              class="mr-2"
+              @click.prevent="openEdit(item.id)"
+            >
+              mdi-pencil
+            </v-icon>
           </template>
-        </template>
-        <template v-slot:[`item.actions`]="{ item }">
-          <a @click.prevent="openEdit(item.id)">Edit</a>
-        </template>
-      </v-data-table>
-    </client-only>
-    <Edit
-      @updated="init"
-    />
+        </v-data-table>
+      </client-only>
+      <Edit
+        @updated="init"
+      />
+    </div>
   </div>
 </template>
 
@@ -59,6 +74,8 @@ export default {
   },
   data () {
     return {
+      isLoading: true,
+      loadingText: 'Загрузка данных',
       perPage: 5,
       totalUsers: 0,
       currentPage: 1,
@@ -83,6 +100,13 @@ export default {
     }
   },
   watch: {
+    isLoading (val) {
+      if (val) {
+        this.loadingText = 'Загрузка данных'
+      } else {
+        this.loadingText = 'Нет данных'
+      }
+    },
     options: {
       handler (val) {
         console.log(val)
@@ -103,12 +127,13 @@ export default {
     }
   },
   methods: {
-    init () {
-      this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/user/list?' + this.query)
-        .then((res) => {
-          this.users = res.data.data
-          this.totalUsers = res.data.total
-        })
+    async init () {
+      const res = await this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/user/list?' + this.query)
+      if (res) {
+        this.users = res.data.data
+        this.totalUsers = res.data.total
+      }
+      this.isLoading = false
     },
     getFullName (user) {
       return user.last_name + ' ' + user.first_name + ' ' + user.middle_name

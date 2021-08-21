@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="doc-signing" centered size="md" title="Подпись документа" @show="init">
+  <b-modal :id="'doc-signing-' + doc.id" centered size="md" title="Подпись документа" @show="init">
     <template v-if="userCompany">
       <div v-if="doc.signature">
         <div>
@@ -66,17 +66,26 @@
           </div>
         </template>
       </div>
+      <div v-else class="inputs">
+        <NuxtLink
+          to="/account"
+          class="nav-link"
+          @click.native="$bvModal.hide('doc-signing-' + doc.id)"
+        >
+          Укажите ваш номер телефона
+        </NuxtLink>
+      </div>
     </template>
     <template #modal-footer class="d-block">
       <div class="d-flex justify-content-between">
         <div>
-          <button type="button" class="btn blue-button" @click="$bvModal.hide('doc-signing')">
-            Назад
+          <button type="button" class="btn blue-button" @click="confirmCode">
+            Подписать
           </button>
         </div>
         <div>
-          <button type="button" class="btn blue-button" @click="confirmCode">
-            Подписать
+          <button type="button" class="btn blue-button" @click="$bvModal.hide('doc-signing-' + doc.id)">
+            Назад
           </button>
         </div>
       </div>
@@ -151,6 +160,7 @@ export default {
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user/document/sendSms', { id: this.doc.id })
         .then((res) => {
           this.smsSent = true
+          this.$notify({ type: 'success', title: 'Успех', text: 'Смс отправлено' })
         })
     },
     confirmCode () {
@@ -161,7 +171,7 @@ export default {
       }).then((res) => {
         if (res.data.success) {
           this.$parent.$emit('signed')
-          this.$bvModal.hide('doc-signing')
+          this.$bvModal.hide('doc-signing-' + this.doc.id)
           this.$notify({ type: 'success', title: 'Успех', text: 'Документ подписан' })
         }
       })

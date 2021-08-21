@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-if="user.login_type === 'email'">
-      <span>Вход по email (id:{{ user.id }})</span>
+      <span>Вход по Имейл (id:{{ user.id }})</span>
     </template>
     <template v-if="user.login_type === 'phys'">
       <span>СНИЛС: {{ user.snils }}</span>

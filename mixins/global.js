@@ -3,23 +3,36 @@ import wcmatch from 'wildcard-match'
 export default {
   computed: {
     userPermissions () {
-      return this.$store.getters.user.permissions.map(item => item.name)
+      if (this.$store.getters.user) {
+        return this.$store.getters.user.permissions.map(item => item.name)
+      }
+      return []
     },
     isSuper () {
-      return this.$store.getters.user.roles.find(item => item.name === 'super')
+      if (this.$store.getters.user) {
+        return this.$store.getters.user.roles.find(item => item.name === 'super')
+      }
+      return false
     },
     userRoles () {
-      return this.$store.getters.user.roles.map(item => item.name)
+      if (this.$store.getters.user) {
+        return this.$store.getters.user.roles.map(item => item.name)
+      }
+      return []
     },
     isExecutive () {
       return !!(this.isSuper || this.userRoles.includes('admin') || this.userRoles.includes('vendor'))
+    },
+    isCustomer () {
+      return !(this.isSuper || this.userRoles.includes('admin') || this.userRoles.includes('vendor'))
+    },
+    isVendor () {
+      return !!(this.userRoles.includes('vendor'))
     }
   },
   methods: {
     can (key) {
-      if (this.isSuper) {
-        return true
-      }
+      if (this.isSuper) { return true }
       if (this.userPermissions) {
         if (key.includes('*')) {
           const isMatch = wcmatch(key)

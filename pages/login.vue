@@ -1,5 +1,6 @@
 <template>
   <div class="relative flex items-top justify-center min-h-screen sm:items-center sm:pt-0">
+    <notifications />
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
     <div v-if="currentStep === 0" class="login-form mx-auto">
       <div class="bg-white">
@@ -10,7 +11,16 @@
             </h2>
             <div>
               <ul>
-                <li><input id="snils" v-model="loginData.type" type="radio" name="type" value="phys"><label for="snils">Физическое лицо (вход по СНИЛС)</label></li>
+                <li>
+                  <input
+                    id="snils"
+                    v-model="loginData.type"
+                    v-mask="'###-###-### ##'"
+                    type="radio"
+                    name="type"
+                    value="phys"
+                  ><label for="snils">Физическое лицо (вход по СНИЛС)</label>
+                </li>
                 <li><input id="ogrn" v-model="loginData.type" type="radio" name="type" value="yur"><label for="ogrn">Юридическое лицо (вход по ОГРН)</label></li>
                 <li><input id="ogrnip" v-model="loginData.type" type="radio" name="type" value="ip"><label for="ogrnip">Индивидуальный предприниматель (вход по ОГРНИП)</label></li>
                 <li><input id="by-email" v-model="loginData.type" type="radio" name="type" value="email"><label for="by-email">Вход по электронной почте</label></li>
@@ -31,11 +41,6 @@
                 <div class="form-group">
                   <input v-model="loginData.password" type="password" class="form-control" placeholder="Пароль" @keyup.enter="submitLogin">
                 </div>
-              </div>
-            </div>
-            <div v-if="loginError">
-              <div class="alert alert-danger">
-                Проверьте данные для входа. Если ошибка повторятся, обратитесь к администратору
               </div>
             </div>
             <div class="form-group d-flex justify-content-between">
@@ -79,39 +84,18 @@
               <div class="inputs">
                 <div v-if="type === 'phys'" class="form-group">
                   <input v-model="display.snils" v-mask="'###-###-### ##'" type="text" class="form-control" placeholder="СНИЛС">
-                  <div v-if="validationErrors.snils.message" class="alert alert-danger">
-                    {{ validationErrors.snils.message }}
-                  </div>
                 </div>
                 <div v-if="type === 'yur'" class="form-group">
                   <input v-model="ogrn" type="text" class="form-control" placeholder="ОГРН">
-                  <div v-if="validationErrors.ogrn.message" class="alert alert-danger">
-                    {{ validationErrors.ogrn.message }}
-                  </div>
                 </div>
                 <div v-if="type === 'ip'" class="form-group">
                   <input v-model="ogrnip" type="text" class="form-control" placeholder="ОГРНИП">
-                  <div v-if="validationErrors.ogrnip.message" class="alert alert-danger">
-                    {{ validationErrors.ogrnip.message }}
-                  </div>
                 </div>
                 <div class="form-group">
                   <input v-model="password" type="password" class="form-control" placeholder="Пароль">
-                  <div v-if="passwordError.required.message" class="alert alert-danger">
-                    {{ passwordError.required.message }}
-                  </div>
-                  <div v-if="passwordError.confirm.message" class="alert alert-danger">
-                    {{ passwordError.confirm.message }}
-                  </div>
                 </div>
                 <div class="form-group">
                   <input v-model="confirmPassword" type="password" class="form-control" placeholder="Повторите пароль">
-                  <div v-if="passwordError.required.message" class="alert alert-danger">
-                    {{ passwordError.required.message }}
-                  </div>
-                  <div v-if="passwordError.confirm.message" class="alert alert-danger">
-                    {{ passwordError.confirm.message }}
-                  </div>
                 </div>
               </div>
             </div>
@@ -158,13 +142,13 @@
                   <input v-model="email" type="text" class="form-control" placeholder="Электронная почта для связи">
                 </div>
                 <div class="form-group">
-                  <input v-model="display.phone" v-mask="'+7 (###) ###-###-##'" type="tel" class="form-control" placeholder="Телефон для уведомлений">
+                  <input v-model="display.phone" v-mask="'+7 (###) ###-##-##'" type="tel" class="form-control" placeholder="Телефон для уведомлений">
                 </div>
               </div>
             </div>
             <div class="form-group d-flex justify-content-between">
               <div>
-                <button class="btn submit" @click="nextTo(3)">
+                <button class="btn submit" @click="validateSecondStep()">
                   Далее
                 </button>
               </div>
@@ -221,7 +205,7 @@
                   4. Соглашения
                 </div>
                 <div class="form-group login-form-checkbox">
-                  <input id="agreement" type="checkbox"><label for="agreement">Я принимаю <a href="">соглашение</a> об обработке персональных данных</label>
+                  <input id="agreement" v-model="agreement" type="checkbox"><label for="agreement">Я принимаю <a href="">соглашение</a> об обработке персональных данных</label>
                 </div>
               </div>
             </div>
@@ -257,12 +241,13 @@ export default {
   mixins: [dataValidation],
   layout: 'auth',
   asyncData ({ req }) {
-    const host = req.headers.host
-    return { host }
+    if (req) {
+      const host = req.headers.host
+      return { host }
+    }
   },
   data () {
     return {
-      loginError: false,
       currentStep: 0,
       notaclient: false,
       loginData: {
@@ -274,6 +259,7 @@ export default {
         type: 'phys'
       },
       email: '',
+      agreement: false,
       password: '',
       confirmPassword: '',
       phone: '',
@@ -319,43 +305,80 @@ export default {
     },
     'display.phone' (val) {
       this.phone = val.replace(/[^0-9]/g, '')
+    },
+    'loginData.snils' (val) {
+      this.snils = val.replace(/[^0-9]/g, '')
     }
   },
   methods: {
     async submitLogin () {
-      this.loginError = false
+      const formData = JSON.parse(JSON.stringify(this.loginData))
+      formData.snils = this.snils
       await this.$auth.login({
-        data: this.loginData
+        data: formData
       }).catch((error) => {
         if (error.response.status === 401) {
-          this.loginError = true
+          this.$notify({ type: 'error', title: 'Ошибка', text: 'Проверьте данные для входа. Если ошибка повторятся, обратитесь к администратору' })
         }
       })
     },
     submitRegistration () {
-      const data = {
-        password: this.password,
-        email: this.email,
-        account: this.account,
-        name: this.name,
-        login_type: this.type,
-        phone: this.phone,
-        host: this.host
-      }
-
-      if (this.type === 'phys') {
-        data.snils = this.snils
-      } else if (this.type === 'yur') {
-        data.ogrn = this.ogrn
-      } else {
-        data.ogrnip = this.ogrnip
-      }
-
-      this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/registration', data).then((resp) => {
-        if (resp.data.success) {
-          this.currentStep = 0
+      if (this.validateThirdStep()) {
+        const data = {
+          password: this.password,
+          email: this.email,
+          account: this.account,
+          name: this.name,
+          login_type: this.type,
+          phone: this.phone,
+          host: this.host
         }
-      })
+
+        if (this.type === 'phys') {
+          data.snils = this.snils
+        } else if (this.type === 'yur') {
+          data.ogrn = this.ogrn
+        } else {
+          data.ogrnip = this.ogrnip
+        }
+
+        this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/registration', data).then((resp) => {
+          if (resp.data.success) {
+            this.currentStep = 0
+            this.$notify({ type: 'success', title: 'Успех', text: 'Теперь вы можете войти используя свои данные' })
+          } else {
+            this.$notify({ type: 'error', title: 'Ошибка', text: 'Перезагрузите страницу и попробуйте еще раз' })
+          }
+        })
+      }
+    },
+    validateThirdStep () {
+      if (!this.notaclient) {
+        if (!this.account) {
+          this.$notify({ type: 'error', title: 'Ошибка', text: 'Укажите номер лицевого счета' })
+          return false
+        }
+        if (!this.name) {
+          this.$notify({ type: 'error', title: 'Ошибка', text: 'Укажите ФИО' })
+          return false
+        }
+      }
+      if (!this.agreement) {
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Примите соглашение об обработке персональных данных' })
+        return false
+      }
+      return true
+    },
+    validateSecondStep () {
+      if (!this.email) {
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Укажите электронную почту' })
+        return false
+      }
+      if (!this.display.phone) {
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Введите телефон' })
+        return false
+      }
+      this.nextTo(3)
     },
     validateFirstStep () {
       Object.assign(this.passwordError, {
@@ -379,11 +402,19 @@ export default {
         this.passwordError.required = {
           message: 'Обязательное поле'
         }
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Придумайте пароль' })
+        return
+      }
+      if (this.password.length < 6) {
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Пароль должен содержать минимум 6 символов' })
+        return
       }
       if (this.password !== this.confirmPassword) {
         this.passwordError.confirm = {
           message: 'Пароли не совпадают'
         }
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Пароли не совпадают' })
+        return
       }
       if (result) {
         this.nextTo(2)
@@ -406,6 +437,7 @@ export default {
   }
   .login-form-row {
     height: 365px;
+    margin: 0 auto;
   }
   .step-title {
     font-family: Varela, sans-serif;

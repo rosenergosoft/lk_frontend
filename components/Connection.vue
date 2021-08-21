@@ -7,8 +7,12 @@
       <div class="l-separator">
         /
       </div>
-      <div><a href="">Обращения</a></div>
-      <div class="ml-auto">
+      <div>
+        <NuxtLink to="/appeals">
+          Обращения
+        </NuxtLink>
+      </div>
+      <div v-if="can('applications_add') && !isSuper" class="ml-auto">
         <button class="btn blue-button" @click="$router.push('/request/new')">
           Новая заявка
         </button>
@@ -132,6 +136,11 @@
           no-results-text="Нет данных"
           no-data-text="Нет данных"
           class="elevation-1 w-100"
+          :loading="isLoading"
+          :loading-text="loadingText"
+          :footer-props="{
+            itemsPerPageText: 'Элементов на странице'
+          }"
         >
           <template #[`item.members`]="{ item }">
             <div>
@@ -176,6 +185,8 @@ export default {
   data () {
     return {
       perPage: 10,
+      isLoading: true,
+      loadingText: 'Загрузка данных',
       totalApplications: 0,
       options: {},
       headers: [
@@ -210,6 +221,15 @@ export default {
       }
     }
   },
+  watch: {
+    isLoading (val) {
+      if (val) {
+        this.loadingText = 'Загрузка данных'
+      } else {
+        this.loadingText = 'Нет данных'
+      }
+    }
+  },
   mounted () {
     this.getTableData()
     if (this.isExecutive) {
@@ -221,20 +241,21 @@ export default {
   },
   methods: {
     handleClick () {
-      console.log(123)
+      // console.log(123)
     },
-    getTableData () {
-      this.$axios.get(process.env.LARAVEL_API_BASE_URL + this.tableDataUrl)
-        .then((res) => {
-          this.applications = res.data.data
-          this.totalApplications = res.data.total
-        })
+    async getTableData () {
+      const res = await this.$axios.get(process.env.LARAVEL_API_BASE_URL + this.tableDataUrl)
+      if (res) {
+        this.applications = res.data.data
+        this.totalApplications = res.data.total
+      }
+      this.isLoading = false
     },
     getMemberFrom (application) {
       if (application.requester === 'phys') {
         const profile = application.user.profile
         return profile.last_name + ' ' + profile.first_name + ' ' + profile.middle_name
-      } else {
+      } else if (application.requester === 'yur') {
         const company = application.user.company
         return company.opf + ' "' + company.name + '"'
       }
