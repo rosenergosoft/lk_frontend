@@ -12,7 +12,7 @@
           Обращения
         </NuxtLink>
       </div>
-      <div v-if="can('applications_add')" class="ml-auto">
+      <div v-if="can('applications_add') && !isSuper" class="ml-auto">
         <button class="btn blue-button" @click="$router.push('/request/new')">
           Новая заявка
         </button>
@@ -87,7 +87,7 @@
             <option :value="null">
               Статус заявки
             </option>
-            <option value="draft">
+            <option v-if="isCustomer" value="draft">
               Черновики
             </option>
             <option value="accepted">
@@ -136,13 +136,25 @@
           no-results-text="Нет данных"
           no-data-text="Нет данных"
           class="elevation-1 w-100"
+          :loading="dataLoading"
+          :loading-text="loadingText"
+          :footer-props="{
+            itemsPerPageText: 'Элементов на странице'
+          }"
         >
-          <template #[`item.members`]="{ item }">
-            <div>
-              <strong>От:</strong> {{ getMemberFrom(item) }}
+          <template #[`item.id`]="{ item }">
+            <div class="count">
+              {{ item.id }}
             </div>
-            <div>
-              <strong>Кому:</strong> {{ (item.vendor) ? item.vendor.name : '' }}
+          </template>
+          <template #[`item.members`]="{ item }">
+            <div class="members">
+              <div>
+                <strong>От:</strong> {{ getMemberFrom(item) }}
+              </div>
+              <div>
+                <strong>Кому:</strong> {{ (item.vendor) ? item.vendor.name : item.client.name }}
+              </div>
             </div>
           </template>
           <template #[`item.type`]="{ item }">
@@ -180,6 +192,8 @@ export default {
   data () {
     return {
       perPage: 10,
+      dataLoading: true,
+      loadingText: 'Загрузка данных',
       totalApplications: 0,
       options: {},
       headers: [
@@ -214,6 +228,15 @@ export default {
       }
     }
   },
+  watch: {
+    dataLoading (val) {
+      if (val) {
+        this.loadingText = 'Загрузка данных'
+      } else {
+        this.loadingText = 'Нет данных'
+      }
+    }
+  },
   mounted () {
     this.getTableData()
     if (this.isExecutive) {
@@ -231,18 +254,20 @@ export default {
     },
     getTableData () {
       this.setLoading(true)
+      this.dataLoading = true
       this.$axios.get(process.env.LARAVEL_API_BASE_URL + this.tableDataUrl)
         .then((res) => {
           this.applications = res.data.data
           this.totalApplications = res.data.total
           this.setLoading(false)
+          this.dataLoading = false
         })
     },
     getMemberFrom (application) {
       if (application.requester === 'phys') {
         const profile = application.user.profile
         return profile.last_name + ' ' + profile.first_name + ' ' + profile.middle_name
-      } else {
+      } else if (application.requester === 'yur') {
         const company = application.user.company
         return company.opf + ' "' + company.name + '"'
       }

@@ -8,6 +8,15 @@ export default (ctx) => {
   const vuetify = new Vuetify({
     theme: {
       dark: false // From 2.0 You have to select the theme dark or light here
+    },
+    lang: {
+      locales: {
+        en: {
+          dataIterator: {
+            pageText: '{0}-{1} из {2}'
+          }
+        }
+      }
     }
   })
 

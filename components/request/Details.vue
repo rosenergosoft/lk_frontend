@@ -449,14 +449,54 @@ export default {
       })
   },
   methods: {
-    submitDetails () {
-      this.details.id = this.applicationId
-      this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/application/create', this.details)
-        .then((response) => {
-          if (response.data.success) {
-            this.$router.push('/request/show/' + response.data.application.id)
+    validate () {
+      if (
+        this.details.connectionType &&
+        this.details.requester &&
+        this.details.objectName &&
+        this.details.objectLocation &&
+        this.details.kadastrNum &&
+        this.details.constructionReason &&
+        this.details.connectorsCount &&
+        this.details.maxPower &&
+        this.details.previousMaxPower &&
+        this.details.integrityCategory &&
+        this.details.powerLevel &&
+        this.details.loadType &&
+        this.details.estimationYear &&
+        this.details.estimationQuater &&
+        this.details.power &&
+        this.details.pricing
+      ) {
+        if (this.connectionType === '1') {
+          if (!this.details.contractNumber || !this.details.contractDate) {
+            this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните анкету заявки' })
+            return false
           }
-        })
+        }
+        // eslint-disable-next-line eqeqeq
+        if (this.connectionType === '2') {
+          if (!this.details.connectionDuration) {
+            this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните анкету заявки' })
+            return false
+          }
+        }
+        return true
+      } else {
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните анкету заявки' })
+        return false
+      }
+    },
+    submitDetails () {
+      if (this.validate()) {
+        this.details.id = this.applicationId
+        this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/application/create', this.details)
+          .then((response) => {
+            if (response.data.success) {
+              this.$router.push('/request/show/' + response.data.application.id)
+            }
+          })
+      }
     },
     goBack () {
       this.$emit('back', 0)

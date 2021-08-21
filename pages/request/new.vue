@@ -20,7 +20,7 @@
             <div class="personal-data">
               <div class="separator" />
             </div>
-            <Documents />
+            <Documents @docs="getDocuments" />
             <div class="text-left button-wrapper">
               <button class="btn blue-button float-none" @click="secondStep">
                 Далее
@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import PersonalData from '~/components/account/PersonalData'
 import Documents from '~/components/account/Documents'
 import Details from '~/components/request/Details'
@@ -53,19 +54,108 @@ export default {
   data () {
     return {
       currentStep: 0,
-      application_id: null
+      application_id: null,
+      docs: {
+        phys: '',
+        yur: ''
+      }
     }
+  },
+  computed: {
+    ...mapGetters(['userProfile', 'userCompany'])
   },
   mounted () {
     this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/application/draft')
       .then((res) => {
         if (res.data.id) {
           this.application_id = res.data.id
-          this.nextTo(1)
+          if (this.validateFirstStep()) {
+            this.nextTo(1)
+          }
         }
       })
   },
   methods: {
+    validateFirstStep () {
+      if (
+        this.userProfile.first_name &&
+        this.userProfile.last_name &&
+        this.userProfile.pasport &&
+        this.userProfile.pasport_granted_by &&
+        this.userProfile.pasport_date &&
+        this.userProfile.reg_address &&
+        this.userProfile.phys_address
+      ) {
+        if (!this.docs.phys[0]) {
+          this.$notify({ type: 'error', title: 'Ошибка', text: 'Загрузите документы пользователя' })
+          return false
+        }
+        if (!this.docs.phys[0].signature) {
+          this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы пользователя' })
+          return false
+        }
+        if (this.docs.phys[1]) {
+          if (!this.docs.phys[1].signature) {
+            this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы пользователя' })
+            return false
+          }
+        }
+        if (this.userCompany && this.userCompany.inn) {
+          if (
+            this.userCompany.opf &&
+            this.userCompany.name &&
+            this.userCompany.address &&
+            this.userCompany.bank_name &&
+            this.userCompany.bank_bik &&
+            this.userCompany.bank_corr_account &&
+            this.userCompany.check_account
+          ) {
+            if (!this.docs.yur[0]) {
+              this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните документы о компании' })
+              return false
+            }
+            if (!this.docs.yur[0].signature) {
+              this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы компании' })
+              return false
+            }
+            if (this.docs.yur[1]) {
+              if (!this.docs.yur[1].signature) {
+                this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы компании' })
+                return false
+              }
+            }
+            if (this.docs.yur[2]) {
+              if (!this.docs.yur[2].signature) {
+                this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы компании' })
+                return false
+              }
+            }
+            if (this.docs.yur[3]) {
+              if (!this.docs.yur[2].signature) {
+                this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы компании' })
+                return false
+              }
+            }
+            if (this.docs.yur[4]) {
+              if (!this.docs.yur[2].signature) {
+                this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы компании' })
+                return false
+              }
+            }
+          } else {
+            this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните данные о компании' })
+            return false
+          }
+        }
+        return true
+      } else {
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните даные о пользователе' })
+        return false
+      }
+    },
+    getDocuments (docs) {
+      this.docs = docs
+    },
     createDraft () {
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/application/draft')
         .then((res) => {
@@ -76,10 +166,12 @@ export default {
         })
     },
     secondStep () {
-      if (this.application_id) {
-        this.nextTo(1)
-      } else {
-        this.createDraft()
+      if (this.validateFirstStep()) {
+        if (this.application_id) {
+          this.nextTo(1)
+        } else {
+          this.createDraft()
+        }
       }
     },
     nextTo (to = false) {

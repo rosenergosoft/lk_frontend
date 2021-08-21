@@ -11,7 +11,16 @@
             </h2>
             <div>
               <ul>
-                <li><input id="snils" v-model="loginData.type" type="radio" name="type" value="phys"><label for="snils">Физическое лицо (вход по СНИЛС)</label></li>
+                <li>
+                  <input
+                    id="snils"
+                    v-model="loginData.type"
+                    v-mask="'###-###-### ##'"
+                    type="radio"
+                    name="type"
+                    value="phys"
+                  ><label for="snils">Физическое лицо (вход по СНИЛС)</label>
+                </li>
                 <li><input id="ogrn" v-model="loginData.type" type="radio" name="type" value="yur"><label for="ogrn">Юридическое лицо (вход по ОГРН)</label></li>
                 <li><input id="ogrnip" v-model="loginData.type" type="radio" name="type" value="ip"><label for="ogrnip">Индивидуальный предприниматель (вход по ОГРНИП)</label></li>
                 <li><input id="by-email" v-model="loginData.type" type="radio" name="type" value="email"><label for="by-email">Вход по электронной почте</label></li>
@@ -133,13 +142,13 @@
                   <input v-model="email" type="text" class="form-control" placeholder="Электронная почта для связи">
                 </div>
                 <div class="form-group">
-                  <input v-model="display.phone" v-mask="'+7 (###) ###-###-##'" type="tel" class="form-control" placeholder="Телефон для уведомлений">
+                  <input v-model="display.phone" v-mask="'+7 (###) ###-##-##'" type="tel" class="form-control" placeholder="Телефон для уведомлений">
                 </div>
               </div>
             </div>
             <div class="form-group d-flex justify-content-between">
               <div>
-                <button class="btn submit" @click="nextTo(3)">
+                <button class="btn submit" @click="validateSecondStep()">
                   Далее
                 </button>
               </div>
@@ -196,7 +205,7 @@
                   4. Соглашения
                 </div>
                 <div class="form-group login-form-checkbox">
-                  <input id="agreement" type="checkbox"><label for="agreement">Я принимаю <a href="">соглашение</a> об обработке персональных данных</label>
+                  <input id="agreement" v-model="agreement" type="checkbox"><label for="agreement">Я принимаю <a href="">соглашение</a> об обработке персональных данных</label>
                 </div>
               </div>
             </div>
@@ -250,6 +259,7 @@ export default {
         type: 'phys'
       },
       email: '',
+      agreement: false,
       password: '',
       confirmPassword: '',
       phone: '',
@@ -295,12 +305,17 @@ export default {
     },
     'display.phone' (val) {
       this.phone = val.replace(/[^0-9]/g, '')
+    },
+    'loginData.snils' (val) {
+      this.snils = val.replace(/[^0-9]/g, '')
     }
   },
   methods: {
     async submitLogin () {
+      const formData = JSON.parse(JSON.stringify(this.loginData))
+      formData.snils = this.snils
       await this.$auth.login({
-        data: this.loginData
+        data: formData
       }).catch((error) => {
         if (error.response.status === 401) {
           this.$notify({ type: 'error', title: 'Ошибка', text: 'Проверьте данные для входа. Если ошибка повторятся, обратитесь к администратору' })
@@ -338,21 +353,32 @@ export default {
       }
     },
     validateThirdStep () {
-      if (this.notaclient === true) {
-        if (this.account === false) {
+      if (!this.notaclient) {
+        if (!this.account) {
           this.$notify({ type: 'error', title: 'Ошибка', text: 'Укажите номер лицевого счета' })
           return false
         }
-        if (this.name === false) {
+        if (!this.name) {
           this.$notify({ type: 'error', title: 'Ошибка', text: 'Укажите ФИО' })
           return false
         }
       }
-      if (this.name === false) {
+      if (!this.agreement) {
         this.$notify({ type: 'error', title: 'Ошибка', text: 'Примите соглашение об обработке персональных данных' })
         return false
       }
       return true
+    },
+    validateSecondStep () {
+      if (!this.email) {
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Укажите электронную почту' })
+        return false
+      }
+      if (!this.display.phone) {
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Введите телефон' })
+        return false
+      }
+      this.nextTo(3)
     },
     validateFirstStep () {
       Object.assign(this.passwordError, {
@@ -377,12 +403,18 @@ export default {
           message: 'Обязательное поле'
         }
         this.$notify({ type: 'error', title: 'Ошибка', text: 'Придумайте пароль' })
+        return
+      }
+      if (this.password.length < 6) {
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Пароль должен содержать минимум 6 символов' })
+        return
       }
       if (this.password !== this.confirmPassword) {
         this.passwordError.confirm = {
           message: 'Пароли не совпадают'
         }
         this.$notify({ type: 'error', title: 'Ошибка', text: 'Пароли не совпадают' })
+        return
       }
       if (result) {
         this.nextTo(2)
@@ -405,6 +437,7 @@ export default {
   }
   .login-form-row {
     height: 365px;
+    margin: 0 auto;
   }
   .step-title {
     font-family: Varela, sans-serif;

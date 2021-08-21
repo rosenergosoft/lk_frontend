@@ -11,28 +11,30 @@
     <div class="content">
       <b-tabs content-class="mt-3">
         <b-tab title="Основаня информация">
-          <div class="row">
+          <div class="row inputs">
             <div class="col">
               <div class="form-group">
                 <label>Тип пользователя</label>
-                <select v-model="userData.type" class="form-control">
-                  <option value="">
-                    Выберите тип пользователя
-                  </option>
-                  <option value="admin">
-                    Администратор
-                  </option>
-                  <option value="vendor">
-                    Гарантийный поставщик
-                  </option>
-                  <option value="customer">
-                    Потребитель
-                  </option>
-                </select>
+                <div class="select-wrapper">
+                  <select v-model="userData.type" class="form-control" :disabled="isEdit">
+                    <option value="">
+                      Выберите тип пользователя
+                    </option>
+                    <option value="admin">
+                      Администратор
+                    </option>
+                    <option value="vendor">
+                      Гарантийный поставщик
+                    </option>
+                    <option value="customer">
+                      Потребитель
+                    </option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row inputs">
             <div class="col">
               <div class="form-group">
                 <label>Email</label>
@@ -74,7 +76,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
+          <div v-if="!isEdit" class="row">
             <div class="col">
               <div class="v-application">
                 <v-switch
@@ -140,7 +142,7 @@
       </b-tabs>
     </div>
     <template #modal-footer>
-      <div class="d-flex justify-content-between">
+      <div>
         <div>
           <button type="button" class="btn blue-button" @click="saveUser">
             Сохранить
@@ -213,7 +215,11 @@ export default {
       if (this.$route.query.id) {
         const query = Object.assign({}, this.$route.query)
         delete query.id
-        this.$router.replace({ query })
+        this.$router.replace({ query }).catch(
+          (e) => {
+            //
+          }
+        )
       }
     },
     saveUser () {
