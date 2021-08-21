@@ -141,7 +141,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'Vuex'
+import { mapGetters } from 'vuex'
 import DocumentsItem from '~/components/account/documents/DocumentsItem'
 export default {
   name: 'Index',
