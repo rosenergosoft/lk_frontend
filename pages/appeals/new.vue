@@ -20,7 +20,7 @@
             <div class="personal-data">
               <div class="separator" />
             </div>
-            <Documents />
+            <Documents @docs="getDocuments" />
             <div class="text-left button-wrapper">
               <button class="btn blue-button float-none" @click="secondStep">
                 Далее
@@ -53,6 +53,10 @@ export default {
   },
   data () {
     return {
+      docs: {
+        phys: '',
+        yur: ''
+      },
       currentStep: 0,
       appeal_id: null
     }
@@ -71,7 +75,27 @@ export default {
   },
   methods: {
     validateFirstStep () {
-      if (this.userProfile.first_name && this.userProfile.last_name && this.userProfile.pasport && this.userProfile.pasport_granted_by && this.userProfile.pasport_date && this.userProfile.reg_address && this.userProfile.phys_address) {
+      if (
+        this.userProfile.first_name &&
+        this.userProfile.last_name &&
+        this.userProfile.pasport &&
+        this.userProfile.pasport_granted_by &&
+        this.userProfile.pasport_date &&
+        this.userProfile.reg_address &&
+        this.userProfile.phys_address
+      ) {
+        if (this.docs.phys[0]) {
+          if (!this.docs.phys[0].signature) {
+            this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы пользователя' })
+            return false
+          }
+        }
+        if (this.docs.phys[1]) {
+          if (!this.docs.phys[1].signature) {
+            this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы пользователя' })
+            return false
+          }
+        }
         return true
       } else {
         this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните даные о пользователе' })
@@ -79,26 +103,29 @@ export default {
       }
     },
     createDraft () {
-      if (this.validateFirstStep()) {
-        this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/appeals/draft')
-          .then((res) => {
-            if (res.data.success) {
-              this.appeal_id = res.data.appeal.id
-              this.nextTo(1)
-            }
-          })
-      }
+      this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/appeals/draft')
+        .then((res) => {
+          if (res.data.success) {
+            this.appeal_id = res.data.appeal.id
+            this.nextTo(1)
+          }
+        })
     },
     secondStep () {
-      if (this.appeal_id) {
-        this.nextTo(1)
-      } else {
-        this.createDraft()
+      if (this.validateFirstStep()) {
+        if (this.appeal_id) {
+          this.nextTo(1)
+        } else {
+          this.createDraft()
+        }
       }
     },
     nextTo (to = false) {
       this.currentStep = to
       window.scrollTo(0, 0)
+    },
+    getDocuments (docs) {
+      this.docs = docs
     }
   }
 }

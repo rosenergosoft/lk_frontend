@@ -31,7 +31,7 @@
           class="elevation-1 w-100"
           no-results-text="Нет данных"
           no-data-text="Нет данных"
-          :loading="isLoading"
+          :loading="dataLoading"
           :loading-text="loadingText"
           :footer-props="{
             itemsPerPageText: 'Элементов на странице'
@@ -47,7 +47,7 @@
             </div>
           </template>
           <template #[`item.status`]="{ item }">
-            <div :class="getStatusClass(item)">
+            <div :class="getStatusClass(item)" class="r-statuses">
               {{ getStatus(item) }}
             </div>
           </template>
@@ -83,12 +83,12 @@ export default {
   data () {
     return {
       perPage: 10,
-      isLoading: true,
+      dataLoading: true,
       loadingText: 'Загрузка данных',
       totalAppeals: 0,
       options: {},
       headers: [
-        { text: '№ обращения', value: 'id' },
+        { text: '№', value: 'id' },
         { text: 'Вопрос', value: 'question' },
         { text: 'Статус', value: 'status' },
         { text: 'Дата создания', value: 'created_at' }
@@ -101,7 +101,7 @@ export default {
     ...mapGetters(['user'])
   },
   watch: {
-    isLoading (val) {
+    dataLoading (val) {
       if (val) {
         this.loadingText = 'Загрузка данных'
       } else {
@@ -114,12 +114,13 @@ export default {
   },
   methods: {
     async loadData () {
+      this.dataLoading = true
       const res = await this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/appeals/list')
       if (res) {
         this.appeals = res.data.data
         this.totalAppeals = res.data.total
       }
-      this.isLoading = false
+      this.dataLoading = false
     },
     handleClick (value) {
       if (value.status !== 'draft') {
