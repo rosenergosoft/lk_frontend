@@ -11,23 +11,20 @@
             </h2>
             <div>
               <ul>
-                <li>
-                  <input
-                    id="snils"
-                    v-model="loginData.type"
-                    v-mask="'###-###-### ##'"
-                    type="radio"
-                    name="type"
-                    value="phys"
-                  ><label for="snils">Физическое лицо (вход по СНИЛС)</label>
-                </li>
+                <li><input id="snils" v-model="loginData.type" type="radio" name="type" value="phys" ><label for="snils">Физическое лицо (вход по СНИЛС)</label></li>
                 <li><input id="ogrn" v-model="loginData.type" type="radio" name="type" value="yur"><label for="ogrn">Юридическое лицо (вход по ОГРН)</label></li>
                 <li><input id="ogrnip" v-model="loginData.type" type="radio" name="type" value="ip"><label for="ogrnip">Индивидуальный предприниматель (вход по ОГРНИП)</label></li>
                 <li><input id="by-email" v-model="loginData.type" type="radio" name="type" value="email"><label for="by-email">Вход по электронной почте</label></li>
               </ul>
               <div class="inputs">
                 <div v-if="loginData.type === 'phys'" class="form-group">
-                  <input v-model="loginData.snils" :placeholder="placeholder" type="text" class="form-control">
+                  <input
+                    v-model="loginData.snils"
+                    v-mask="'###-###-### ##'"
+                    :placeholder="placeholder"
+                    type="text"
+                    class="form-control"
+                  >
                 </div>
                 <div v-if="loginData.type === 'yur'" class="form-group">
                   <input v-model="loginData.ogrn" :placeholder="placeholder" type="text" class="form-control">

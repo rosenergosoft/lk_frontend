@@ -35,12 +35,20 @@
             </div>
           </div>
           <div class="row inputs">
-            <div class="col">
+            <div class="col-6">
               <div class="form-group">
                 <label>Email</label>
                 <input v-model="userData.email" class="form-control" type="text" />
               </div>
             </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label>Телефон</label>
+                <input v-model="displayPhone" v-mask="phoneMask" class="form-control" type="text" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
             <div class="col">
               <div class="form-group">
                 <label>Пароль</label>
@@ -60,7 +68,7 @@
             <div class="col">
               <div class="form-group">
                 <label>СНИЛС</label>
-                <input v-model="userData.snils" type="text" class="form-control">
+                <input v-model="displaySnils" v-mask="'###-###-### ##'" type="text" class="form-control">
               </div>
             </div>
             <div class="col">
@@ -162,6 +170,9 @@ export default {
   },
   data () {
     return {
+      displaySnils: '',
+      displayPhone: '',
+      phoneMask: '+7 (###) ###-##-##',
       userData: {
         type: ''
       },
@@ -183,6 +194,20 @@ export default {
       return !!(this.$route.query.id)
     }
   },
+  watch: {
+    displaySnils (val) {
+      if (val && typeof (val) === 'string') {
+        console.log(val)
+        this.userData.snils = val.replace(/[^0-9]/g, '')
+      }
+    },
+    displayPhone (val) {
+      if (val && typeof (val) === 'string') {
+        console.log(val)
+        this.userData.phone = val.replace(/[^0-9]/g, '')
+      }
+    }
+  },
   methods: {
     init () {
       if (this.isEdit) {
@@ -190,17 +215,21 @@ export default {
         this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/user/' + this.$route.query.id)
           .then((res) => {
             if (res.data.success) {
+              this.phoneMask = '+# (###) ###-##-##'
               this.userData = {
                 id: res.data.user.id,
                 type: res.data.user.type,
                 email: res.data.user.email,
+                phone: res.data.user.phone,
                 vendor_name: (res.data.user.vendor) ? res.data.user.vendor.name : '',
                 snils: res.data.user.snils,
                 ogrn: res.data.user.ogrn,
                 ogrnip: res.data.user.ogrnip,
                 is_active: res.data.user.is_active
               }
-              this.userProfile = res.data.user.profile
+              this.displaySnils = res.data.user.snils
+              this.displayPhone = res.data.user.phone
+              this.userProfile = res.data.user.profile ?? {}
             }
             this.setLoading(false)
           })
