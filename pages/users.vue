@@ -20,7 +20,7 @@
           no-results-text="Нет данных"
           no-data-text="Нет данных"
           class="elevation-1 w-100"
-          :loading="isLoading"
+          :loading="dataLoading"
           :loading-text="loadingText"
           :footer-props="{
             itemsPerPageText: 'Элементов на странице'
@@ -74,7 +74,7 @@ export default {
   },
   data () {
     return {
-      isLoading: true,
+      dataLoading: true,
       loadingText: 'Загрузка данных',
       perPage: 5,
       totalUsers: 0,
@@ -100,7 +100,7 @@ export default {
     }
   },
   watch: {
-    isLoading (val) {
+    dataLoading (val) {
       if (val) {
         this.loadingText = 'Загрузка данных'
       } else {
@@ -127,24 +127,16 @@ export default {
     }
   },
   methods: {
-<<<<<<< HEAD
     init () {
       this.setLoading(true)
+      this.dataLoading = true
       this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/user/list?' + this.query)
         .then((res) => {
           this.users = res.data.data
           this.totalUsers = res.data.total
           this.setLoading(false)
+          this.dataLoading = false
         })
-=======
-    async init () {
-      const res = await this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/user/list?' + this.query)
-      if (res) {
-        this.users = res.data.data
-        this.totalUsers = res.data.total
-      }
-      this.isLoading = false
->>>>>>> 7225040df6fdb81f8e807949a4e232bad50dfe84
     },
     getFullName (user) {
       return user.last_name + ' ' + user.first_name + ' ' + user.middle_name
