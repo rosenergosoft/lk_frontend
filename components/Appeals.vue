@@ -47,7 +47,7 @@
             </div>
           </template>
           <template #[`item.status`]="{ item }">
-            <div :class="getStatusClass(item)">
+            <div :class="getStatusClass(item)" class="r-statuses">
               {{ getStatus(item) }}
             </div>
           </template>
@@ -88,7 +88,7 @@ export default {
       totalAppeals: 0,
       options: {},
       headers: [
-        { text: '№ обращения', value: 'id' },
+        { text: '№', value: 'id' },
         { text: 'Вопрос', value: 'question' },
         { text: 'Статус', value: 'status' },
         { text: 'Дата создания', value: 'created_at' }

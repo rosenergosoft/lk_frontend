@@ -4,7 +4,7 @@
       <div class="text-content d-flex">
         <div class="person w40-square" />
         <div class="">
-          <div v-if="userProfile.user_id !== message.user_id" class="label">
+          <div v-if="appeal.user_id === message.user_id" class="label">
             {{ message.user_profile.first_name }} {{ message.user_profile.last_name }}
           </div>
           <div v-else class="label">
@@ -27,6 +27,10 @@ export default {
   name: 'Message',
   props: {
     message: {
+      type: Object,
+      default: null
+    },
+    appeal: {
       type: Object,
       default: null
     }
