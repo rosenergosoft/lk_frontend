@@ -797,7 +797,16 @@ tr {
     }
   }
 }
-<<<<<<< HEAD
+
+.nav-tabs .nav-link {
+  border-radius: 0;
+}
+.w-90 {
+  width: 90%
+}
+.w-30 {
+  width: 30%
+}
 
 
 // loader
@@ -894,14 +903,3 @@ tr {
   }
 }
 
-=======
-.nav-tabs .nav-link {
-  border-radius: 0;
-}
-.w-90 {
-  width: 90%
-}
-.w-30 {
-  width: 30%
-}
->>>>>>> 7225040df6fdb81f8e807949a4e232bad50dfe84
