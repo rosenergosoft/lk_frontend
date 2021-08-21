@@ -86,10 +86,56 @@
           </div>
         </b-tab>
         <b-tab v-if="userData.type === 'customer'" title="Профиль пользователя">
-          Тут какя-то инфа о ебучем пользователе
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <label>Фамилия</label>
+                    <input v-model="userProfile.last_name" type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <label>Имя</label>
+                    <input v-model="userProfile.first_name" type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <label>Отчество</label>
+                    <input v-model="userProfile.middle_name" type="text" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <label>Лицевой счет</label>
+                    <input v-model="userProfile.account" type="text" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </b-tab>
-        <b-tab v-if="userData.type === 'customer'" title="Файлы пользователя">
-          Тут ебучие файлы пользователя
+        <b-tab v-if="userData.type === 'customer'" title="Файлы пользователя" @click="loadFiles">
+          <DocumentsItem
+            v-for="doc in documents.phys"
+            :key="doc.id"
+            :doc="doc"
+            @deleted="handleDelete"
+            @signed="handleSigned"
+            @unsigned="loadFiles"
+          />
+          <DocumentsItem
+            v-for="doc in documents.yur"
+            :key="doc.id"
+            :doc="doc"
+            @deleted="handleDelete"
+            @signed="handleSigned"
+            @unsigned="loadFiles"
+          />
         </b-tab>
       </b-tabs>
     </div>
@@ -106,12 +152,21 @@
 </template>
 
 <script>
+import DocumentsItem from '../account/documents/DocumentsItem'
 export default {
   name: 'Edit',
+  components: {
+    DocumentsItem
+  },
   data () {
     return {
       userData: {
         type: ''
+      },
+      userProfile: {},
+      documents: {
+        phys: [],
+        yur: []
       }
     }
   },
@@ -129,6 +184,7 @@ export default {
   methods: {
     init () {
       if (this.isEdit) {
+        this.setLoading(true)
         this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/user/' + this.$route.query.id)
           .then((res) => {
             if (res.data.success) {
@@ -142,7 +198,9 @@ export default {
                 ogrnip: res.data.user.ogrnip,
                 is_active: res.data.user.is_active
               }
+              this.userProfile = res.data.user.profile
             }
+            this.setLoading(false)
           })
       } else {
         this.userData = {
@@ -159,13 +217,35 @@ export default {
       }
     },
     saveUser () {
-      this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user/save', this.userData)
+      this.setLoading(true)
+      const data = {
+        userData: this.userData,
+        userProfile: this.userProfile
+      }
+      this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user/save', data)
         .then((res) => {
           if (res.data.success) {
             this.$emit('updated')
             this.$bvModal.hide('modal-users-edit')
           }
+          this.setLoading(false)
         })
+    },
+    loadFiles () {
+      this.setLoading(true)
+      this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/user/documents?id=' + this.$route.query.id)
+        .then((res) => {
+          if (res.data.docs) {
+            this.documents = res.data.docs
+          }
+          this.setLoading(false)
+        })
+    },
+    handleDelete () {
+      this.reloadDocs()
+    },
+    handleSigned () {
+      this.reloadDocs()
     }
   }
 }

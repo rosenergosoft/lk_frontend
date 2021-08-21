@@ -50,12 +50,14 @@ export default {
   },
   mounted () {
     if (this.isSuper) {
+      this.setLoading(true)
       this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/client/list')
         .then((res) => {
           if (res.data.success) {
             this.clients = res.data.list
             this.current_client = this.$store.getters.user.client_id
           }
+          this.setLoading(false)
         })
     }
   },
@@ -67,8 +69,10 @@ export default {
     },
     switchClient () {
       if (this.isSuper) {
+        this.setLoading(true)
         this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/client/switch', { client_id: this.current_client })
           .then((res) => {
+            this.setLoading(false)
             if (res.data.success) {
               this.$router.go()
             }

@@ -14,6 +14,11 @@
         </div>
       </div>
     </div>
+    <div v-if="isLoading" class="loader-background">
+      <div class="mx-auto">
+        <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+      </div>
+    </div>
   </div>
 </template>
 

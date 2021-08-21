@@ -1,5 +1,5 @@
 export const state = () => ({
-
+  isLoading: false
 })
 
 export const getters = {
@@ -11,6 +11,9 @@ export const getters = {
   },
   userCompany (state) {
     return state.auth.user.company
+  },
+  isLoading (state) {
+    return state.isLoading
   }
 }
 
@@ -32,10 +35,10 @@ export const mutations = {
       state.auth.user.company = company
     }
   },
-  increment (state) {
-    state.counter++
-  },
   DELETE_USER_COMPANY (state) {
     state.auth.user.company = null
+  },
+  UPDATE_LOADING (state, loading) {
+    state.isLoading = loading
   }
 }
