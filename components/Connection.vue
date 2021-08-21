@@ -136,7 +136,7 @@
           no-results-text="Нет данных"
           no-data-text="Нет данных"
           class="elevation-1 w-100"
-          :loading="isLoading"
+          :loading="dataLoading"
           :loading-text="loadingText"
           :footer-props="{
             itemsPerPageText: 'Элементов на странице'
@@ -192,7 +192,7 @@ export default {
   data () {
     return {
       perPage: 10,
-      isLoading: true,
+      dataLoading: true,
       loadingText: 'Загрузка данных',
       totalApplications: 0,
       options: {},
@@ -229,7 +229,7 @@ export default {
     }
   },
   watch: {
-    isLoading (val) {
+    dataLoading (val) {
       if (val) {
         this.loadingText = 'Загрузка данных'
       } else {
@@ -240,9 +240,11 @@ export default {
   mounted () {
     this.getTableData()
     if (this.isExecutive) {
+      this.setLoading(true)
       this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/application/counts')
         .then((res) => {
           this.counts = res.data.counts
+          this.setLoading(false)
         })
     }
   },
@@ -250,13 +252,16 @@ export default {
     handleClick () {
       // console.log(123)
     },
-    async getTableData () {
-      const res = await this.$axios.get(process.env.LARAVEL_API_BASE_URL + this.tableDataUrl)
-      if (res) {
-        this.applications = res.data.data
-        this.totalApplications = res.data.total
-      }
-      this.isLoading = false
+    getTableData () {
+      this.setLoading(true)
+      this.dataLoading = true
+      this.$axios.get(process.env.LARAVEL_API_BASE_URL + this.tableDataUrl)
+        .then((res) => {
+          this.applications = res.data.data
+          this.totalApplications = res.data.total
+          this.setLoading(false)
+          this.dataLoading = false
+        })
     },
     getMemberFrom (application) {
       if (application.requester === 'phys') {

@@ -1,7 +1,11 @@
 import wcmatch from 'wildcard-match'
+import { mapGetters } from 'vuex'
 
 export default {
   computed: {
+    ...mapGetters([
+      'isLoading'
+    ]),
     userPermissions () {
       if (this.$store.getters.user) {
         return this.$store.getters.user.permissions.map(item => item.name)
@@ -47,6 +51,9 @@ export default {
         }
       }
       return false
+    },
+    setLoading (state) {
+      this.$store.commit('UPDATE_LOADING', state)
     }
   }
 }

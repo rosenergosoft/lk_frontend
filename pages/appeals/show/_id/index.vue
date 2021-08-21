@@ -76,7 +76,7 @@
                 <label class="label">Сообщения</label>
                 <div class="d-flex justify-content-between align-items-center mt-20">
                   <div class="text-content d-flex">
-                    <div class="person w40-square"></div>
+                    <div class="person w40-square" />
                     <div class="w-90">
                       <div class="label">
                         {{ userProfile.first_name }} {{ userProfile.last_name }}
@@ -88,7 +88,7 @@
                     {{ $moment(appeal.created_at).format('hh:ss, DD MMMM yyyy') }}
                   </div>
                 </div>
-                <div v-if="messages" class="separator"></div>
+                <div v-if="messages" class="separator" />
                 <div class="private-messages">
                   <Message
                     v-for="item in messages"
@@ -101,7 +101,7 @@
             </div>
           </div>
         </div>
-        <div class="box status-6">
+        <div v-if="isExecutive || appeal.status !== 'completed'" class="box status-6">
           <h4>Обращение</h4>
           <div v-if="isExecutive" class="personal-data">
             <div class="inputs">
@@ -206,7 +206,7 @@ export default {
             this.text = ''
             this.$notify({ type: 'success', title: 'Успех', text: 'Сообщение отправлено' })
             this.messages = res.messages
-            console.log(this.messages)
+            this.appeal = res.appeal
           }
         })
     },
