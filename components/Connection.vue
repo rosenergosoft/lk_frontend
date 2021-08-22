@@ -214,6 +214,7 @@ export default {
       ],
       applications: [],
       counts: {},
+      currentPage: 1,
       filters: {
         status: null,
         query: ''
@@ -223,7 +224,10 @@ export default {
   computed: {
     ...mapGetters(['user']),
     tableDataUrl () {
-      const query = {}
+      const query = {
+        per_page: this.perPage,
+        page: this.currentPage
+      }
       if (this.filters.status) {
         query.status = this.filters.status
       }
@@ -244,6 +248,13 @@ export default {
       } else {
         this.loadingText = 'Нет данных'
       }
+    },
+    options: {
+      handler (val) {
+        this.currentPage = val.page
+        this.getTableData()
+      },
+      deep: true
     }
   },
   mounted () {

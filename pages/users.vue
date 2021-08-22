@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="user-list">
     <div class="d-flex justify-content-between mb-4">
       <div style="width: 100px" />
       <div class="mr-4">
@@ -92,7 +92,8 @@ export default {
   computed: {
     query () {
       const obj = {
-        per_page: this.perPage
+        per_page: this.perPage,
+        page: this.currentPage
       }
       return Object.keys(obj)
         .map(key => `${key}=${obj[key]}`)
@@ -109,7 +110,8 @@ export default {
     },
     options: {
       handler (val) {
-        // this.getDataFromApi()
+        this.currentPage = val.page
+        this.init()
       },
       deep: true
     },
