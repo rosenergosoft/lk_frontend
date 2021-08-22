@@ -69,6 +69,7 @@ export default {
       .then((res) => {
         if (res.data.id) {
           this.application_id = res.data.id
+          this.docs = res.data.docs
           if (this.validateFirstStep()) {
             this.nextTo(1)
           }

@@ -13,7 +13,9 @@
       <div class="l-separator">
         /
       </div>
-      <div><a>Вода</a></div>
+      <div :class="{ active: disclosureGroup === 2 }" @click="setDisclosureGroup(2)">
+        <a>Водоснабжение</a>
+      </div>
     </div>
     <div class="disclosure-documents">
       <div class="boxes">
