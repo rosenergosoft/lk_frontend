@@ -1,8 +1,11 @@
 <template>
   <div class="uploaded-files d-flex mt-20 align-items-center justify-content-between">
     <div class="d-flex align-items-center">
-      <div v-viewer="{navbar:false, toolbar:false}" class="mr-20 document-preview">
+      <div v-if="isImage" v-viewer="{navbar:false, toolbar:false}" class="mr-20 document-preview">
         <img :src="getUrl()" :alt="doc.filename" title="">
+      </div>
+      <div v-if="isDoc" class="mr-20 document-preview">
+        <b-icon-file-earmark class="bootstrap-icon" font-scale="3" />
       </div>
       <div>
         {{ getType() }}
@@ -21,13 +24,14 @@
   </div>
 </template>
 <script>
-import { BIconCheckCircle } from 'bootstrap-vue'
+import { BIconCheckCircle, BIconFileEarmark } from 'bootstrap-vue'
 import Signing from './Signing'
 export default {
   name: 'DocumentsItem',
   components: {
     Signing,
-    BIconCheckCircle
+    BIconCheckCircle,
+    BIconFileEarmark
   },
   props: {
     // eslint-disable-next-line vue/require-default-prop
@@ -43,7 +47,33 @@ export default {
         yur_prikaz: 'Приказ, выписка из протокола, решение учредителей о назначении директора',
         yur_sgr: 'Выписка или свидетельство о государственной регистрации заявителя в качестве юридического лица или ип',
         yur_pszun: 'Свидетельство о постановке заявителя на учет в налоговом органе'
+      },
+      fileType: {
+        image: [
+          'jpg',
+          'jpeg',
+          'png'
+        ],
+        doc: [
+          'doc',
+          'pdf',
+          'docx',
+          'xls',
+          'xlsx'
+        ]
       }
+    }
+  },
+  computed: {
+    fileExtension () {
+      const re = /(?:\.([^.]+))?$/
+      return re.exec(this.doc.filename)[1]
+    },
+    isImage () {
+      return this.fileType.image.includes(this.fileExtension)
+    },
+    isDoc () {
+      return this.fileType.doc.includes(this.fileExtension)
     }
   },
   methods: {

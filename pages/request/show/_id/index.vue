@@ -90,8 +90,7 @@
                   <div>Энергопринимающие устройства, которые могут быть присоединены к устройствам противоаварийной автоматики: {{ emergencyAuto[application.emergencyAuto] }}</div>
                   <div>Сроки проектирования: {{ estimationQuater[application.estimationQuater] }} квартал {{ application.estimationYear }} года</div>
                   <div>Мощность (кВт): {{ application.power }} </div>
-                  <div>Гарантийный поставщик: 123 </div>
-                  <div>Энергосбытовая:  ООО Энергосбыт</div>
+                  <div>Энергосбытовая: {{ application.vendor.name }}</div>
                   <div>Ценовая категория:  {{ pricing[application.pricing] }}</div>
                   <div>Дополнительная информация:  {{ application.other }}</div>
                 </div>
@@ -175,6 +174,7 @@ export default {
         'Увеличение максимальной мощности и изменение категории надежности'
       ],
       integrityCategory: [
+        '',
         'I',
         'II',
         'III'
