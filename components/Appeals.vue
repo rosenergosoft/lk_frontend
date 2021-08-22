@@ -31,6 +31,7 @@
           class="elevation-1 w-100"
           no-results-text="Нет данных"
           no-data-text="Нет данных"
+          :disable-sort="true"
           :loading="dataLoading"
           :loading-text="loadingText"
           :footer-props="{
@@ -40,7 +41,7 @@
         >
           <template #[`item.question`]="{ item }">
             <div v-if="item.question">
-              {{ item.question }}
+              {{ item.question | cut}}
             </div>
             <div v-else>
               - Вопрос не задан -
@@ -51,7 +52,7 @@
               {{ getStatus(item) }}
             </div>
           </template>
-          <template #[`item.created_at`]="{ item }">
+          <template #[`item.created_at`]="{ item }" class="text-nowrap">
             {{ $moment(item.created_at).format('DD MMM YYYY') }} г.
           </template>
           <template #[`item.actions`]="{ item }">
@@ -91,7 +92,7 @@ export default {
         { text: '№', value: 'id' },
         { text: 'Вопрос', value: 'question' },
         { text: 'Статус', value: 'status' },
-        { text: 'Дата создания', value: 'created_at' }
+        { text: 'Дата создания', value: 'created_at', class: 'text-nowrap' }
       ],
       appeals: [],
       counts: {}
@@ -111,6 +112,24 @@ export default {
   },
   mounted () {
     this.loadData()
+  },
+  filters: {
+    cut (value) {
+      let i = 240
+      if (value.length > i) {
+        if (value[i] === ' ') {
+          return value.substr(0, i) + ' ...'
+        } else {
+          while (value[i] !== ' ') {
+            i++
+            if (value[i] === ' ') {
+              return value.substr(0, i) + ' ...'
+            }
+          }
+        }
+      }
+      return value
+    }
   },
   methods: {
     async loadData () {

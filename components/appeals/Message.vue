@@ -2,19 +2,23 @@
   <div>
     <div class="d-flex justify-content-between align-items-center mt-20">
       <div class="text-content d-flex">
-        <div class="person w40-square" />
-        <div class="">
-          <div v-if="appeal.user_id === message.user_id" class="label">
-            {{ message.user_profile.first_name }} {{ message.user_profile.last_name }}
-          </div>
-          <div v-else class="label">
-            Администратор
+        <div>
+          <div class="person mr-0 w-40p" />
+        </div>
+        <div class="pl-3">
+          <div class="d-flex">
+            <div v-if="appeal.user_id === message.user_id" class="label">
+              {{ message.user_profile.first_name }} {{ message.user_profile.last_name }}
+            </div>
+            <div v-else class="label">
+              Администратор
+            </div>
+            <div class="notice ml-auto">
+              {{ $moment(message.created_at).format('hh:ss, DD MMMM yyyy') }}
+            </div>
           </div>
           <div>{{ message.message }}</div>
         </div>
-      </div>
-      <div class="notice">
-        {{ $moment(message.created_at).format('hh:ss, DD MMMM yyyy') }}
       </div>
     </div>
     <div class="separator" />

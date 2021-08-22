@@ -74,18 +74,22 @@
             <div>
               <div v-if="appeal.question">
                 <label class="label">Сообщения</label>
-                <div class="d-flex justify-content-between align-items-center mt-20">
+                <div class="align-items-center mt-20">
                   <div class="text-content d-flex">
-                    <div class="person w40-square" />
-                    <div class="w-90">
-                      <div class="label">
-                        {{ userProfile.first_name }} {{ userProfile.last_name }}
+                    <div>
+                      <div class="person mr-0 w-40p" />
+                    </div>
+                    <div class="pl-3">
+                      <div class="d-flex">
+                        <div class="label">
+                          {{ userProfile.first_name }} {{ userProfile.last_name }}
+                        </div>
+                        <div class="notice ml-auto">
+                          {{ $moment(appeal.created_at).format('hh:ss, DD MMMM yyyy') }}
+                        </div>
                       </div>
                       <div>{{ appeal.question }}</div>
                     </div>
-                  </div>
-                  <div class="notice w-30">
-                    {{ $moment(appeal.created_at).format('hh:ss, DD MMMM yyyy') }}
                   </div>
                 </div>
                 <div v-if="messages" class="separator" />
@@ -131,7 +135,7 @@
           </div>
           <div class="clearfix" />
         </div>
-        <div v-if="docs" class="box status-1">
+        <div v-if="docs.length" class="box status-1">
           <h4>Загруженные файлы</h4>
           <div class="docs">
             <UploadedDocumentsItem
@@ -171,7 +175,7 @@ export default {
         phys: [],
         yur: []
       },
-      docs: {},
+      docs: [],
       messages: {},
       text: '',
       loaded: false,
@@ -185,7 +189,7 @@ export default {
       }
     }
   },
-  created () {
+  mounted () {
     this.getAppeal()
   },
   methods: {
