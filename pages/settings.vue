@@ -1,34 +1,40 @@
 <template>
-  <div class="container ml-4">
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label>Тип клиента</label>
-          <select multiple v-model="clientType" class="form-control">
-            <option value="">
-              Выберите тип клиента
-            </option>
-            <option value="1">
-              Электричество
-            </option>
-            <option value="2">
-              Тепло
-            </option>
-            <option value="3">
-              Вода
-            </option>
-            <option value="4">
-              Водоотведение
-            </option>
-          </select>
-        </div>
+  <div class="connection">
+    <div class="page-title d-flex">
+      <div class="active">
+        Настройка
       </div>
-      <div class="col">
-        <div class="form-group">
-          <button class="btn blue-button" @click="submitClient">
-            Сохранить
-          </button>
+    </div>
+    <div class="boxes">
+      <div class="box status-2">
+        <h4>Личный кабинет</h4>
+        <div class="form-group inputs">
+          <div class="notice">
+            Выберите ваши сферы деятельности
+          </div>
+          <label class="label">Сферы деятельности</label>
+          <div class="select-wrapper">
+            <select v-model="clientType" multiple class="form-control">
+              <option value="1">
+                Электричество
+              </option>
+              <option value="2">
+                Тепло
+              </option>
+              <option value="3">
+                Вода
+              </option>
+            </select>
+          </div>
         </div>
+        <div class="col">
+          <div class="form-group">
+            <button class="btn blue-button" @click="submitClient">
+              Сохранить
+            </button>
+          </div>
+        </div>
+        <div class="clearfix"></div>
       </div>
     </div>
   </div>

@@ -32,6 +32,9 @@ export default {
     },
     isVendor () {
       return !!(this.userRoles.includes('vendor'))
+    },
+    isAdmin () {
+      return !!(this.userRoles.includes('admin'))
     }
   },
   methods: {

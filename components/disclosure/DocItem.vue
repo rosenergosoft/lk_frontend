@@ -92,6 +92,7 @@ export default {
         }
         this.itemVal.deadline = this.item.deadline.replace('[YEAR]', this.$moment().add(additionalYear, 'years').format('yy'))
         this.itemVal.deadline = this.item.deadline.replace('[NEXT_QUARTER_MONTH]', this.$moment(nextQuarter, 'MM').format('MMMM'))
+        this.itemVal.deadline = this.item.deadline.replace('[NEXT_AFTER_QUARTER_MONTH]', this.$moment(nextQuarter, 'MM').add(1, 'months').format('MMMM'))
       }
     },
     processSemiannual () {
