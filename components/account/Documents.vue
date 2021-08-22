@@ -4,7 +4,7 @@
       <div>
         <label class="label">Документы по физическому лицу</label>
       </div>
-      <div class="file-upload">
+      <div v-if="canUploadPhys" class="file-upload">
         <button v-b-modal.modal-phys-docs type="button" class="btn blue-button">
           Загрузить
         </button>
@@ -27,7 +27,7 @@
       <div>
         <label class="label">Документы по юридическому лицу или ИП</label>
       </div>
-      <div class="file-upload">
+      <div v-if="canUploadYur" class="file-upload">
         <button v-b-modal.modal-yur-docs type="button" class="btn blue-button">
           Загрузить
         </button>
@@ -72,7 +72,23 @@ export default {
   computed: {
     ...mapGetters([
       'userCompany'
-    ])
+    ]),
+    canUploadPhys () {
+      return (this.documents.phys.length === 0 ||
+        !(this.documents.phys.find(item => item.type === 'proxy') &&
+        this.documents.phys.find(item => item.type === 'personal_id'))
+      )
+    },
+    canUploadYur () {
+      return (this.documents.yur.length === 0 ||
+          !(this.documents.yur.find(item => item.type === 'yur_proxy') &&
+            this.documents.yur.find(item => item.type === 'yur_ustav') &&
+            this.documents.yur.find(item => item.type === 'yur_prikaz') &&
+            this.documents.yur.find(item => item.type === 'yur_sgr') &&
+            this.documents.yur.find(item => item.type === 'yur_pszun')
+          )
+      )
+    }
   },
   mounted () {
     this.reloadDocs()
