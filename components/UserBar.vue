@@ -21,7 +21,7 @@
           <p v-if="isSuper" class="">
             Супер админ
           </p>
-          <p v-if="isExecutive && !isSuper" class="">
+          <p v-if="isAdmin" class="">
             Админ
           </p>
           <p v-if="isCustomer" class="">

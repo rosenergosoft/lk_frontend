@@ -282,9 +282,9 @@ td .count {
   text-align: center;
   cursor: pointer;
   height: 97px;
+  margin-bottom: 20px;
+  padding: 0 20px 0 0;
   font-size: 10px;
-  background-color: $statusBackgroundColor;
-  max-width: 160px;
   border-left: 20px solid #1F2234;
   .count {
     font-family: Barlow-Bold, sans-serif;
@@ -905,4 +905,16 @@ tr {
 .tarifs {
   display: flex;
   flex-wrap: nowrap;
+}
+.status-content {
+  display: flex;
+  height: 100%;
+  justify-content: space-around;
+  width: 100%;
+  align-items: center;
+  box-sizing: border-box;
+  background-color: $statusBackgroundColor;
+}
+.hoverColor {
+  color: $LinkHoverColor;
 }

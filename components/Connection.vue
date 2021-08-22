@@ -19,63 +19,75 @@
       </div>
     </div>
     <div v-if="isExecutive" class="row justify-content-between funnel align-middle">
-      <div class="col status-1 status d-flex align-items-center justify-content-center">
-        <div>
-          <div class="count">
-            {{ counts.accepted }}
-          </div>
-          <div class="status-text">
-            В работе
-          </div>
-        </div>
-      </div>
-      <div class="col status-2 status d-flex align-items-center justify-content-center">
-        <div>
-          <div class="count">
-            {{ counts.waiting_company_resp }}
-          </div>
-          <div class="status-text">
-            Ожидает ответа компании
+      <div class="col-lg-2 col-md-4 status-1 status d-flex align-items-center justify-content-center">
+        <div class="status-content">
+          <div>
+            <div class="count">
+              {{ counts.accepted }}
+            </div>
+            <div class="status-text">
+              В работе
+            </div>
           </div>
         </div>
       </div>
-      <div class="col status-3 status d-flex align-items-center justify-content-center">
-        <div>
-          <div class="count">
-            {{ counts.preparing }}
-          </div>
-          <div class="status-text">
-            Подготовка тех условий
-          </div>
-        </div>
-      </div>
-      <div class="col status-4 status d-flex align-items-center justify-content-center">
-        <div>
-          <div class="count">
-            {{ counts.invoice }}
-          </div>
-          <div class="status-text">
-            Счет на оплату
+      <div class="col-lg-2 col-md-4 status-2 status d-flex align-items-center justify-content-center">
+        <div class="status-content">
+          <div>
+            <div class="count">
+              {{ counts.waiting_company_resp }}
+            </div>
+            <div class="status-text">
+              Ожидает ответа компании
+            </div>
           </div>
         </div>
       </div>
-      <div class="col status-5 status d-flex align-items-center justify-content-center">
-        <div>
-          <div class="count">
-            {{ counts.in_progress }}
-          </div>
-          <div class="status-text">
-            Исполняется
+      <div class="col-lg-2 col-md-4 status-3 status d-flex align-items-center justify-content-center">
+        <div class="status-content">
+          <div>
+            <div class="count">
+              {{ counts.preparing }}
+            </div>
+            <div class="status-text">
+              Подготовка тех условий
+            </div>
           </div>
         </div>
       </div>
-      <div class="col status-6 status d-flex align-items-center justify-content-center">
-        <div>
-          <div class="count">
-            {{ counts.completed }}
+      <div class="col-lg-2 col-md-4 status-4 status d-flex align-items-center justify-content-center">
+        <div class="status-content">
+          <div>
+            <div class="count">
+              {{ counts.invoice }}
+            </div>
+            <div class="status-text">
+              Счет на оплату
+            </div>
           </div>
-          <div class="status-text">
-            Выполнен
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-4 status-5 status d-flex align-items-center justify-content-center">
+        <div class="status-content">
+          <div>
+            <div class="count">
+              {{ counts.in_progress }}
+            </div>
+            <div class="status-text">
+              Исполняется
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-4 status-6 status d-flex align-items-center justify-content-center">
+        <div class="status-content">
+          <div>
+            <div class="count">
+              {{ counts.completed }}
+            </div>
+            <div class="status-text">
+              Выполнен
+            </div>
           </div>
         </div>
       </div>
@@ -141,6 +153,7 @@
           :options.sync="options"
           :server-items-length="totalApplications"
           :items-per-page="perPage"
+          :disable-sort="true"
           no-results-text="Нет данных"
           no-data-text="Нет данных"
           class="elevation-1 w-100"
@@ -214,6 +227,7 @@ export default {
       ],
       applications: [],
       counts: {},
+      currentPage: 1,
       filters: {
         status: null,
         query: ''
@@ -223,7 +237,10 @@ export default {
   computed: {
     ...mapGetters(['user']),
     tableDataUrl () {
-      const query = {}
+      const query = {
+        per_page: this.perPage,
+        page: this.currentPage
+      }
       if (this.filters.status) {
         query.status = this.filters.status
       }
@@ -244,6 +261,13 @@ export default {
       } else {
         this.loadingText = 'Нет данных'
       }
+    },
+    options: {
+      handler (val) {
+        this.currentPage = val.page
+        this.getTableData()
+      },
+      deep: true
     }
   },
   mounted () {
