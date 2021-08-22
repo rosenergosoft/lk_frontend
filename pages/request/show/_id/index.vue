@@ -244,7 +244,7 @@ export default {
       }
     }
   },
-  created () {
+  mounted () {
     this.getApplication()
   },
   methods: {

@@ -13,7 +13,7 @@
         </NuxtLink>
       </div>
       <div v-if="can('applications_add') && !isSuper" class="ml-auto">
-        <button class="btn blue-button" @click="$router.push('/request/new')">
+        <button class="btn blue-button" @click="$router.push('/request/electricity/new')">
           Новая заявка
         </button>
       </div>
