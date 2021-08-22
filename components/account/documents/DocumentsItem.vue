@@ -54,11 +54,13 @@ export default {
       return this.types[this.doc.type]
     },
     deleteDocument () {
+      this.setLoading(true)
       this.$axios.delete(process.env.LARAVEL_API_BASE_URL + '/api/user/documents?id=' + this.doc.id)
         .then((res) => {
           if (res.data.success) {
             this.$emit('deleted')
           }
+          this.setLoading(false)
         })
     },
     signDoc () {

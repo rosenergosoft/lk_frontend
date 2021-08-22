@@ -225,14 +225,17 @@ export default {
         appeal_id: this.appeal.id,
         status: this.appeal.status
       }
+      this.setLoading(true)
       this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/appeals/changeStatus', formData)
         .then((res) => {
+          this.setLoading(false)
           if (res.success) {
             this.$notify({ type: 'success', title: 'Успех', text: 'Статус изменен' })
           }
         })
     },
     async getAppeal () {
+      this.setLoading(true)
       const id = this.$route.params.id
       try {
         const res = await this.$axios.$get(process.env.LARAVEL_API_BASE_URL + '/api/appeals/get/' + id)
@@ -248,6 +251,7 @@ export default {
         await this.getDocuments()
         await this.getDocs()
         await this.getMessages()
+        this.setLoading(false)
         this.loaded = true
       } catch (e) {
         // console.log(e)

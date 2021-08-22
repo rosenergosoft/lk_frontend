@@ -158,8 +158,10 @@ export default {
       this.docs = docs
     },
     createDraft () {
+      this.setLoading(true)
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/application/draft')
         .then((res) => {
+          this.setLoading(false)
           if (res.data.success) {
             this.application_id = res.data.application.id
             this.nextTo(1)

@@ -85,7 +85,13 @@
           </NuxtLink>
         </li>
         <li v-if="can('settings')" class="nav-item">
-          <a href="" class="nav-link"><i class="settings" /> Настройки</a>
+          <NuxtLink
+            to="/settings"
+            class="nav-link"
+            :class="{ active : $nuxt.$route.name === 'settings'}"
+          >
+            <i class="settings" /> Настройки
+          </NuxtLink>
         </li>
       </ul>
     </nav>
