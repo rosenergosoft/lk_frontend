@@ -5,7 +5,10 @@
         <div>
           <label class="label">Лицевой счет</label>
         </div>
-        <div class="text-content">
+        <div v-if="userProfile && userProfile.account" class="text-content">
+          {{ userProfile.account }}
+        </div>
+        <div v-else class="text-content">
           Новый клиент: лицевой счет еще не присвоен
         </div>
       </div>
