@@ -153,6 +153,7 @@
           :options.sync="options"
           :server-items-length="totalApplications"
           :items-per-page="perPage"
+          :disable-sort="true"
           no-results-text="Нет данных"
           no-data-text="Нет данных"
           class="elevation-1 w-100"

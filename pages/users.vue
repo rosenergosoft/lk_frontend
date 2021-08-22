@@ -17,6 +17,7 @@
           :server-items-length="totalUsers"
           :items-per-page="perPage"
           :page="currentPage"
+          :disable-sort="true"
           no-results-text="Нет данных"
           no-data-text="Нет данных"
           class="elevation-1 w-100"
