@@ -45,6 +45,7 @@ export default {
       if (this.proxy) {
         formData.append('proxy', this.proxy, this.proxy.name)
       }
+      this.setLoading(true)
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user/documents', formData)
         .then((res) => {
           if (res.data.success) {
@@ -53,6 +54,7 @@ export default {
             this.$emit('uploaded')
             this.$bvModal.hide('modal-phys-docs')
           }
+          this.setLoading(false)
         })
     }
   }

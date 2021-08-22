@@ -147,6 +147,7 @@ export default {
       }
       const data = Object.assign({}, this.companyData, this.bankData)
       data.id = this.id
+      this.setLoading(true)
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user/company', data)
         .then((res) => {
           if (res.data.success) {
@@ -154,10 +155,12 @@ export default {
             this.$bvModal.hide('modal-yur-data')
             this.$notify({ type: 'success', title: 'Успех', text: 'Данные сохранены' })
           }
+          this.setLoading(false)
         })
     },
     removeCompanyData () {
       if (this.userCompany && this.userCompany.name) {
+        this.setLoading(true)
         this.$axios.delete(process.env.LARAVEL_API_BASE_URL + '/api/user/company', { params: { id: this.id } })
           .then((res) => {
             if (res.data.success) {
@@ -166,6 +169,7 @@ export default {
               this.companyData = null
               this.$bvModal.hide('modal-yur-data')
             }
+            this.setLoading(false)
           })
       }
     }

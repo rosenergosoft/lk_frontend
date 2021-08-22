@@ -103,8 +103,10 @@ export default {
       }
     },
     createDraft () {
+      this.setLoading(true)
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/appeals/draft')
         .then((res) => {
+          this.setLoading(false)
           if (res.data.success) {
             this.appeal_id = res.data.appeal.id
             this.nextTo(1)

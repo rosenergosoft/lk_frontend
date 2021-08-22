@@ -252,11 +252,11 @@ export default {
       }
     },
     saveUser () {
-      this.setLoading(true)
       const data = {
         userData: this.userData,
         userProfile: this.userProfile
       }
+      this.setLoading(true)
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user/save', data)
         .then((res) => {
           if (res.data.success) {

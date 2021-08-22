@@ -8,11 +8,13 @@
         У вас указано не только физ. лицо, но и юридическое (или ИП), выберите на кого будет заключать договор.
       </div>
       <div>
-        <div class="form-group">
-          <input id="phys" v-model="details.requester" type="radio" value="phys" name="requester-type"><label for="phys">Физическое лицо</label>
+        <div class="form-group tarifs">
+          <div><input id="phys" v-model="details.requester" type="radio" value="phys" name="requester-type"></div>
+          <div><label for="phys">Физическое лицо</label></div>
         </div>
-        <div class="form-group">
-          <input id="yur" v-model="details.requester" type="radio" value="yur" name="requester-type"><label for="yur">Юридическое лицо</label>
+        <div class="form-group tarifs">
+          <div><input id="yur" v-model="details.requester" type="radio" value="yur" name="requester-type"></div>
+          <div><label for="yur">Юридическое лицо</label></div>
         </div>
         <div class="separator" />
       </div>
@@ -340,23 +342,54 @@
         <div>
           <label>Ценовая категория</label>
         </div>
-        <div class="form-group">
-          <input id="tarif_1" v-model="details.pricing" type="radio" value="1" name="tarif"><label for="tarif_1" class="mr-20">1 (Расчет = цена * объем потребления. Тариф по передаче эл.эн. одноставочный)</label>
+        <div class="form-group tarifs">
+          <div>
+            <input id="tarif_1" v-model="details.pricing" type="radio" value="1" name="tarif">
+          </div>
+          <div>
+            <label for="tarif_1" class="mr-20">1 (Расчет = цена * объем потребления. Тариф по передаче эл.эн. одноставочный)</label>
+          </div>
         </div>
-        <div class="form-group">
-          <input id="tarif_2" v-model="details.pricing" type="radio" value="2" name="tarif"><label for="tarif_2">2 (Расчет = сумма стоимости эл.эн для каждой зоны суток. Тариф по передаче эл.эн. одноставочный)</label>
+        <div class="form-group tarifs">
+          <div>
+            <input id="tarif_2" v-model="details.pricing" type="radio" value="2" name="tarif">
+          </div>
+          <div>
+            <label for="tarif_2">2 (Расчет = сумма стоимости эл.эн для каждой зоны суток. Тариф по передаче эл.эн. одноставочный)</label>
+          </div>
         </div>
-        <div class="form-group">
-          <input id="tarif_3" v-model="details.pricing" type="radio" value="3" name="tarif"><label for="tarif_3">3 (Расчет = сумма стоимости эл.эн. за каждый час плюс стоимость мощности. Тариф по передаче эл.эн. одноставочный)</label>
+        <div class="form-group tarifs">
+          <div><input id="tarif_3" v-model="details.pricing" type="radio" value="3" name="tarif"></div>
+          <div>
+            <label for="tarif_3">
+              3 (Расчет = сумма стоимости эл.эн. за каждый час плюс стоимость мощности. Тариф по
+              передаче эл.эн. одноставочный)
+            </label>
+          </div>
         </div>
-        <div class="form-group">
-          <input id="tarif_4" v-model="details.pricing" type="radio" value="4" name="tarif"><label for="tarif_4">4 (Расчет = сумма стоимости эл.эн. за каждый час плюс стоимость мощности. Тариф по передаче эл.эн. двухставочный)</label>
+        <div class="form-group tarifs">
+          <div><input id="tarif_4" v-model="details.pricing" type="radio" value="4" name="tarif"></div>
+          <div>
+            <label for="tarif_4">
+              4 (Расчет = сумма стоимости эл.эн. за каждый час плюс стоимость мощности. Тариф по
+              передаче эл.эн. двухставочный)
+            </label>
+          </div>
         </div>
-        <div class="form-group">
-          <input id="tarif_5" v-model="details.pricing" type="radio" value="5" name="tarif"><label for="tarif_5">5 (Расчет = сумма фактической стоимости эл.эн. по каждому часу, сумма отклонений от плана и стоимости мощности. Тариф одноставочный)</label>
+        <div class="form-group tarifs">
+          <div><input id="tarif_5" v-model="details.pricing" type="radio" value="5" name="tarif"></div>
+          <div>
+            <label for="tarif_5">5 (Расчет = сумма фактической стоимости эл.эн. по каждому часу, сумма отклонений от
+              плана и стоимости мощности. Тариф одноставочный)
+            </label>
+          </div>
         </div>
-        <div class="form-group">
-          <input id="tarif_6" v-model="details.pricing" type="radio" value="6" name="tarif"><label for="tarif_6">6 (Расчет = сумма фактической стоимости эл.эн. по каждому часу, сумма отклонений от плана и стоимости мощности. Тариф двухставочный)</label>
+        <div class="form-group tarifs">
+          <div><input id="tarif_6" v-model="details.pricing" type="radio" value="6" name="tarif"></div>
+          <div>
+            <label for="tarif_6">6 (Расчет = сумма фактической стоимости эл.эн. по каждому часу, сумма отклонений от
+              плана и стоимости мощности. Тариф двухставочный)</label>
+          </div>
         </div>
       </div>
     </div>
@@ -441,8 +474,10 @@ export default {
     if (!this.userCompany) {
       this.details.requester = 'phys'
     }
+    this.setLoading(true)
     this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/vendor/list')
       .then((res) => {
+        this.setLoading(false)
         if (res.data.success) {
           this.vendors = res.data.vendors
         }
@@ -490,8 +525,10 @@ export default {
     submitDetails () {
       if (this.validate()) {
         this.details.id = this.applicationId
+        this.setLoading(true)
         this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/application/create', this.details)
           .then((response) => {
+            this.setLoading(false)
             if (response.data.success) {
               this.$router.push('/request/show/' + response.data.application.id)
             }

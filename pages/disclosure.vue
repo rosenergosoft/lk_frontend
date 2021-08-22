@@ -13,7 +13,9 @@
       <div class="l-separator">
         /
       </div>
-      <div><a>Вода</a></div>
+      <div :class="{ active: disclosureGroup === 2 }" @click="setDisclosureGroup(2)">
+        <a>Водоснабжение</a>
+      </div>
     </div>
     <div class="disclosure-documents">
       <div class="boxes">
@@ -67,7 +69,9 @@ export default {
   },
   methods: {
     async openDisclosureModal (type) {
+      this.setLoading(true)
       const res = await this.$axios.$get(process.env.LARAVEL_API_BASE_URL + '/api/disclosure/getByType/' + this.disclosureGroup + '/' + type)
+      this.setLoading(false)
       if (res) {
         this.modalContent.disclosure = res.disclosure
         this.modalContent.disclosureListItem = res.disclosureListItem

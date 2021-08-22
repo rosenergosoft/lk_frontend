@@ -58,7 +58,9 @@ export default {
           if (this.appealId) {
             formData.append('appeal_id', this.appealId)
           }
+          this.setLoading(true)
           const res = await this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/appeals/fileUpload', formData)
+          this.setLoading(false)
           if (res.success) {
             this.$emit('file-upload-after', res)
             this.$notify({ type: 'success', title: 'Успех', text: 'Файл загружен' })

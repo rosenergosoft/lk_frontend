@@ -87,7 +87,9 @@ export default {
         if (this.disclosureId) {
           formData.append('disclosure_id', this.disclosureId)
         }
+        this.setLoading(true)
         const res = await this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/disclosure/fileUpload', formData)
+        this.setLoading(false)
         if (res.success) {
           this.$emit('file-upload-after', res)
           this.$bvModal.hide('add-document-modal')

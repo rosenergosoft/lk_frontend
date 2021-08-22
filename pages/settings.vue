@@ -43,8 +43,10 @@ export default {
     }
   },
   mounted () {
+    this.setLoading(true)
     this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/client')
       .then((res) => {
+        this.setLoading(false)
         if (res.data.success) {
           this.clientType = res.data.client.type
         }
@@ -52,8 +54,10 @@ export default {
   },
   methods: {
     submitClient () {
+      this.setLoading(true)
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/client/save', { type: this.clientType })
         .then((res) => {
+          this.setLoading(false)
           if (res.data.success) {
             this.$notify({ type: 'success', title: 'Успех', text: 'Данные успешно сохранены' })
           }

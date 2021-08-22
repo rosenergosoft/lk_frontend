@@ -130,6 +130,7 @@ export default {
     selectCertificate (cert) {
       this.selectedCert = cert
       const thumbprint = cert.thumbprint
+      this.setLoading(true)
       this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/user/document/sign?id=' + this.doc.id, { responseType: 'arraybuffer' })
         .then((res) => {
           this.$cryptopro.createHash(res.data).then((hash) => {
@@ -143,27 +144,33 @@ export default {
                 if (res.data.success) {
                   this.$parent.$emit('signed')
                 }
+                this.setLoading(false)
               })
             })
           })
         })
     },
     deleteSignature (id) {
+      this.setLoading(true)
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user/document/unsign', { id })
         .then((res) => {
           if (res.data.success) {
             this.$parent.$emit('unsigned')
           }
+          this.setLoading(false)
         })
     },
     sendSMSCode () {
+      this.setLoading(true)
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user/document/sendSms', { id: this.doc.id })
         .then((res) => {
           this.smsSent = true
           this.$notify({ type: 'success', title: 'Успех', text: 'Смс отправлено' })
+          this.setLoading(false)
         })
     },
     confirmCode () {
+      this.setLoading(true)
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user/document/sign', {
         document_id: this.doc.id,
         type: 'sms',
@@ -174,6 +181,7 @@ export default {
           this.$bvModal.hide('doc-signing-' + this.doc.id)
           this.$notify({ type: 'success', title: 'Успех', text: 'Документ подписан' })
         }
+        this.setLoading(false)
       })
     }
   }

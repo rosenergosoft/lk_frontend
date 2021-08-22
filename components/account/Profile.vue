@@ -89,6 +89,7 @@ export default {
     },
     submitProfile () {
       if (this.validateProfile()) {
+        this.setLoading(true)
         this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user/profile', this.profileData)
           .then((response) => {
             if (response.data.success) {
@@ -96,6 +97,7 @@ export default {
               this.$bvModal.hide('modal-phys-data')
               this.$notify({ type: 'success', title: 'Успех', text: 'Профиль сохранен' })
             }
+            this.setLoading(false)
           })
       }
     }
