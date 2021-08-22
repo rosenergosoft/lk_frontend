@@ -127,13 +127,11 @@ export default {
   },
   methods: {
     init () {
-      this.setLoading(true)
       this.dataLoading = true
       this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/user/list?' + this.query)
         .then((res) => {
           this.users = res.data.data
           this.totalUsers = res.data.total
-          this.setLoading(false)
           this.dataLoading = false
         })
     },

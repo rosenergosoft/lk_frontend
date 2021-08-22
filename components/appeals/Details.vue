@@ -116,8 +116,10 @@ export default {
     submitDetails () {
       if (this.validateDetails()) {
         this.details.id = this.appealId
+        this.setLoading(true)
         this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/appeals/create', this.details)
           .then((response) => {
+            this.setLoading(false)
             if (response.data.success) {
               this.$router.push('/appeals/show/' + response.data.appeal.id)
             }
@@ -141,9 +143,10 @@ export default {
         appeal_id: this.appealId,
         doc_id: fileData.id
       }
+      this.setLoading(true)
       this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/appeals/fileDelete', formData).then(
         (res) => {
-          //
+          this.setLoading(false)
         }
       )
       this.docs.splice(fileData.index, 1)

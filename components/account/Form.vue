@@ -83,8 +83,10 @@ export default {
       this.formData.snils = this.snils.replace(/[^\d]/g, '')
       const data = Object.assign({}, this.formData, this.passwordData)
       data.login_type = this.type
+      this.setLoading(true)
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user', data)
         .then((res) => {
+          this.setLoading(false)
           if (res.data.success) {
             this.$store.commit('UPDATE_USER', res.data.user)
             Object.assign(this.passwordData, {

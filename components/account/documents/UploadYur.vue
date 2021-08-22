@@ -81,6 +81,7 @@ export default {
       if (this.yur_pszun) {
         formData.append('yur_pszun', this.yur_pszun, this.yur_pszun.name)
       }
+      this.setLoading(true)
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user/documents', formData)
         .then((res) => {
           if (res.data.success) {
@@ -92,6 +93,7 @@ export default {
             this.$emit('uploaded')
             this.$bvModal.hide('modal-yur-docs')
           }
+          this.setLoading(false)
         })
     }
   }

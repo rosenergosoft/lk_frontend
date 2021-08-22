@@ -441,8 +441,10 @@ export default {
     if (!this.userCompany) {
       this.details.requester = 'phys'
     }
+    this.setLoading(true)
     this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/vendor/list')
       .then((res) => {
+        this.setLoading(false)
         if (res.data.success) {
           this.vendors = res.data.vendors
         }
@@ -490,8 +492,10 @@ export default {
     submitDetails () {
       if (this.validate()) {
         this.details.id = this.applicationId
+        this.setLoading(true)
         this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/application/create', this.details)
           .then((response) => {
+            this.setLoading(false)
             if (response.data.success) {
               this.$router.push('/request/show/' + response.data.application.id)
             }

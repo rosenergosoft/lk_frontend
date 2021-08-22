@@ -249,6 +249,7 @@ export default {
     async getApplication () {
       const id = this.$route.params.id
       try {
+        this.setLoading(true)
         const res = await this.$axios.$get(process.env.LARAVEL_API_BASE_URL + '/api/application/get/' + id)
         if (res.application) {
           this.application = res.application
@@ -261,6 +262,7 @@ export default {
         }
         await this.getDocuments()
         this.loaded = true
+        this.setLoading(false)
       } catch (e) {
         // console.log(e)
       }
@@ -273,8 +275,10 @@ export default {
         application_id: this.application.id,
         status: this.application.status
       }
+      this.setLoading(true)
       this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/application/changeStatus', formData)
         .then((res) => {
+          this.setLoading(false)
           if (res.success) {
             this.$notify({ type: 'success', title: 'Успех', text: 'Статус изменен' })
           }
