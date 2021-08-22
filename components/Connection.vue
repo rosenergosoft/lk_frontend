@@ -278,7 +278,6 @@ export default {
     },
     getMemberFrom (application) {
       if (application.requester === 'phys' || !application.requester) {
-        console.log(application.user)
         const profile = application.user.profile
         return profile.last_name + ' ' + profile.first_name + ' ' + profile.middle_name
       } else if (application.requester === 'yur') {

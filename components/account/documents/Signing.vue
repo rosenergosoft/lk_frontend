@@ -78,7 +78,7 @@
     </template>
     <template #modal-footer class="d-block">
       <div class="d-flex justify-content-between">
-        <div>
+        <div v-if="smsSent">
           <button type="button" class="btn blue-button" @click="confirmCode">
             Подписать
           </button>
@@ -98,8 +98,12 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'Signing',
   props: {
-    // eslint-disable-next-line vue/require-default-prop
-    doc: Object
+    doc: {
+      type: Object,
+      default () {
+        return {}
+      }
+    }
   },
   data () {
     return {
@@ -180,6 +184,9 @@ export default {
           this.$parent.$emit('signed')
           this.$bvModal.hide('doc-signing-' + this.doc.id)
           this.$notify({ type: 'success', title: 'Успех', text: 'Документ подписан' })
+        }
+        if (res.data.error) {
+          this.$notify({ type: 'error', title: 'Ошибка', text: 'Проверьте правильность кода или повторите попытку еще раз' })
         }
         this.setLoading(false)
       })
