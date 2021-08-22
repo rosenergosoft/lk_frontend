@@ -88,13 +88,22 @@
               Статус заявки
             </option>
             <option v-if="isCustomer" value="draft">
-              Черновики
+              Черновик
+            </option>
+            <option value="waiting_company_resp">
+              Ожидает ответа компании
             </option>
             <option value="accepted">
               В работе
             </option>
-            <option value="waiting_company_resp">
-              Ожидает ответа компании
+            <option value="invoice">
+              Счет на оплату
+            </option>
+            <option value="preparing">
+              Подготовка тех условий
+            </option>
+            <option value="in_progress">
+              Исполняется
             </option>
             <option value="completed">
               Выполнены
@@ -118,9 +127,8 @@
           <select>
             <option>Тип заявки</option>
             <option>Вода</option>
-            <option>Элеткричество</option>
+            <option>Электричество</option>
             <option>Тепло</option>
-            <option>Все заявки</option>
           </select>
         </div>
       </div>
@@ -166,7 +174,7 @@
               {{ item.objectLocation }}
             </div>
             <div class="order-details">
-              {{ getConnectionType(item) }}, {{ getConstructionReason(item) }}, {{ getPowerLevel(item) }}
+              <span v-if="getConnectionType(item)">{{ getConnectionType(item) }}</span><span v-if="getConstructionReason(item)">, {{ getConstructionReason(item) }}</span><span v-if="getPowerLevel(item)">, {{ getPowerLevel(item) }}</span>
             </div>
             <div class="order-updated-at">
               {{ $moment(item.updated_at).format('DD MMM YYYY') }} г.: Заявка обновлена.
@@ -269,7 +277,7 @@ export default {
         })
     },
     getMemberFrom (application) {
-      if (application.requester === 'phys') {
+      if (application.requester === 'phys' || !application.requester) {
         const profile = application.user.profile
         return profile.last_name + ' ' + profile.first_name + ' ' + profile.middle_name
       } else if (application.requester === 'yur') {
