@@ -13,10 +13,10 @@
     </div>
     <div v-if="!doc.signature">
       <a @click.prevent="signDoc"><b-icon-clipboard class="bootstrap-icon hoverColor mr-0" style="top: 4px;" /></a>
-      <a @click.prevent="deleteDocument"><b-icon-trash class="bootstrap-icon mr-0" style="top: 4px;" /></a>
+      <a @click.prevent="deleteDocument"><b-icon-trash class="bootstrap-icon mr-0 red-status" style="top: 4px;" /></a>
     </div>
     <div v-else class="dark-green">
-      <b-icon-clipboard-check class="bootstrap-icon" style="top: 3px;" /> Документ подписан
+      <a @click.prevent="signDoc"><b-icon-clipboard-check class="bootstrap-icon" style="top: 3px;" /> Документ подписан</a>
     </div>
     <Signing
       :doc="doc"
