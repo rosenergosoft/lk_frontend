@@ -29,7 +29,18 @@
           </div>
           <div v-if="currentStep === 1">
             <h4>2. Заявка на подключение</h4>
-            <Details
+            <Electricity
+              v-if="$route.params.type === 'electricity'"
+              :application-id="application_id"
+              @back="nextTo"
+            />
+            <Warm
+              v-if="$route.params.type === 'warm'"
+              :application-id="application_id"
+              @back="nextTo"
+            />
+            <Water
+              v-if="$route.params.type === 'water'"
               :application-id="application_id"
               @back="nextTo"
             />
@@ -44,12 +55,16 @@
 import { mapGetters } from 'vuex'
 import PersonalData from '~/components/account/PersonalData'
 import Documents from '~/components/account/Documents'
-import Details from '~/components/request/Details'
+import Electricity from '~/components/request/Electricity'
+import Warm from '~/components/request/Warm'
+import Water from '~/components/request/Water'
 export default {
   components: {
     PersonalData,
     Documents,
-    Details
+    Electricity,
+    Warm,
+    Water
   },
   data () {
     return {

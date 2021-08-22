@@ -12,11 +12,11 @@
       </div>
     </div>
     <div v-if="!doc.signature">
-      <a @click.prevent="signDoc"><img src="/images/confirm.svg" alt="" title=""></a>
-      <a @click.prevent="deleteDocument"><img src="/images/remove.svg" alt="" title=""></a>
+      <a @click.prevent="signDoc"><b-icon-clipboard class="bootstrap-icon hoverColor mr-0" style="top: 4px;" /></a>
+      <a @click.prevent="deleteDocument"><b-icon-trash class="bootstrap-icon mr-0" style="top: 4px;" /></a>
     </div>
     <div v-else class="dark-green">
-      <b-icon-check-circle class="bootstrap-icon" style="top: 3px;" /> Документ подписан
+      <b-icon-clipboard-check class="bootstrap-icon" style="top: 3px;" /> Документ подписан
     </div>
     <Signing
       :doc="doc"
@@ -24,14 +24,16 @@
   </div>
 </template>
 <script>
-import { BIconCheckCircle, BIconFileEarmark } from 'bootstrap-vue'
+import { BIconClipboardCheck, BIconClipboard, BIconFileEarmark, BIconTrash } from 'bootstrap-vue'
 import Signing from './Signing'
 export default {
   name: 'DocumentsItem',
   components: {
     Signing,
-    BIconCheckCircle,
-    BIconFileEarmark
+    BIconClipboardCheck,
+    BIconFileEarmark,
+    BIconClipboard,
+    BIconTrash
   },
   props: {
     // eslint-disable-next-line vue/require-default-prop
