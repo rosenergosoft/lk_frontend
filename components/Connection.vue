@@ -153,6 +153,7 @@
           :options.sync="options"
           :server-items-length="totalApplications"
           :items-per-page="perPage"
+          :disable-sort="true"
           no-results-text="Нет данных"
           no-data-text="Нет данных"
           class="elevation-1 w-100"
@@ -226,6 +227,7 @@ export default {
       ],
       applications: [],
       counts: {},
+      currentPage: 1,
       filters: {
         status: null,
         query: ''
@@ -235,7 +237,10 @@ export default {
   computed: {
     ...mapGetters(['user']),
     tableDataUrl () {
-      const query = {}
+      const query = {
+        per_page: this.perPage,
+        page: this.currentPage
+      }
       if (this.filters.status) {
         query.status = this.filters.status
       }
@@ -256,6 +261,13 @@ export default {
       } else {
         this.loadingText = 'Нет данных'
       }
+    },
+    options: {
+      handler (val) {
+        this.currentPage = val.page
+        this.getTableData()
+      },
+      deep: true
     }
   },
   mounted () {
