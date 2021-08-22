@@ -2,7 +2,7 @@
   <b-modal :id="'doc-signing-' + doc.id" centered size="md" title="Подпись документа" @show="init">
     <template v-if="userCompany">
       <div v-if="doc.signature">
-        <div>
+        <div class="notice">
           <span>Документ подписан:</span>
         </div>
         <div class="d-flex">
