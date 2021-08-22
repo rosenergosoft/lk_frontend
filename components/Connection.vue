@@ -194,7 +194,7 @@
             </div>
           </template>
           <template #[`item.status`]="{ item }">
-            <div :class="getStatusClass(item)">
+            <div :class="getStatusClass(item)" class="text-nowrap">
               {{ getStatus(item) }}
             </div>
           </template>
@@ -222,8 +222,8 @@ export default {
         { text: '№', value: 'id' },
         { text: 'Участники', value: 'members' },
         { text: 'Тип заявки', value: 'type' },
-        { text: 'Статус', value: 'status' },
-        { text: 'Дата создания', value: 'created_at' }
+        { text: 'Статус', value: 'status', class: 'text-nowrap' },
+        { text: 'Дата создания', value: 'created_at', class: 'text-nowrap' }
       ],
       applications: [],
       counts: {},
