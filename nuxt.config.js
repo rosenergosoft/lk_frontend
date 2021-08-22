@@ -45,6 +45,7 @@ export default {
     { src: '~/plugins/cryptopro.js', mode: 'client' },
     { src: '~/plugins/vue-datepicker.js', mode: 'client' },
     { src: '~/plugins/v-viewer.js', mode: 'client' },
+    { src: '~/plugins/v-tooltip.js', mode: 'client' },
     { src: '~/plugins/notifications-ssr', ssr: true },
     { src: '~/plugins/notifications-client', ssr: false }
   ],

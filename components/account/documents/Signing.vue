@@ -2,20 +2,18 @@
   <b-modal :id="'doc-signing-' + doc.id" centered size="md" title="Подпись документа" @show="init">
     <template v-if="userCompany">
       <div v-if="doc.signature">
-        <div class="notice">
+        <div class="label">
           <span>Документ подписан:</span>
         </div>
-        <div class="d-flex">
-          <div>ICON</div>
+        <div class="d-flex align-items-center">
+          <div><b-icon-clipboard-check class="bootstrap-icon green-status" style="top: 3px;" /></div>
           <div>
             <div>Представитель компании</div>
-            <div> {{ $moment(doc.signature.created_at).format('DD MMM YYYY') }} г. </div>
+            <div class="notice"> {{ $moment(doc.signature.created_at).format('DD MMM YYYY') }} г. </div>
           </div>
-          <div>
-            <div>download icon</div>
-            <div @click="deleteSignature(doc.signature.id)">
-              delete icon
-            </div>
+          <div class="ml-auto">
+            <a class="mr-1"><b-icon-download class="bootstrap-icon mr-0 hoverColor" style="top: 4px" /></a>
+            <a @click="deleteSignature(doc.signature.id)"><b-icon-trash class="bootstrap-icon mr-0 red-status" style="top: 4px;" /></a>
           </div>
         </div>
       </div>
@@ -39,9 +37,14 @@
           </div>
         </div>
         <div v-else>
-          <div v-for="(cert, index) in userCertificates" :key="index">
-            <div style="cursor: pointer" @click="selectCertificate(cert)">
-              ОГРН ДО {{ $moment(cert.validTo).format('DD MMM YYYY') }} г.
+          <div v-if="!doc.signature">
+            <div v-for="(cert, index) in userCertificates" :key="index">
+              <div class="label">
+                Электронная подпись
+              </div>
+              <div style="cursor: pointer" @click="selectCertificate(cert)">
+                ОГРН ДО {{ $moment(cert.validTo).format('DD MMM YYYY') }} г.
+              </div>
             </div>
           </div>
         </div>
@@ -95,8 +98,14 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { BIconClipboardCheck, BIconTrash, BIconDownload } from 'bootstrap-vue'
 export default {
   name: 'Signing',
+  components: {
+    BIconClipboardCheck,
+    BIconTrash,
+    BIconDownload
+  },
   props: {
     doc: {
       type: Object,
