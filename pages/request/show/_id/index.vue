@@ -285,7 +285,7 @@ export default {
         })
     },
     async getDocuments () {
-      const res = await this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/user/documents')
+      const res = await this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/user/documents/' + this.application.user_id)
       if (res.data.docs) {
         this.documents = res.data.docs
       }
