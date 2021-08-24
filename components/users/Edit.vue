@@ -37,7 +37,7 @@
           <div class="row inputs">
             <div class="col-6">
               <div class="form-group">
-                <label>Email</label>
+                <label>Email*</label>
                 <input v-model="userData.email" class="form-control" type="text">
               </div>
             </div>
@@ -51,7 +51,7 @@
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <label>Пароль</label>
+                <label>Пароль*</label>
                 <input v-model="userData.password" class="form-control" type="password">
               </div>
             </div>
@@ -59,7 +59,7 @@
           <div v-if="userData.type === 'vendor'" class="row">
             <div class="col">
               <div class="form-group">
-                <label>Название компании</label>
+                <label>Название компании*</label>
                 <input v-model="userData.vendor_name" type="text" class="form-control">
               </div>
             </div>
@@ -252,6 +252,14 @@ export default {
       }
     },
     saveUser () {
+      if (!this.userData.email && !this.userData.password) {
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Email и Пароль обязательные поля' })
+        return
+      }
+      if (this.userData.type === 'vendor' && !this.userData.vendor_name) {
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Название компании обязательное поле' })
+        return
+      }
       const data = {
         userData: this.userData,
         userProfile: this.userProfile
