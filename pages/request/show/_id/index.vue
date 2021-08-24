@@ -90,7 +90,9 @@
                   <div>Энергопринимающие устройства, которые могут быть присоединены к устройствам противоаварийной автоматики: {{ emergencyAuto[application.emergencyAuto] }}</div>
                   <div>Сроки проектирования: {{ estimationQuater[application.estimationQuater] }} квартал {{ application.estimationYear }} года</div>
                   <div>Мощность (кВт): {{ application.power }} </div>
-                  <div>Энергосбытовая: {{ application.vendor.name }}</div>
+                  <div v-if="application.vendor">
+                    Энергосбытовая: {{ application.vendor.name }}
+                  </div>
                   <div>Ценовая категория:  {{ pricing[application.pricing] }}</div>
                   <div>Дополнительная информация:  {{ application.other }}</div>
                 </div>
@@ -242,7 +244,7 @@ export default {
       }
     }
   },
-  created () {
+  mounted () {
     this.getApplication()
   },
   methods: {

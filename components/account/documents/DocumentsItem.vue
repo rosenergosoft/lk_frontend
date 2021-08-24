@@ -16,7 +16,8 @@
       <a @click.prevent="deleteDocument"><b-icon-trash v-tooltip="'Удалить документ'" class="bootstrap-icon mr-0 red-status" style="top: 4px;" /></a>
     </div>
     <div v-else class="dark-green">
-      <a @click.prevent="signDoc"><b-icon-clipboard-check v-tooltip="'Документ подписан'" class="bootstrap-icon" style="top: 3px;" /></a>
+      <a v-if="!isExecutive" @click.prevent="signDoc"><b-icon-clipboard-check v-tooltip="'Документ подписан'" class="bootstrap-icon" style="top: 3px;" /></a>
+      <div v-else><b-icon-clipboard-check v-tooltip="'Документ подписан'" class="bootstrap-icon" style="top: 3px;" /></div>
     </div>
     <Signing
       :doc="doc"

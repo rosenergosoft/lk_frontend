@@ -918,19 +918,20 @@ tr {
 .hoverColor {
   color: $LinkHoverColor;
 }
-
-
+.w-40p {
+  height: 40px;
+  width: 40px;
+  background-size: cover;
+}
 .tooltip {
   display: block !important;
   z-index: 10000;
-
   .tooltip-inner {
     background: black;
     color: white;
     border-radius: 16px;
     padding: 5px 10px 4px;
   }
-
   .tooltip-arrow {
     width: 0;
     height: 0;
@@ -940,10 +941,8 @@ tr {
     border-color: black;
     z-index: 1;
   }
-
   &[x-placement^="top"] {
     margin-bottom: 5px;
-
     .tooltip-arrow {
       border-width: 5px 5px 0 5px;
       border-left-color: transparent !important;
@@ -955,10 +954,8 @@ tr {
       margin-bottom: 0;
     }
   }
-
   &[x-placement^="bottom"] {
     margin-top: 5px;
-
     .tooltip-arrow {
       border-width: 0 5px 5px 5px;
       border-left-color: transparent !important;
@@ -970,10 +967,8 @@ tr {
       margin-bottom: 0;
     }
   }
-
   &[x-placement^="right"] {
     margin-left: 5px;
-
     .tooltip-arrow {
       border-width: 5px 5px 5px 0;
       border-left-color: transparent !important;
@@ -985,10 +980,8 @@ tr {
       margin-right: 0;
     }
   }
-
   &[x-placement^="left"] {
     margin-right: 5px;
-
     .tooltip-arrow {
       border-width: 5px 0 5px 5px;
       border-top-color: transparent !important;
@@ -1000,10 +993,8 @@ tr {
       margin-right: 0;
     }
   }
-
   &.popover {
     $color: #f9f9f9;
-
     .popover-inner {
       background: $color;
       color: black;
@@ -1011,18 +1002,15 @@ tr {
       border-radius: 5px;
       box-shadow: 0 5px 30px rgba(black, .1);
     }
-
     .popover-arrow {
       border-color: $color;
     }
   }
-
   &[aria-hidden='true'] {
     visibility: hidden;
     opacity: 0;
     transition: opacity .15s, visibility .15s;
   }
-
   &[aria-hidden='false'] {
     visibility: visible;
     opacity: 1;
