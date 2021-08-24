@@ -1,7 +1,7 @@
 <template>
   <b-modal id="modal-yur-docs" centered size="xl" title="Загрузка документов">
     <v-file-input
-      v-if="!docs.find(item => item.typw === 'yur_proxy')"
+      v-if="!docs.find(item => item.type === 'yur_proxy')"
       v-model="yur_proxy"
       show-size
       single-line
@@ -9,7 +9,7 @@
       hint="Документ подтверждающий полномочия представителя заявителя"
     />
     <v-file-input
-      v-if="!docs.find(item => item.typw === 'yur_ustav')"
+      v-if="!docs.find(item => item.type === 'yur_ustav')"
       v-model="yur_ustav"
       show-size
       single-line
@@ -17,7 +17,7 @@
       hint="Устав, решение учредителей о создании юр. лица и т.п."
     />
     <v-file-input
-      v-if="!docs.find(item => item.typw === 'yur_prikaz')"
+      v-if="!docs.find(item => item.type === 'yur_prikaz')"
       v-model="yur_prikaz"
       show-size
       single-line
@@ -25,7 +25,7 @@
       hint="Приказ, выписка из протокола, решение учредителей о назначении директора"
     />
     <v-file-input
-      v-if="!docs.find(item => item.typw === 'yur_sgr')"
+      v-if="!docs.find(item => item.type === 'yur_sgr')"
       v-model="yur_sgr"
       show-size
       single-line
@@ -33,7 +33,7 @@
       hint="Выписка или свидетельство о государственной регистрации заявителя в качестве юридического лица или ип"
     />
     <v-file-input
-      v-if="!docs.find(item => item.typw === 'yur_pszun')"
+      v-if="!docs.find(item => item.type === 'yur_pszun')"
       v-model="yur_pszun"
       show-size
       single-line
