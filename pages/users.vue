@@ -18,13 +18,15 @@
           :items-per-page="perPage"
           :page="currentPage"
           :disable-sort="true"
+          :disable-items-per-page="true"
           no-results-text="Нет данных"
           no-data-text="Нет данных"
           class="elevation-1 w-100"
           :loading="dataLoading"
           :loading-text="loadingText"
           :footer-props="{
-            itemsPerPageText: 'Элементов на странице'
+            itemsPerPageText: 'Элементов на странице',
+            'disable-items-per-page':true
           }"
         >
           <template #[`item.user`]="{ item }">
