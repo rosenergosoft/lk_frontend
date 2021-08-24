@@ -273,11 +273,9 @@ export default {
   mounted () {
     this.getTableData()
     if (this.isExecutive) {
-      this.setLoading(true)
       this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/application/counts')
         .then((res) => {
           this.counts = res.data.counts
-          this.setLoading(false)
         })
     }
   },
@@ -290,13 +288,11 @@ export default {
       }
     },
     getTableData () {
-      this.setLoading(true)
       this.dataLoading = true
       this.$axios.get(process.env.LARAVEL_API_BASE_URL + this.tableDataUrl)
         .then((res) => {
           this.applications = res.data.data
           this.totalApplications = res.data.total
-          this.setLoading(false)
           this.dataLoading = false
         })
     },
