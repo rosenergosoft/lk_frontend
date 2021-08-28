@@ -286,7 +286,7 @@ export default {
       if (value.status !== 'draft') {
         this.$router.push('/request/show/' + value.id)
       } else {
-        this.$router.push('/request/new/')
+        this.$router.push('/request/electricity/new/')
       }
     },
     getTableData () {
@@ -358,7 +358,7 @@ export default {
         case 'invoice':
           return 'Счет на оплату'
         case 'preparing':
-          return 'Подготовока тех условий'
+          return 'Подготовка тех условий'
         case 'in_progress':
           return 'Исполняется'
         case 'accepted':

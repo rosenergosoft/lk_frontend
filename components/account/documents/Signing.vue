@@ -9,7 +9,9 @@
           <div><b-icon-clipboard-check class="bootstrap-icon green-status" style="top: 3px;" /></div>
           <div>
             <div>Представитель компании</div>
-            <div class="notice"> {{ $moment(doc.signature.created_at).format('DD MMM YYYY') }} г. </div>
+            <div class="notice">
+              {{ $moment(doc.signature.created_at).format('DD MMM YYYY') }} г.
+            </div>
           </div>
           <div class="ml-auto">
             <a class="mr-1"><b-icon-download class="bootstrap-icon mr-0 hoverColor" style="top: 4px" /></a>
@@ -84,11 +86,6 @@
         <div v-if="smsSent">
           <button type="button" class="btn blue-button" @click="confirmCode">
             Подписать
-          </button>
-        </div>
-        <div>
-          <button type="button" class="btn blue-button" @click="$bvModal.hide('doc-signing-' + doc.id)">
-            Назад
           </button>
         </div>
       </div>
@@ -176,7 +173,7 @@ export default {
     sendSMSCode () {
       this.setLoading(true)
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user/document/sendSms', { id: this.doc.id })
-        .then((res) => {
+        .then(() => {
           this.smsSent = true
           this.$notify({ type: 'success', title: 'Успех', text: 'Смс отправлено' })
           this.setLoading(false)
