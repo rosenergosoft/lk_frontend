@@ -44,7 +44,7 @@
             <div class="col-6 pl-2">
               <div class="form-group">
                 <label>Телефон</label>
-                <input v-model="displayPhone" v-mask="phoneMask" class="form-control" type="text" />
+                <input v-model="displayPhone" v-mask="phoneMask" class="form-control" type="text">
               </div>
             </div>
           </div>
@@ -197,13 +197,11 @@ export default {
   watch: {
     displaySnils (val) {
       if (val && typeof (val) === 'string') {
-        console.log(val)
         this.userData.snils = val.replace(/[^0-9]/g, '')
       }
     },
     displayPhone (val) {
       if (val && typeof (val) === 'string') {
-        console.log(val)
         this.userData.phone = val.replace(/[^0-9]/g, '')
       }
     }
@@ -271,6 +269,8 @@ export default {
             this.$emit('updated')
             this.$bvModal.hide('modal-users-edit')
           }
+          this.setLoading(false)
+        }).catch(() => {
           this.setLoading(false)
         })
     },

@@ -338,7 +338,10 @@ export default {
         } else {
           data.ogrnip = this.ogrnip
         }
-
+        if (this.notaclient) {
+          this.name = ''
+          this.account = ''
+        }
         this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/registration', data).then((resp) => {
           if (resp.data.success) {
             this.currentStep = 0

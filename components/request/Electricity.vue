@@ -491,12 +491,9 @@ export default {
         this.details.objectName &&
         this.details.objectLocation &&
         this.details.kadastrNum &&
-        this.details.constructionReason &&
         this.details.connectorsCount &&
         this.details.maxPower &&
         this.details.previousMaxPower &&
-        this.details.integrityCategory &&
-        this.details.powerLevel &&
         this.details.loadType &&
         this.details.estimationYear &&
         this.details.estimationQuater &&
