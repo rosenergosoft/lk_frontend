@@ -16,7 +16,7 @@
               <div class="form-group">
                 <label>Тип пользователя</label>
                 <div class="select-wrapper">
-                  <select v-model="userData.type" class="form-control" :disabled="isEdit">
+                  <select v-model="userData.type" class="form-control" :disabled="isEdit && !isExecutive">
                     <option value="">
                       Выберите тип пользователя
                     </option>
@@ -35,20 +35,20 @@
             </div>
           </div>
           <div class="row inputs">
-            <div class="col-6">
+            <div class="col-6 pr-2">
               <div class="form-group">
                 <label>Email*</label>
                 <input v-model="userData.email" class="form-control" type="text">
               </div>
             </div>
-            <div class="col-6">
+            <div class="col-6 pl-2">
               <div class="form-group">
                 <label>Телефон</label>
                 <input v-model="displayPhone" v-mask="phoneMask" class="form-control" type="text" />
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row inputs">
             <div class="col">
               <div class="form-group">
                 <label>Пароль*</label>
@@ -56,7 +56,7 @@
               </div>
             </div>
           </div>
-          <div v-if="userData.type === 'vendor'" class="row">
+          <div v-if="userData.type === 'vendor'" class="row inputs">
             <div class="col">
               <div class="form-group">
                 <label>Название компании*</label>
@@ -64,7 +64,7 @@
               </div>
             </div>
           </div>
-          <div v-if="userData.type === 'customer'" class="row">
+          <div v-if="userData.type === 'customer'" class="row inputs">
             <div class="col">
               <div class="form-group">
                 <label>СНИЛС</label>
@@ -84,7 +84,7 @@
               </div>
             </div>
           </div>
-          <div v-if="!isEdit" class="row">
+          <div v-if="!isEdit" class="row inputs">
             <div class="col">
               <div class="v-application">
                 <v-switch
@@ -99,26 +99,26 @@
           <div class="row">
             <div class="col">
               <div class="row">
-                <div class="col">
+                <div class="col inputs">
                   <div class="form-group">
                     <label>Фамилия</label>
                     <input v-model="userProfile.last_name" type="text" class="form-control">
                   </div>
                 </div>
-                <div class="col">
+                <div class="col inputs">
                   <div class="form-group">
                     <label>Имя</label>
                     <input v-model="userProfile.first_name" type="text" class="form-control">
                   </div>
                 </div>
-                <div class="col">
+                <div class="col inputs">
                   <div class="form-group">
                     <label>Отчество</label>
                     <input v-model="userProfile.middle_name" type="text" class="form-control">
                   </div>
                 </div>
               </div>
-              <div class="row">
+              <div class="row inputs">
                 <div class="col">
                   <div class="form-group">
                     <label>Лицевой счет</label>
@@ -186,7 +186,7 @@ export default {
   computed: {
     modalTitle () {
       if (this.$route.query.id) {
-        return 'Редактирвоание'
+        return 'Редактирование'
       }
       return 'Создание'
     },

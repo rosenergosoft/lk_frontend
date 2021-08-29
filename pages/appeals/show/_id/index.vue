@@ -125,7 +125,7 @@
               </div>
             </div>
           </div>
-          <div class="inputs">
+          <div v-if="appeal.status !== 'completed'" class="inputs">
             <textarea v-model="text" class="form-control" placeholder="Ответить" />
           </div>
           <div class="mt-20">

@@ -10,9 +10,11 @@
           {{ itemVal.deadline }}
         </div>
       </div>
-      <div class="doc-status h5">
-        <b-icon v-if="getStatusValue() === 'green'" icon="check-circle" :class="getStatus()" />
-        <b-icon v-if="getStatusValue() === 'red'" icon="exclamation-circle" :class="getStatus()" />
+      <div class="doc-status h5 text-nowrap">
+        <b-icon v-if="getStatusValue() === 'green'" icon="check-circle" :class="getStatus()" style="width: 18px;" />
+        <b-icon v-if="getStatusValue() === 'red'" icon="exclamation-circle" :class="getStatus()" style="width: 18px;" />
+        <b-icon v-if="getActiveColor() === 'green'" icon="eye" :class="getActiveClass()" />
+        <b-icon v-if="getActiveColor() === 'red'" icon="eye-slash" :class="getActiveClass()" />
       </div>
     </div>
     <div class="separator" />
@@ -20,7 +22,7 @@
 </template>
 
 <script>
-import { BIcon, BIconCheckCircle, BIconExclamationCircle } from 'bootstrap-vue'
+import { BIcon, BIconCheckCircle, BIconExclamationCircle, BIconEye, BIconEyeSlash } from 'bootstrap-vue'
 export default {
   name: 'DocItem',
   components: {
@@ -28,7 +30,11 @@ export default {
     // eslint-disable-next-line vue/no-unused-components
     BIconCheckCircle,
     // eslint-disable-next-line vue/no-unused-components
-    BIconExclamationCircle
+    BIconExclamationCircle,
+    // eslint-disable-next-line vue/no-unused-components
+    BIconEye,
+    // eslint-disable-next-line vue/no-unused-components
+    BIconEyeSlash
   },
   props: {
     item: {
@@ -50,8 +56,18 @@ export default {
     getStatus () {
       return this.getStatusValue() + '-status'
     },
+    getActiveClass () {
+      return this.getActiveColor() + '-status'
+    },
     getStatusValue () {
       if (this.item.is_processed) {
+        return 'green'
+      } else {
+        return 'red'
+      }
+    },
+    getActiveColor () {
+      if (this.item.is_show) {
         return 'green'
       } else {
         return 'red'

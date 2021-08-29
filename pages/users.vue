@@ -28,6 +28,7 @@
             itemsPerPageText: 'Элементов на странице',
             'disable-items-per-page':true
           }"
+          @click:row="handleClick"
         >
           <template #[`item.user`]="{ item }">
             <User :user="item" />
@@ -47,15 +48,6 @@
             <template v-else>
               <span>-</span>
             </template>
-          </template>
-          <template #[`item.actions`]="{ item }">
-            <v-icon
-              small
-              class="mr-2"
-              @click.prevent="openEdit(item.id)"
-            >
-              mdi-pencil
-            </v-icon>
           </template>
         </v-data-table>
       </client-only>
@@ -145,6 +137,9 @@ export default {
     },
     openEdit (id) {
       this.$router.replace({ query: { ...this.$route.query, id } })
+    },
+    handleClick (item) {
+      this.openEdit(item.id)
     }
   }
 }

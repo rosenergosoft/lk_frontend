@@ -1017,3 +1017,8 @@ tr {
     transition: opacity .15s;
   }
 }
+.nav-tabs {
+  a {
+    color: $defaultFontColor;
+  }
+}

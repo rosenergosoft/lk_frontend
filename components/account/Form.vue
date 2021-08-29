@@ -12,7 +12,7 @@
           class="form-control"
         >
         <input v-if="type === 'yur'" v-model="formData.ogrn" type="text" placeholder="ОГРН" class="form-control">
-        <input v-if="type === 'ip'" v-model="formData.ogrn" type="text" placeholder="ОГРНИП" class="form-control">
+        <input v-if="type === 'ip'" v-model="formData.ogrnip" type="text" placeholder="ОГРНИП" class="form-control">
       </div>
       <div class="form-group d-flex justify-content-between">
         <input v-model="formData.email" type="email" placeholder="Имейл" class="form-control mr-20">
@@ -79,14 +79,17 @@ export default {
   },
   methods: {
     submitAccountForm () {
-      this.formData.phone = this.displayedPhone.replace(/[^\d]/g, '')
-      this.formData.snils = this.snils.replace(/[^\d]/g, '')
+      if (this.formData.phone !== null) {
+        this.formData.phone = this.displayedPhone.replace(/[^\d]/g, '')
+      }
+      if (this.formData.snils !== null) {
+        this.formData.snils = this.snils.replace(/[^\d]/g, '')
+      }
       const data = Object.assign({}, this.formData, this.passwordData)
       data.login_type = this.type
       this.setLoading(true)
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user', data)
         .then((res) => {
-          this.setLoading(false)
           if (res.data.success) {
             this.$store.commit('UPDATE_USER', res.data.user)
             Object.assign(this.passwordData, {
@@ -95,7 +98,14 @@ export default {
               confirmNewPassword: ''
             })
             this.$notify({ type: 'success', title: 'Успех', text: 'Данные сохранены' })
+          } else {
+            this.$notify({ type: 'error', title: 'Ошибка', text: 'Что-то пошло не так' })
           }
+          this.setLoading(false)
+        })
+        .catch(() => {
+          this.$notify({ type: 'error', title: 'Ошибка', text: 'Что-то пошло не так' })
+          this.setLoading(false)
         })
     }
   }
