@@ -95,7 +95,7 @@
     <div class="filters d-flex">
       <div class="">
         <div class="select-wrapper">
-          <select v-model="filters.status" @change="getTableData">
+          <select v-model="filters.status" @change="handleFilterChanged">
             <option :value="null">
               Статус заявки
             </option>
@@ -131,7 +131,7 @@
       </div>
       <div class="">
         <div class="search-wrapper">
-          <input v-model="filters.query" type="text" placeholder="Поиск" @change="getTableData">
+          <input v-model="filters.query" type="text" placeholder="Поиск" @change="handleFilterChanged">
         </div>
       </div>
       <div class="">
@@ -288,6 +288,10 @@ export default {
       } else {
         this.$router.push('/request/electricity/new/')
       }
+    },
+    handleFilterChanged () {
+      this.currentPage = 1
+      this.getTableData()
     },
     getTableData () {
       this.dataLoading = true
