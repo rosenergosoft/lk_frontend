@@ -276,7 +276,7 @@ export default {
     },
     loadFiles () {
       this.setLoading(true)
-      this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/user/documents?id=' + this.$route.query.id)
+      this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/user/documents/' + this.$route.query.id)
         .then((res) => {
           if (res.data.docs) {
             this.documents = res.data.docs
