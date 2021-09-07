@@ -32,6 +32,7 @@
           no-results-text="Нет данных"
           no-data-text="Нет данных"
           :disable-sort="true"
+          :disable-items-per-page="true"
           :loading="dataLoading"
           :loading-text="loadingText"
           :footer-props="{
