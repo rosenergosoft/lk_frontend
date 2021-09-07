@@ -11,7 +11,7 @@
             </h2>
             <div>
               <ul>
-                <li><input id="snils" v-model="loginData.type" type="radio" name="type" value="phys" ><label for="snils">Физическое лицо (вход по СНИЛС)</label></li>
+                <li><input id="snils" v-model="loginData.type" type="radio" name="type" value="phys"><label for="snils">Физическое лицо (вход по СНИЛС)</label></li>
                 <li><input id="ogrn" v-model="loginData.type" type="radio" name="type" value="yur"><label for="ogrn">Юридическое лицо (вход по ОГРН)</label></li>
                 <li><input id="ogrnip" v-model="loginData.type" type="radio" name="type" value="ip"><label for="ogrnip">Индивидуальный предприниматель (вход по ОГРНИП)</label></li>
                 <li><input id="by-email" v-model="loginData.type" type="radio" name="type" value="email"><label for="by-email">Вход по электронной почте</label></li>
@@ -346,6 +346,8 @@ export default {
           if (resp.data.success) {
             this.currentStep = 0
             this.$notify({ type: 'success', title: 'Успех', text: 'Теперь вы можете войти используя свои данные' })
+          } else if (resp.data.message === 'Duplicate') {
+            this.$notify({ type: 'error', title: 'Ошибка', text: 'Пользователь с этим email уже существует' })
           } else {
             this.$notify({ type: 'error', title: 'Ошибка', text: 'Перезагрузите страницу и попробуйте еще раз' })
           }
