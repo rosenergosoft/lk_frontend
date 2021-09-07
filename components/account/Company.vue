@@ -167,6 +167,7 @@ export default {
               this.$store.commit('DELETE_USER_COMPANY', {})
               this.bankData = null
               this.companyData = null
+              this.id = null
               this.$bvModal.hide('modal-yur-data')
             }
             this.setLoading(false)
