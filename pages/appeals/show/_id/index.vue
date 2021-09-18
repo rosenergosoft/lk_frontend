@@ -79,26 +79,26 @@
                     <div>
                       <div class="person mr-0 w-40p" />
                     </div>
-                    <div class="pl-3">
+                    <div class="pl-3 w-100">
                       <div class="d-flex">
                         <div class="label">
                           {{ userProfile.first_name }} {{ userProfile.last_name }}
                         </div>
                         <div class="notice ml-auto">
-                          {{ $moment(appeal.created_at).format('hh:ss, DD MMMM yyyy') }}
+                          {{ $moment(appeal.created_at).local().format('HH:mm:ss, DD MMMM yyyy') }}
                         </div>
                       </div>
                       <div>{{ appeal.question }}</div>
                     </div>
                   </div>
                 </div>
-                <div v-if="messages" class="separator" />
+                <div v-if="messages.length > 0" class="separator" />
                 <div class="private-messages">
                   <Message
                     v-for="item in messages"
                     :key="item.id"
                     :message="item"
-                    :appeal="appeal"
+                    :entity="appeal"
                   />
                 </div>
               </div>
@@ -157,7 +157,7 @@
 import fileDownload from 'js-file-download'
 import DocumentsItem from '~/components/account/documents/DocumentsItem'
 import UploadedDocumentsItem from '~/components/disclosure/DocumentsItem'
-import Message from '~/components/appeals/Message'
+import Message from '~/components/Message'
 export default {
   name: 'Index',
   components: {
@@ -201,7 +201,7 @@ export default {
     },
     sendMessage () {
       const formData = {
-        appeal_id: this.appeal.id,
+        entity_id: this.appeal.id,
         message: this.text
       }
       this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/appeals/sendMessage', formData)

@@ -1,20 +1,20 @@
 <template>
   <div>
-    <div class="d-flex justify-content-between align-items-center mt-20">
+    <div class="mt-20">
       <div class="text-content d-flex">
         <div>
           <div class="person mr-0 w-40p" />
         </div>
-        <div class="pl-3">
+        <div class="pl-3 w-100">
           <div class="d-flex">
-            <div v-if="appeal.user_id === message.user_id" class="label">
+            <div v-if="entity.user_id === message.user_id" class="label">
               {{ message.user_profile.first_name }} {{ message.user_profile.last_name }}
             </div>
             <div v-else class="label">
               Администратор
             </div>
             <div class="notice ml-auto">
-              {{ $moment(message.created_at).format('hh:ss, DD MMMM yyyy') }}
+              {{ $moment.utc(message.updated_at).local().format('HH:mm:ss, DD MMMM yyyy') }}
             </div>
           </div>
           <div>{{ message.message }}</div>
@@ -34,7 +34,7 @@ export default {
       type: Object,
       default: null
     },
-    appeal: {
+    entity: {
       type: Object,
       default: null
     }

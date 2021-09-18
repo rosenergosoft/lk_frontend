@@ -98,11 +98,27 @@
                 </div>
               </div>
             </div>
+            <div class="separator" />
+          </div>
+          <div class="personal-data">
+            <div>
+              <div>
+                <label class="label">Сообщения</label>
+                <div class="private-messages">
+                  <Message
+                    v-for="item in messages"
+                    :key="item.id"
+                    :message="item"
+                    :entity="application"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div v-if="isExecutive" class="box status-6">
-          <h4>Обращение</h4>
-          <div class="personal-data">
+        <div v-if="isExecutive || application.status !== 'completed'" class="box status-6">
+          <h4>Заявка</h4>
+          <div v-if="isExecutive" class="personal-data">
             <div class="inputs">
               <label class="label">Сменить статус</label>
               <div class="select-wrapper">
@@ -135,6 +151,15 @@
               </div>
             </div>
           </div>
+          <div v-if="application.status !== 'completed'" class="inputs">
+            <textarea v-model="text" class="form-control" placeholder="Ответить" />
+          </div>
+          <div class="mt-20">
+            <button class="btn blue-button" @click="sendMessage">
+              Отправить ответ
+            </button>
+          </div>
+          <div class="clearfix" />
         </div>
       </div>
     </div>
@@ -144,19 +169,20 @@
 <script>
 import { mapGetters } from 'vuex'
 import DocumentsItem from '~/components/account/documents/DocumentsItem'
+import Message from '~/components/Message'
 export default {
   name: 'Index',
   components: {
-    DocumentsItem
-  },
-  computed: {
-    ...mapGetters(['user'])
+    DocumentsItem,
+    Message
   },
   data () {
     return {
       userProfile: {},
       application: {},
       company: {},
+      text: '',
+      messages: {},
       documents: {
         phys: [],
         yur: []
@@ -244,6 +270,9 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters(['user'])
+  },
   mounted () {
     this.getApplication()
   },
@@ -263,11 +292,33 @@ export default {
           this.company = res.company
         }
         await this.getDocuments()
+        await this.getMessages()
         this.loaded = true
         this.setLoading(false)
       } catch (e) {
         // console.log(e)
       }
+    },
+    async getMessages () {
+      const res = await this.$axios.$get(process.env.LARAVEL_API_BASE_URL + '/api/application/getMessages/' + this.application.id)
+      if (res.success) {
+        this.messages = res.messages
+      }
+    },
+    sendMessage () {
+      const formData = {
+        entity_id: this.application.id,
+        message: this.text
+      }
+      this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/application/sendMessage', formData)
+        .then((res) => {
+          if (res.success) {
+            this.text = ''
+            this.$notify({ type: 'success', title: 'Успех', text: 'Сообщение отправлено' })
+            this.messages = res.messages
+            this.application = res.application
+          }
+        })
     },
     formatDate (date) {
       return this.$moment.utc(date).format('DD-MM-YYYY')
