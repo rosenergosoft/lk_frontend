@@ -456,7 +456,7 @@ export default {
     margin-top: 10px;
   }
   .form-image {
-    background: url('/images/sign-up/form-image.jpg') no-repeat right center;
+    background: url('/images/sign-up/form-image2.jpg') no-repeat right center;
     background-size: cover;
   }
   .login-form {
