@@ -35,6 +35,9 @@ export default {
     },
     isAdmin () {
       return !!(this.userRoles.includes('admin'))
+    },
+    isPhys () {
+      return this.$store.getters.user.login_type === 'phys'
     }
   },
   methods: {

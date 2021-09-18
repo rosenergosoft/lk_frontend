@@ -14,45 +14,91 @@
       </div>
     </div>
     <div class="separator" />
-    <div class="d-flex justify-content-between">
-      <div>
+
+    <div v-if="isPhys">
+      <div class="d-flex justify-content-between">
         <div>
-          <label class="label">Физическое лицо</label>
+          <div>
+            <label class="label">Физическое лицо</label>
+          </div>
+          <div class="text-content">
+            {{ customerName }}
+          </div>
+          <div class="red-warning">
+            {{ passportData }}
+          </div>
         </div>
-        <div class="text-content">
-          {{ customerName }}
-        </div>
-        <div class="red-warning">
-          {{ passportData }}
+        <div class="text-right">
+          <a v-b-modal.modal-phys-data><img src="/images/edit.svg" alt="" title=""></a>
+          <profile/>
         </div>
       </div>
-      <div class="text-right">
-        <a v-b-modal.modal-phys-data><img src="/images/edit.svg" alt="" title=""></a>
-        <profile />
+      <div class="separator"/>
+      <div class="d-flex justify-content-between">
+        <div>
+          <div>
+            <label class="label">Юридическое лицо или ИП</label>
+          </div>
+          <div v-if="companyName">
+            <div class="text-content">
+              {{ companyName }}
+            </div>
+            <div class="text-details">
+              {{ companyInfo }}
+            </div>
+          </div>
+          <div v-if="companyInfo" class="company-info" v-html="bankInfo"/>
+          <div v-else>
+            Нет данных
+          </div>
+        </div>
+        <div class="text-right">
+          <a v-b-modal.modal-yur-data href="#"><img src="/images/edit.svg" alt="" title=""></a>
+          <company/>
+        </div>
       </div>
     </div>
-    <div class="separator" />
-    <div class="d-flex justify-content-between">
-      <div>
+    <div v-else>
+      <div class="d-flex justify-content-between">
         <div>
-          <label class="label">Юридическое лицо или ИП</label>
-        </div>
-        <div v-if="companyName">
-          <div class="text-content">
-            {{ companyName }}
+          <div>
+            <label class="label">Юридическое лицо или ИП</label>
           </div>
-          <div class="text-details">
-            {{ companyInfo }}
+          <div v-if="companyName">
+            <div class="text-content">
+              {{ companyName }}
+            </div>
+            <div class="text-details">
+              {{ companyInfo }}
+            </div>
+          </div>
+          <div v-if="companyInfo" class="company-info" v-html="bankInfo"/>
+          <div v-else>
+            Нет данных
           </div>
         </div>
-        <div v-if="companyInfo" class="company-info" v-html="bankInfo" />
-        <div v-else>
-          Нет данных
+        <div class="text-right">
+          <a v-b-modal.modal-yur-data href="#"><img src="/images/edit.svg" alt="" title=""></a>
+          <company/>
         </div>
       </div>
-      <div class="text-right">
-        <a v-b-modal.modal-yur-data href="#"><img src="/images/edit.svg" alt="" title=""></a>
-        <company />
+      <div class="separator"/>
+      <div class="d-flex justify-content-between">
+        <div>
+          <div>
+            <label class="label">Физическое лицо</label>
+          </div>
+          <div class="text-content">
+            {{ customerName }}
+          </div>
+          <div class="red-warning">
+            {{ passportData }}
+          </div>
+        </div>
+        <div class="text-right">
+          <a v-b-modal.modal-phys-data><img src="/images/edit.svg" alt="" title=""></a>
+          <profile/>
+        </div>
       </div>
     </div>
   </div>

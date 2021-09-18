@@ -10,7 +10,7 @@
   >
     <div class="content">
       <b-tabs content-class="mt-3">
-        <b-tab title="Основаня информация">
+        <b-tab title="Основная информация">
           <div class="row inputs">
             <div class="col">
               <div class="form-group">
