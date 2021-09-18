@@ -86,19 +86,19 @@ export default {
       ) {
         if (this.docs.phys[0]) {
           if (!this.docs.phys[0].signature) {
-            this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы пользователя' })
+            this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы пользователя', duration: 6000 })
             return false
           }
         }
         if (this.docs.phys[1]) {
           if (!this.docs.phys[1].signature) {
-            this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы пользователя' })
+            this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы пользователя', duration: 6000 })
             return false
           }
         }
         return true
       } else {
-        this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните даные о пользователе' })
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните даные о пользователе', duration: 6000 })
         return false
       }
     },

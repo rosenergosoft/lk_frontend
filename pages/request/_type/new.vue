@@ -14,7 +14,7 @@
               Документы, необходимые для заключения договора
             </div>
             <div class="big-notice mb-1">
-              Укажите данные по физическому и/или юридическому лицу, которое будет учавствовать в заключении договора на присоединение.
+              Укажите данные по физическому и/или юридическому лицу, которое будет участвовать в заключении договора на присоединение.
             </div>
             <PersonalData />
             <div class="personal-data">
@@ -99,23 +99,22 @@ export default {
         this.userProfile.pasport &&
         this.userProfile.pasport_granted_by &&
         this.userProfile.pasport_date &&
-        this.userProfile.reg_address &&
-        this.userProfile.phys_address
+        this.userProfile.reg_address
       ) {
         if (!this.docs.phys[0]) {
-          this.$notify({ type: 'error', title: 'Ошибка', text: 'Загрузите документы пользователя' })
+          this.$notify({ type: 'error', title: 'Ошибка', text: 'Загрузите документы пользователя', duration: 6000 })
           return false
         }
-        if (!this.docs.phys[0].signature) {
-          this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы пользователя' })
-          return false
-        }
-        if (this.docs.phys[1]) {
-          if (!this.docs.phys[1].signature) {
-            this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы пользователя' })
-            return false
-          }
-        }
+        // if (!this.docs.phys[0].signature) {
+        //   this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы пользователя' })
+        //   return false
+        // }
+        // if (this.docs.phys[1]) {
+        //   if (!this.docs.phys[1].signature) {
+        //     this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы пользователя' })
+        //     return false
+        //   }
+        // }
         if (this.userCompany && this.userCompany.inn) {
           if (
             this.userCompany.opf &&
@@ -127,45 +126,45 @@ export default {
             this.userCompany.check_account
           ) {
             if (!this.docs.yur[0]) {
-              this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните документы о компании' })
+              this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните документы о компании', duration: 6000 })
               return false
             }
             if (!this.docs.yur[0].signature) {
-              this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы компании' })
+              this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы компании', duration: 6000 })
               return false
             }
             if (this.docs.yur[1]) {
               if (!this.docs.yur[1].signature) {
-                this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы компании' })
+                this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы компании', duration: 6000 })
                 return false
               }
             }
             if (this.docs.yur[2]) {
               if (!this.docs.yur[2].signature) {
-                this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы компании' })
+                this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы компании', duration: 6000 })
                 return false
               }
             }
             if (this.docs.yur[3]) {
               if (!this.docs.yur[2].signature) {
-                this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы компании' })
+                this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы компании', duration: 6000 })
                 return false
               }
             }
             if (this.docs.yur[4]) {
               if (!this.docs.yur[2].signature) {
-                this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы компании' })
+                this.$notify({ type: 'error', title: 'Ошибка', text: 'Подпишите документы компании', duration: 6000 })
                 return false
               }
             }
           } else {
-            this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните данные о компании' })
+            this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните данные о компании', duration: 6000 })
             return false
           }
         }
         return true
       } else {
-        this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните даные о пользователе' })
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните даные о пользователе', duration: 6000 })
         return false
       }
     },

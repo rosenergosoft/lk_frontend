@@ -98,13 +98,13 @@
             </div>
             <div class="form-group d-flex justify-content-between">
               <div>
-                <button class="btn submit" @click="validateFirstStep">
-                  Далее
+                <button class="btn reg" @click="nextTo(0)">
+                  Назад
                 </button>
               </div>
               <div>
-                <button class="btn reg" @click="nextTo(0)">
-                  Авторизация
+                <button class="btn submit" @click="validateFirstStep">
+                  Далее
                 </button>
               </div>
             </div>
@@ -145,13 +145,13 @@
             </div>
             <div class="form-group d-flex justify-content-between">
               <div>
-                <button class="btn submit" @click="validateSecondStep()">
-                  Далее
+                <button class="btn reg" @click="nextTo(1)">
+                  Назад
                 </button>
               </div>
               <div>
-                <button class="btn reg" @click="nextTo(1)">
-                  Назад
+                <button class="btn submit" @click="validateSecondStep()">
+                  Далее
                 </button>
               </div>
             </div>
@@ -208,13 +208,13 @@
             </div>
             <div class="form-group d-flex justify-content-between">
               <div>
-                <button class="btn submit" @click="submitRegistration">
-                  Отправить
+                <button class="btn reg" @click="nextTo(2)">
+                  Назад
                 </button>
               </div>
               <div>
-                <button class="btn reg" @click="nextTo(2)">
-                  Назад
+                <button class="btn submit" @click="submitRegistration">
+                  Далее
                 </button>
               </div>
             </div>
@@ -315,7 +315,7 @@ export default {
         data: formData
       }).catch((error) => {
         if (error.response.status === 401) {
-          this.$notify({ type: 'error', title: 'Ошибка', text: 'Проверьте данные для входа. Если ошибка повторятся, обратитесь к администратору' })
+          this.$notify({ type: 'error', title: 'Ошибка', text: 'Проверьте данные для входа. Если ошибка повторятся, обратитесь к администратору', duration: 6000 })
         }
       })
     },
@@ -345,11 +345,11 @@ export default {
         this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/registration', data).then((resp) => {
           if (resp.data.success) {
             this.currentStep = 0
-            this.$notify({ type: 'success', title: 'Успех', text: 'Теперь вы можете войти используя свои данные' })
+            this.$notify({ type: 'success', title: 'Успех', text: 'Теперь вы можете войти используя свои данные', duration: 6000 })
           } else if (resp.data.message === 'Duplicate') {
-            this.$notify({ type: 'error', title: 'Ошибка', text: 'Пользователь с этим email уже существует' })
+            this.$notify({ type: 'error', title: 'Ошибка', text: 'Пользователь с этим email уже существует', duration: 6000 })
           } else {
-            this.$notify({ type: 'error', title: 'Ошибка', text: 'Перезагрузите страницу и попробуйте еще раз' })
+            this.$notify({ type: 'error', title: 'Ошибка', text: 'Перезагрузите страницу и попробуйте еще раз', duration: 6000 })
           }
         })
       }
@@ -357,27 +357,27 @@ export default {
     validateThirdStep () {
       if (!this.notaclient) {
         if (!this.account) {
-          this.$notify({ type: 'error', title: 'Ошибка', text: 'Укажите номер лицевого счета' })
+          this.$notify({ type: 'error', title: 'Ошибка', text: 'Укажите номер лицевого счета', duration: 6000 })
           return false
         }
         if (!this.name) {
-          this.$notify({ type: 'error', title: 'Ошибка', text: 'Укажите ФИО' })
+          this.$notify({ type: 'error', title: 'Ошибка', text: 'Укажите ФИО', duration: 6000 })
           return false
         }
       }
       if (!this.agreement) {
-        this.$notify({ type: 'error', title: 'Ошибка', text: 'Примите соглашение об обработке персональных данных' })
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Примите соглашение об обработке персональных данных', duration: 6000 })
         return false
       }
       return true
     },
     validateSecondStep () {
       if (!this.email) {
-        this.$notify({ type: 'error', title: 'Ошибка', text: 'Укажите электронную почту' })
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Укажите электронную почту', duration: 6000 })
         return false
       }
       if (!this.display.phone) {
-        this.$notify({ type: 'error', title: 'Ошибка', text: 'Введите телефон' })
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Введите телефон', duration: 6000 })
         return false
       }
       this.nextTo(3)
@@ -404,18 +404,18 @@ export default {
         this.passwordError.required = {
           message: 'Обязательное поле'
         }
-        this.$notify({ type: 'error', title: 'Ошибка', text: 'Придумайте пароль' })
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Придумайте пароль', duration: 6000 })
         return
       }
       if (this.password.length < 6) {
-        this.$notify({ type: 'error', title: 'Ошибка', text: 'Пароль должен содержать минимум 6 символов' })
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Пароль должен содержать минимум 6 символов', duration: 6000 })
         return
       }
       if (this.password !== this.confirmPassword) {
         this.passwordError.confirm = {
           message: 'Пароли не совпадают'
         }
-        this.$notify({ type: 'error', title: 'Ошибка', text: 'Пароли не совпадают' })
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Пароли не совпадают', duration: 6000 })
         return
       }
       if (result) {

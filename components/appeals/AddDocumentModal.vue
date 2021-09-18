@@ -45,7 +45,7 @@ export default {
   methods: {
     validateFile () {
       if (!this.file.fileData) {
-        this.$notify({ type: 'error', title: 'Ошибка', text: 'Файл не выбран' })
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Файл не выбран', duration: 6000 })
         return false
       }
       return true
@@ -63,7 +63,7 @@ export default {
           this.setLoading(false)
           if (res.success) {
             this.$emit('file-upload-after', res)
-            this.$notify({ type: 'success', title: 'Успех', text: 'Файл загружен' })
+            this.$notify({ type: 'success', title: 'Успех', text: 'Файл загружен', duration: 6000 })
             this.$bvModal.hide('add-document-modal')
             this.file = Object
           }

@@ -502,20 +502,20 @@ export default {
       ) {
         if (this.connectionType === '1') {
           if (!this.details.contractNumber || !this.details.contractDate) {
-            this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните анкету заявки' })
+            this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните анкету заявки', duration: 6000 })
             return false
           }
         }
         // eslint-disable-next-line eqeqeq
         if (this.connectionType === '2') {
           if (!this.details.connectionDuration) {
-            this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните анкету заявки' })
+            this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните анкету заявки', duration: 6000 })
             return false
           }
         }
         return true
       } else {
-        this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните анкету заявки' })
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Заполните анкету заявки', duration: 6000 })
         return false
       }
     },

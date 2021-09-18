@@ -65,7 +65,7 @@ export default {
         .then((res) => {
           this.setLoading(false)
           if (res.data.success) {
-            this.$notify({ type: 'success', title: 'Успех', text: 'Данные успешно сохранены' })
+            this.$notify({ type: 'success', title: 'Успех', text: 'Данные успешно сохранены', duration: 6000 })
           }
         })
     }

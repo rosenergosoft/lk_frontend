@@ -175,7 +175,7 @@ export default {
       this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/user/document/sendSms', { id: this.doc.id })
         .then(() => {
           this.smsSent = true
-          this.$notify({ type: 'success', title: 'Успех', text: 'Смс отправлено' })
+          this.$notify({ type: 'success', title: 'Успех', text: 'Смс отправлено', duration: 6000 })
           this.setLoading(false)
         })
     },
@@ -189,10 +189,10 @@ export default {
         if (res.data.success) {
           this.$parent.$emit('signed')
           this.$bvModal.hide('doc-signing-' + this.doc.id)
-          this.$notify({ type: 'success', title: 'Успех', text: 'Документ подписан' })
+          this.$notify({ type: 'success', title: 'Успех', text: 'Документ подписан', duration: 6000 })
         }
         if (res.data.error) {
-          this.$notify({ type: 'error', title: 'Ошибка', text: 'Проверьте правильность кода или повторите попытку еще раз' })
+          this.$notify({ type: 'error', title: 'Ошибка', text: 'Проверьте правильность кода или повторите попытку еще раз', duration: 6000 })
         }
         this.setLoading(false)
       })

@@ -97,14 +97,14 @@ export default {
               newPassword: '',
               confirmNewPassword: ''
             })
-            this.$notify({ type: 'success', title: 'Успех', text: 'Данные сохранены' })
+            this.$notify({ type: 'success', title: 'Успех', text: 'Данные сохранены', duration: 6000 })
           } else {
-            this.$notify({ type: 'error', title: 'Ошибка', text: 'Что-то пошло не так' })
+            this.$notify({ type: 'error', title: 'Ошибка', text: 'Что-то пошло не так', duration: 6000 })
           }
           this.setLoading(false)
         })
         .catch(() => {
-          this.$notify({ type: 'error', title: 'Ошибка', text: 'Что-то пошло не так' })
+          this.$notify({ type: 'error', title: 'Ошибка', text: 'Что-то пошло не так', duration: 6000 })
           this.setLoading(false)
         })
     }

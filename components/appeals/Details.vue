@@ -104,11 +104,11 @@ export default {
   methods: {
     validateDetails () {
       if (!this.details.requester) {
-        this.$notify({ type: 'error', title: 'Ошибка', text: 'Заявитель не выбран' })
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Заявитель не выбран', duration: 6000 })
         return false
       }
       if (!this.details.question) {
-        this.$notify({ type: 'error', title: 'Ошибка', text: 'Введите ваш вопрос' })
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Введите ваш вопрос', duration: 6000 })
         return false
       }
       return true

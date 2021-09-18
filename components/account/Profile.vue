@@ -81,7 +81,7 @@ export default {
         !this.profileData.pasport_date ||
         !this.profileData.reg_address
       ) {
-        this.$notify({ type: 'error', title: 'Ошибка', text: 'Все поля должны быть заполнены' })
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Все поля должны быть заполнены', duration: 6000 })
         return false
       } else {
         return true
@@ -95,7 +95,7 @@ export default {
             if (response.data.success) {
               this.$store.commit('UPDATE_USER_PROFILE', response.data.user.profile)
               this.$bvModal.hide('modal-phys-data')
-              this.$notify({ type: 'success', title: 'Успех', text: 'Профиль сохранен' })
+              this.$notify({ type: 'success', title: 'Успех', text: 'Профиль сохранен', duration: 6000 })
             }
             this.setLoading(false)
           })

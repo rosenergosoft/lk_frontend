@@ -251,11 +251,11 @@ export default {
     },
     saveUser () {
       if (!this.userData.email && !this.userData.password) {
-        this.$notify({ type: 'error', title: 'Ошибка', text: 'Email и Пароль обязательные поля' })
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Email и Пароль обязательные поля', duration: 6000 })
         return
       }
       if (this.userData.type === 'vendor' && !this.userData.vendor_name) {
-        this.$notify({ type: 'error', title: 'Ошибка', text: 'Название компании обязательное поле' })
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Название компании обязательное поле', duration: 6000 })
         return
       }
       const data = {

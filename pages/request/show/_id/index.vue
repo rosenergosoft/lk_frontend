@@ -314,7 +314,7 @@ export default {
         .then((res) => {
           if (res.success) {
             this.text = ''
-            this.$notify({ type: 'success', title: 'Успех', text: 'Сообщение отправлено' })
+            this.$notify({ type: 'success', title: 'Успех', text: 'Сообщение отправлено', duration: 6000 })
             this.messages = res.messages
             this.application = res.application
           }
@@ -333,7 +333,7 @@ export default {
         .then((res) => {
           this.setLoading(false)
           if (res.success) {
-            this.$notify({ type: 'success', title: 'Успех', text: 'Статус изменен' })
+            this.$notify({ type: 'success', title: 'Успех', text: 'Статус изменен', duration: 6000 })
           }
         })
     },
