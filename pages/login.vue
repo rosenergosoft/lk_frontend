@@ -1,19 +1,27 @@
 <template>
-  <div class="relative flex items-top justify-center min-h-screen sm:items-center sm:pt-0">
+  <div class="login-container">
     <notifications />
-    <div v-if="currentStep === 0" class="login-form mx-auto">
+    <div v-if="currentStep === 0" class="login-form">
       <div class="bg-white">
         <div class="row">
           <div class="col-6 form-container">
-            <h2 class="text-2xl leading-7 font-semibold">
+            <h2>
               Авторизация
             </h2>
             <div>
               <ul>
-                <li><input id="snils" v-model="loginData.type" type="radio" name="type" value="phys"><label for="snils">Физическое лицо (вход по СНИЛС)</label></li>
-                <li><input id="ogrn" v-model="loginData.type" type="radio" name="type" value="yur"><label for="ogrn">Юридическое лицо (вход по ОГРН)</label></li>
-                <li><input id="ogrnip" v-model="loginData.type" type="radio" name="type" value="ip"><label for="ogrnip">Индивидуальный предприниматель (вход по ОГРНИП)</label></li>
-                <li><input id="by-email" v-model="loginData.type" type="radio" name="type" value="email"><label for="by-email">Вход по электронной почте</label></li>
+                <li class="nav-item">
+                  <input id="snils" v-model="loginData.type" type="radio" name="type" value="phys"><label for="snils">Физическое лицо (вход по СНИЛС)</label>
+                </li>
+                <li class="nav-item">
+                  <input id="ogrn" v-model="loginData.type" type="radio" name="type" value="yur"><label for="ogrn">Юридическое лицо (вход по ОГРН)</label>
+                </li>
+                <li class="nav-item">
+                  <input id="ogrnip" v-model="loginData.type" type="radio" name="type" value="ip"><label for="ogrnip">Индивидуальный предприниматель (вход по ОГРНИП)</label>
+                </li>
+                <li class="nav-item">
+                  <input id="by-email" v-model="loginData.type" type="radio" name="type" value="email"><label for="by-email">Вход по электронной почте</label>
+                </li>
               </ul>
               <div class="inputs">
                 <div v-if="loginData.type === 'phys'" class="form-group">
@@ -430,10 +438,12 @@ export default {
   }
 }
 </script>
-<style>
-  @import "~/theme/tailwind.min.css";
-</style>
 <style lang="scss" scoped>
+  .absolute-center {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
   .col, .row, .col-6 {
     margin: 0;
     padding: 0;
@@ -463,6 +473,7 @@ export default {
   .login-form {
     max-width: 1140px;
     width: 100%;
+    margin: 0 auto !important;
   }
   h2 {
     font-family: Barlow-Bold, sans-serif;
@@ -479,6 +490,19 @@ export default {
     &:checked {
       background: $submitColor url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e") no-repeat center center;
       background-size: 70%;
+    }
+  }
+  .form-group {
+    margin-bottom: 0;
+  }
+  .login-container {
+    min-height: 100vh;
+    align-items: center !important;
+    display: flex !important;
+    ul {
+      li {
+        list-style: none;
+      }
     }
   }
   .form-container {
