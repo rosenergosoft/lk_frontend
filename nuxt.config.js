@@ -101,6 +101,9 @@ export default {
   build: {
     extractCSS: {
       ignoreOrder: false
+    },
+    babel: {
+      compact: true
     }
   },
   router: {
