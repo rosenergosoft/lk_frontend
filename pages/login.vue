@@ -1,7 +1,6 @@
 <template>
   <div class="relative flex items-top justify-center min-h-screen sm:items-center sm:pt-0">
     <notifications />
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
     <div v-if="currentStep === 0" class="login-form mx-auto">
       <div class="bg-white">
         <div class="row">
@@ -431,7 +430,9 @@ export default {
   }
 }
 </script>
-
+<style>
+  @import "~/theme/tailwind.min.css";
+</style>
 <style lang="scss" scoped>
   .col, .row, .col-6 {
     margin: 0;

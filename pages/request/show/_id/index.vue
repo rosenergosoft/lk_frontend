@@ -128,7 +128,7 @@
                 :doc="doc"
                 :index="index"
                 :count="docs.length"
-                show-owner="true"
+                :show-owner="true"
                 @remove-file="removeFile"
                 @download-file="downloadFile"
               />

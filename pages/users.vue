@@ -133,7 +133,20 @@ export default {
         })
     },
     getFullName (user) {
-      return user.last_name + ' ' + user.first_name + ' ' + user.middle_name
+      let fullName
+      if (user.last_name) {
+        fullName = user.last_name
+      }
+      if (user.first_name) {
+        fullName += ' ' + user.first_name
+      }
+      if (user.middle_name) {
+        fullName += ' ' + user.middle_name
+      }
+      if (!fullName) {
+        fullName = 'Имя не заполнено'
+      }
+      return fullName
     },
     openEdit (id) {
       this.$router.replace({ query: { ...this.$route.query, id } })
