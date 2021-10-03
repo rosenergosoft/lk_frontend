@@ -12,6 +12,9 @@
           <a v-if="doc.original_name" class="file-link" @click="downloadFile(doc.id, doc.original_name)">
             <b-icon-file-richtext class="bootstrap-icon" />{{ doc.original_name }}
           </a>
+          <div v-if="showOwner" class="notice">
+            Загружено <span v-if="doc.user.type === 'customer'">пользователем</span><span v-else>администратором</span>
+          </div>
         </div>
       </div>
       <div>
@@ -20,14 +23,14 @@
         </div>
       </div>
     </div>
-    <div class="separator mt-25" />
+    <div v-if="index+1 !== count" class="separator mt-25" />
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
 import { BIconFileRichtext } from 'bootstrap-vue'
 export default {
-  name: 'DocumentsItem',
+  name: 'AppDoc',
   components: {
     BIconFileRichtext
   },
@@ -39,6 +42,14 @@ export default {
     hideDeleteButton: {
       type: Boolean,
       default: false
+    },
+    showOwner: {
+      type: Boolean,
+      default: false
+    },
+    count: {
+      type: Number,
+      default: null
     }
   },
   data () {

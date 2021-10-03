@@ -29,9 +29,13 @@
 export default {
   name: 'AddDocumentModal',
   props: {
-    appealId: {
+    entityId: {
       type: Number,
       default: null
+    },
+    type: {
+      type: String,
+      default: 'appeals'
     }
   },
   data () {
@@ -55,11 +59,11 @@ export default {
         const formData = new FormData()
         if (this.file.fileData) {
           formData.append('file_data', this.file.fileData, this.file.fileData.name)
-          if (this.appealId) {
-            formData.append('appeal_id', this.appealId)
+          if (this.entityId) {
+            formData.append('entity_id', this.entityId)
           }
           this.setLoading(true)
-          const res = await this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/appeals/fileUpload', formData)
+          const res = await this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/' + this.type + '/fileUpload', formData)
           this.setLoading(false)
           if (res.success) {
             this.$emit('file-upload-after', res)

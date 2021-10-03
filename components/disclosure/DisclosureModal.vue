@@ -86,7 +86,7 @@
 
 <script>
 import AddDocumentModal from '@/components/disclosure/AddDocumentModal'
-import DocumentsItem from '@/components/disclosure/DocumentsItem'
+import DocumentsItem from '@/components/AppDoc'
 export default {
   name: 'DisclosureModal',
   components: {

@@ -202,7 +202,7 @@
                   4. Соглашения
                 </div>
                 <div class="form-group login-form-checkbox">
-                  <input id="agreement" v-model="agreement" type="checkbox"><label for="agreement">Я принимаю <a href="">соглашение</a> об обработке персональных данных</label>
+                  <input id="agreement" v-model="agreement" type="checkbox"><label for="agreement">Я принимаю <a href="http://rosenergosite.newizze.com/user-agreement" target="_blank">соглашение</a> об обработке персональных данных</label>
                 </div>
               </div>
             </div>

@@ -100,20 +100,45 @@
             </div>
             <div class="separator" />
           </div>
-          <div class="personal-data">
-            <div>
-              <div>
-                <label class="label">Сообщения</label>
-                <div class="private-messages">
-                  <Message
-                    v-for="item in messages"
-                    :key="item.id"
-                    :message="item"
-                    :entity="application"
-                  />
-                </div>
-              </div>
+          <div v-if="messages" class="personal-data">
+            <label class="label">Сообщения</label>
+            <div class="private-messages">
+              <Message
+                v-for="item in messages"
+                :key="item.id"
+                :message="item"
+                :entity="application"
+              />
             </div>
+          </div>
+        </div>
+        <div class="box status-1">
+          <div class="personal-data">
+            <h4>Документы к заявке</h4>
+            <div class="details">
+              <button v-b-modal.add-document-modal class="blue-button float-none">
+                Добавить документ
+              </button>
+            </div>
+            <div class="clearfix" />
+            <div class="details">
+              <AppDoc
+                v-for="(doc, index) in docs"
+                :key="doc.id"
+                :doc="doc"
+                :index="index"
+                :count="docs.length"
+                show-owner="true"
+                @remove-file="removeFile"
+                @download-file="downloadFile"
+              />
+            </div>
+            <div class="clearfix" />
+            <AddDocumentModal
+              :entity-id="application.id"
+              type="application"
+              @file-upload-after="updateDocs"
+            />
           </div>
         </div>
         <div v-if="isExecutive || application.status !== 'completed'" class="box status-6">
@@ -167,14 +192,19 @@
 </template>
 
 <script>
+import AddDocumentModal from '@/components/AddDocumentModal'
 import { mapGetters } from 'vuex'
+import fileDownload from 'js-file-download'
+import AppDoc from '@/components/AppDoc'
 import DocumentsItem from '~/components/account/documents/DocumentsItem'
 import Message from '~/components/Message'
 export default {
   name: 'Index',
   components: {
     DocumentsItem,
-    Message
+    Message,
+    AddDocumentModal,
+    AppDoc
   },
   data () {
     return {
@@ -183,6 +213,7 @@ export default {
       company: {},
       text: '',
       messages: {},
+      docs: {},
       documents: {
         phys: [],
         yur: []
@@ -277,6 +308,38 @@ export default {
     this.getApplication()
   },
   methods: {
+    updateDocs (res) {
+      this.docs = res.docs
+    },
+    async getDocs () {
+      const res = await this.$axios.$get(process.env.LARAVEL_API_BASE_URL + '/api/application/getDocs/' + this.application.id)
+      if (res) {
+        this.docs = res.docs
+      }
+    },
+    removeFile (fileData) {
+      const formData = {
+        application_id: this.application.id,
+        doc_id: fileData.id
+      }
+      this.setLoading(true)
+      this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/application/fileDelete', formData).then(
+        (res) => {
+          this.setLoading(false)
+        }
+      )
+      this.docs.splice(fileData.index, 1)
+    },
+    downloadFile (fileData) {
+      this.$axios.$get(process.env.LARAVEL_API_BASE_URL + '/api/application/downloadFile/' + fileData.id, {
+        responseType: 'blob'
+      })
+        .then((res) => {
+          if (res) {
+            fileDownload(res, fileData.name)
+          }
+        })
+    },
     async getApplication () {
       const id = this.$route.params.id
       try {
@@ -294,6 +357,7 @@ export default {
         await this.getDocuments()
         await this.getMessages()
         this.loaded = true
+        await this.getDocs()
         this.setLoading(false)
       } catch (e) {
         // console.log(e)

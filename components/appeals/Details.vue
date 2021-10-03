@@ -58,7 +58,7 @@
       </div>
     </div>
     <AddDocumentModal
-      :appeal-id="appealId"
+      :entity-id="appealId"
       @file-upload-after="updateDocs"
     />
   </div>
@@ -67,8 +67,8 @@
 <script>
 import { mapGetters } from 'vuex'
 import fileDownload from 'js-file-download'
-import AddDocumentModal from '@/components/appeals/AddDocumentModal'
-import DocumentsItem from '@/components/disclosure/DocumentsItem'
+import AddDocumentModal from '@/components/AddDocumentModal'
+import DocumentsItem from '@/components/AppDoc'
 export default {
   name: 'Details',
   components: {

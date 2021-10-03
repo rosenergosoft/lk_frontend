@@ -81,8 +81,7 @@ export default {
         this.userProfile.pasport &&
         this.userProfile.pasport_granted_by &&
         this.userProfile.pasport_date &&
-        this.userProfile.reg_address &&
-        this.userProfile.phys_address
+        this.userProfile.reg_address
       ) {
         if (this.docs.phys[0]) {
           if (!this.docs.phys[0].signature) {

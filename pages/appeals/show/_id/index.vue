@@ -105,6 +105,19 @@
             </div>
           </div>
         </div>
+        <div v-if="docs.length" class="box status-1">
+          <h4>Загруженные файлы</h4>
+          <div class="docs">
+            <UploadedDocumentsItem
+              v-for="(doc, index) in docs"
+              :key="doc.id"
+              :doc="doc"
+              :index="index"
+              :hide-delete-button="true"
+              @download-file="downloadFile"
+            />
+          </div>
+        </div>
         <div v-if="isExecutive || appeal.status !== 'completed'" class="box status-6">
           <h4>Обращение</h4>
           <div v-if="isExecutive" class="personal-data">
@@ -135,19 +148,6 @@
           </div>
           <div class="clearfix" />
         </div>
-        <div v-if="docs.length" class="box status-1">
-          <h4>Загруженные файлы</h4>
-          <div class="docs">
-            <UploadedDocumentsItem
-              v-for="(doc, index) in docs"
-              :key="doc.id"
-              :doc="doc"
-              :index="index"
-              :hide-delete-button="true"
-              @download-file="downloadFile"
-            />
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -155,8 +155,8 @@
 
 <script>
 import fileDownload from 'js-file-download'
+import UploadedDocumentsItem from '@/components/AppDoc'
 import DocumentsItem from '~/components/account/documents/DocumentsItem'
-import UploadedDocumentsItem from '~/components/disclosure/DocumentsItem'
 import Message from '~/components/Message'
 export default {
   name: 'Index',
