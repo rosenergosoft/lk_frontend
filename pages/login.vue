@@ -1,237 +1,283 @@
 <template>
   <div class="login-container">
     <notifications />
-    <div v-if="currentStep === 0" class="login-form">
-      <div class="bg-white">
-        <div class="row">
-          <div class="col-6 form-container">
-            <h2>
-              Авторизация
-            </h2>
-            <div>
-              <ul>
-                <li class="nav-item">
-                  <input id="snils" v-model="loginData.type" type="radio" name="type" value="phys"><label for="snils">Физическое лицо (вход по СНИЛС)</label>
-                </li>
-                <li class="nav-item">
-                  <input id="ogrn" v-model="loginData.type" type="radio" name="type" value="yur"><label for="ogrn">Юридическое лицо (вход по ОГРН)</label>
-                </li>
-                <li class="nav-item">
-                  <input id="ogrnip" v-model="loginData.type" type="radio" name="type" value="ip"><label for="ogrnip">Индивидуальный предприниматель (вход по ОГРНИП)</label>
-                </li>
-                <li class="nav-item">
-                  <input id="by-email" v-model="loginData.type" type="radio" name="type" value="email"><label for="by-email">Вход по электронной почте</label>
-                </li>
-              </ul>
-              <div class="inputs">
-                <div v-if="loginData.type === 'phys'" class="form-group">
-                  <input
-                    v-model="loginData.snils"
-                    v-mask="'###-###-### ##'"
-                    :placeholder="placeholder"
-                    type="text"
-                    class="form-control"
-                  >
+    <div class="d-flex align-items-center" style="min-height: 100vh;">
+      <div v-if="currentStep === 0" class="login-form">
+        <div class="bg-white">
+          <div class="row">
+            <div class="col-6 form-container">
+              <h2>
+                Авторизация
+              </h2>
+              <div>
+                <ul>
+                  <li class="nav-item">
+                    <input id="snils" v-model="loginData.type" type="radio" name="type" value="phys"><label for="snils">Физическое
+                      лицо (вход по СНИЛС)</label>
+                  </li>
+                  <li class="nav-item">
+                    <input id="ogrn" v-model="loginData.type" type="radio" name="type" value="yur"><label for="ogrn">Юридическое
+                      лицо (вход по ОГРН)</label>
+                  </li>
+                  <li class="nav-item">
+                    <input id="ogrnip" v-model="loginData.type" type="radio" name="type" value="ip"><label for="ogrnip">Индивидуальный
+                      предприниматель (вход по ОГРНИП)</label>
+                  </li>
+                  <li class="nav-item">
+                    <input id="by-email" v-model="loginData.type" type="radio" name="type" value="email"><label
+                      for="by-email"
+                    >Вход по электронной почте</label>
+                  </li>
+                </ul>
+                <div class="inputs">
+                  <div v-if="loginData.type === 'phys'" class="form-group">
+                    <input
+                      v-model="loginData.snils"
+                      v-mask="'###-###-### ##'"
+                      :placeholder="placeholder"
+                      type="text"
+                      class="form-control"
+                    >
+                  </div>
+                  <div v-if="loginData.type === 'yur'" class="form-group">
+                    <input v-model="loginData.ogrn" :placeholder="placeholder" type="text" class="form-control">
+                  </div>
+                  <div v-if="loginData.type === 'ip'" class="form-group">
+                    <input v-model="loginData.ogrnip" :placeholder="placeholder" type="text" class="form-control">
+                  </div>
+                  <div v-if="loginData.type === 'email'" class="form-group">
+                    <input v-model="loginData.email" :placeholder="placeholder" type="text" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <input
+                      v-model="loginData.password"
+                      type="password"
+                      class="form-control"
+                      placeholder="Пароль"
+                      @keyup.enter="submitLogin"
+                    >
+                  </div>
                 </div>
-                <div v-if="loginData.type === 'yur'" class="form-group">
-                  <input v-model="loginData.ogrn" :placeholder="placeholder" type="text" class="form-control">
+              </div>
+              <div class="form-group d-flex justify-content-between">
+                <div>
+                  <button class="btn submit" @click="submitLogin">
+                    Войти
+                  </button>
                 </div>
-                <div v-if="loginData.type === 'ip'" class="form-group">
-                  <input v-model="loginData.ogrnip" :placeholder="placeholder" type="text" class="form-control">
-                </div>
-                <div v-if="loginData.type === 'email'" class="form-group">
-                  <input v-model="loginData.email" :placeholder="placeholder" type="text" class="form-control">
-                </div>
-                <div class="form-group">
-                  <input v-model="loginData.password" type="password" class="form-control" placeholder="Пароль" @keyup.enter="submitLogin">
+                <div>
+                  <button class="btn reg" @click="nextTo(1)">
+                    Регистрация
+                  </button>
                 </div>
               </div>
             </div>
-            <div class="form-group d-flex justify-content-between">
-              <div>
-                <button class="btn submit" @click="submitLogin">
-                  Войти
-                </button>
-              </div>
-              <div>
-                <button class="btn reg" @click="nextTo(1)">
-                  Регистрация
-                </button>
-              </div>
-            </div>
+            <div class="col-6 form-image" />
           </div>
-          <div class="col-6 form-image" />
         </div>
       </div>
-    </div>
-    <div v-if="currentStep === 1" class="login-form mx-auto">
-      <div class="bg-white">
-        <div class="row">
-          <div class="col-6 form-container">
-            <h2 class="text-2xl leading-7 font-semibold">
-              Регистрация
-            </h2>
-            <div class="login-form-row">
-              <div class="steps">
-                <div class="step-title">
-                  1. Способ входа
+      <div v-if="currentStep === 1" class="login-form mx-auto">
+        <div class="bg-white">
+          <div class="row">
+            <div class="col-6 form-container">
+              <h2 class="text-2xl leading-7 font-semibold">
+                Регистрация
+              </h2>
+              <div class="login-form-row">
+                <div class="steps">
+                  <div class="step-title">
+                    1. Способ входа
+                  </div>
+                  <div class="step-description">
+                    Выберите тип аккаунта для определения способа входа. В последствии вы можете изменить его в вашем
+                    профиле.
+                  </div>
                 </div>
-                <div class="step-description">
-                  Выберите тип аккаунта для определения способа входа. В последствии вы можете изменить его в вашем профиле.
+                <ul>
+                  <li>
+                    <input id="phys" v-model="type" type="radio" value="phys" name="type"><label for="phys">Физическое
+                      лицо (вход по СНИЛС)</label>
+                  </li>
+                  <li>
+                    <input id="yur" v-model="type" type="radio" value="yur" name="type"><label for="yur">Юридическое
+                      лицо (вход по ОГРН)</label>
+                  </li>
+                  <li>
+                    <input id="ip" v-model="type" type="radio" value="ip" name="type"><label for="ip">Индивидуальный
+                      предприниматель (вход по ОГРНИП)</label>
+                  </li>
+                </ul>
+                <div class="inputs">
+                  <div v-if="type === 'phys'" class="form-group">
+                    <input
+                      v-model="display.snils"
+                      v-mask="'###-###-### ##'"
+                      type="text"
+                      class="form-control"
+                      placeholder="СНИЛС"
+                    >
+                  </div>
+                  <div v-if="type === 'yur'" class="form-group">
+                    <input v-model="ogrn" type="text" class="form-control" placeholder="ОГРН">
+                  </div>
+                  <div v-if="type === 'ip'" class="form-group">
+                    <input v-model="ogrnip" type="text" class="form-control" placeholder="ОГРНИП">
+                  </div>
+                  <div class="form-group">
+                    <input v-model="password" type="password" class="form-control" placeholder="Пароль">
+                  </div>
+                  <div class="form-group">
+                    <input
+                      v-model="confirmPassword"
+                      type="password"
+                      class="form-control"
+                      placeholder="Повторите пароль"
+                    >
+                  </div>
                 </div>
               </div>
-              <ul>
-                <li><input id="phys" v-model="type" type="radio" value="phys" name="type"><label for="phys">Физическое лицо (вход по СНИЛС)</label></li>
-                <li><input id="yur" v-model="type" type="radio" value="yur" name="type"><label for="yur">Юридическое лицо (вход по ОГРН)</label></li>
-                <li><input id="ip" v-model="type" type="radio" value="ip" name="type"><label for="ip">Индивидуальный предприниматель (вход по ОГРНИП)</label></li>
-              </ul>
-              <div class="inputs">
-                <div v-if="type === 'phys'" class="form-group">
-                  <input v-model="display.snils" v-mask="'###-###-### ##'" type="text" class="form-control" placeholder="СНИЛС">
+              <div class="form-group d-flex justify-content-between">
+                <div>
+                  <button class="btn reg" @click="nextTo(0)">
+                    Назад
+                  </button>
                 </div>
-                <div v-if="type === 'yur'" class="form-group">
-                  <input v-model="ogrn" type="text" class="form-control" placeholder="ОГРН">
+                <div>
+                  <button class="btn submit" @click="validateFirstStep">
+                    Далее
+                  </button>
                 </div>
-                <div v-if="type === 'ip'" class="form-group">
-                  <input v-model="ogrnip" type="text" class="form-control" placeholder="ОГРНИП">
-                </div>
-                <div class="form-group">
-                  <input v-model="password" type="password" class="form-control" placeholder="Пароль">
-                </div>
-                <div class="form-group">
-                  <input v-model="confirmPassword" type="password" class="form-control" placeholder="Повторите пароль">
-                </div>
+              </div>
+              <div class="d-flex ellipses justify-content-between">
+                <div class="active-ellipse" />
+                <div />
+                <div />
               </div>
             </div>
-            <div class="form-group d-flex justify-content-between">
-              <div>
-                <button class="btn reg" @click="nextTo(0)">
-                  Назад
-                </button>
-              </div>
-              <div>
-                <button class="btn submit" @click="validateFirstStep">
-                  Далее
-                </button>
-              </div>
-            </div>
-            <div class="d-flex ellipses justify-content-between">
-              <div class="active-ellipse" />
-              <div />
-              <div />
-            </div>
+            <div class="col-6 form-image" />
           </div>
-          <div class="col-6 form-image" />
         </div>
       </div>
-    </div>
-    <div v-if="currentStep === 2" class="login-form mx-auto">
-      <div class="bg-white">
-        <div class="row">
-          <div class="col-6 form-container">
-            <h2 class="text-2xl leading-7 font-semibold">
-              Регистрация
-            </h2>
-            <div class="login-form-row">
-              <div class="steps">
-                <div class="step-title">
-                  2. Контактная информация
+      <div v-if="currentStep === 2" class="login-form mx-auto">
+        <div class="bg-white">
+          <div class="row">
+            <div class="col-6 form-container">
+              <h2 class="text-2xl leading-7 font-semibold">
+                Регистрация
+              </h2>
+              <div class="login-form-row">
+                <div class="steps">
+                  <div class="step-title">
+                    2. Контактная информация
+                  </div>
+                  <div class="step-description">
+                    Укажите телефон и электронную почту для связи и уведомлений о изменениях по ваших заявкам, договору
+                    и тарифах
+                  </div>
                 </div>
-                <div class="step-description">
-                  Укажите телефон и электронную почту для связи и уведомлений о изменениях по ваших заявкам, договору и тарифах
+                <div class="inputs">
+                  <div class="form-group">
+                    <input v-model="email" type="text" class="form-control" placeholder="Электронная почта для связи">
+                  </div>
+                  <div class="form-group">
+                    <input
+                      v-model="display.phone"
+                      v-mask="'+7 (###) ###-##-##'"
+                      type="tel"
+                      class="form-control"
+                      placeholder="Телефон для уведомлений"
+                    >
+                  </div>
                 </div>
               </div>
-              <div class="inputs">
-                <div class="form-group">
-                  <input v-model="email" type="text" class="form-control" placeholder="Электронная почта для связи">
+              <div class="form-group d-flex justify-content-between">
+                <div>
+                  <button class="btn reg" @click="nextTo(1)">
+                    Назад
+                  </button>
                 </div>
-                <div class="form-group">
-                  <input v-model="display.phone" v-mask="'+7 (###) ###-##-##'" type="tel" class="form-control" placeholder="Телефон для уведомлений">
+                <div>
+                  <button class="btn submit" @click="validateSecondStep()">
+                    Далее
+                  </button>
                 </div>
+              </div>
+              <div class="d-flex ellipses justify-content-between">
+                <div />
+                <div class="active-ellipse" />
+                <div />
               </div>
             </div>
-            <div class="form-group d-flex justify-content-between">
-              <div>
-                <button class="btn reg" @click="nextTo(1)">
-                  Назад
-                </button>
-              </div>
-              <div>
-                <button class="btn submit" @click="validateSecondStep()">
-                  Далее
-                </button>
-              </div>
-            </div>
-            <div class="d-flex ellipses justify-content-between">
-              <div />
-              <div class="active-ellipse" />
-              <div />
-            </div>
+            <div class="col-6 form-image" />
           </div>
-          <div class="col-6 form-image" />
         </div>
       </div>
-    </div>
-    <div v-if="currentStep === 3" class="login-form mx-auto">
-      <div class="bg-white">
-        <div class="row">
-          <div class="col-6 form-container">
-            <h2 class="text-2xl leading-7 font-semibold">
-              Регистрация
-            </h2>
-            <div class="login-form-row">
-              <div class="steps">
-                <div class="step-title">
-                  3. Лицевой счет
-                </div>
-                <div class="step-description">
-                  Если вы уже являетесь нашим клиентом, укажите ваш лицевой счет и ФИО (по договору). Его можно будет добавить позже в вашем профиле.
-                </div>
-              </div>
-              <div class="form-group login-form-checkbox">
-                <input
-                  id="im-not-a-client"
-                  v-model="notaclient"
-                  type="checkbox"
-                  value="1"
-                ><label for="im-not-a-client">Я не являюсь клиентом компании и у меня нет лицевого счета</label>
-              </div>
-              <div v-if="notaclient === false" class="inputs">
-                <div class="form-group">
-                  <input v-model="account" type="text" class="form-control" placeholder="Лицевой счет">
-                </div>
-                <div class="form-group">
-                  <input v-model="name" type="text" class="form-control" placeholder="ФИО">
-                </div>
-              </div>
-              <div class="steps">
-                <div class="step-title">
-                  4. Соглашения
+      <div v-if="currentStep === 3" class="login-form mx-auto">
+        <div class="bg-white">
+          <div class="row">
+            <div class="col-6 form-container">
+              <h2 class="text-2xl leading-7 font-semibold">
+                Регистрация
+              </h2>
+              <div class="login-form-row">
+                <div class="steps">
+                  <div class="step-title">
+                    3. Лицевой счет
+                  </div>
+                  <div class="step-description">
+                    Если вы уже являетесь нашим клиентом, укажите ваш лицевой счет и ФИО (по договору). Его можно будет
+                    добавить позже в вашем профиле.
+                  </div>
                 </div>
                 <div class="form-group login-form-checkbox">
-                  <input id="agreement" v-model="agreement" type="checkbox"><label for="agreement">Я принимаю <a href="http://rosenergosite.newizze.com/user-agreement" target="_blank">соглашение</a> об обработке персональных данных</label>
+                  <input
+                    id="im-not-a-client"
+                    v-model="notaclient"
+                    type="checkbox"
+                    value="1"
+                  ><label for="im-not-a-client">Я не являюсь клиентом компании и у меня нет лицевого счета</label>
+                </div>
+                <div v-if="notaclient === false" class="inputs">
+                  <div class="form-group">
+                    <input v-model="account" type="text" class="form-control" placeholder="Лицевой счет">
+                  </div>
+                  <div class="form-group">
+                    <input v-model="name" type="text" class="form-control" placeholder="ФИО">
+                  </div>
+                </div>
+                <div class="steps">
+                  <div class="step-title">
+                    4. Соглашения
+                  </div>
+                  <div class="form-group login-form-checkbox">
+                    <input id="agreement" v-model="agreement" type="checkbox"><label for="agreement">Я принимаю <a
+                      href="http://rosenergosite.newizze.com/user-agreement"
+                      target="_blank"
+                    >соглашение</a> об обработке
+                      персональных данных</label>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="form-group d-flex justify-content-between">
-              <div>
-                <button class="btn reg" @click="nextTo(2)">
-                  Назад
-                </button>
+              <div class="form-group d-flex justify-content-between">
+                <div>
+                  <button class="btn reg" @click="nextTo(2)">
+                    Назад
+                  </button>
+                </div>
+                <div>
+                  <button class="btn submit" @click="submitRegistration">
+                    Далее
+                  </button>
+                </div>
               </div>
-              <div>
-                <button class="btn submit" @click="submitRegistration">
-                  Далее
-                </button>
+              <div class="d-flex ellipses justify-content-between">
+                <div />
+                <div />
+                <div class="active-ellipse" />
               </div>
             </div>
-            <div class="d-flex ellipses justify-content-between">
-              <div />
-              <div />
-              <div class="active-ellipse" />
-            </div>
+            <div class="col-6 form-image" />
           </div>
-          <div class="col-6 form-image" />
         </div>
       </div>
     </div>
@@ -498,7 +544,6 @@ export default {
   .login-container {
     min-height: 100vh;
     align-items: center !important;
-    display: flex !important;
     ul {
       li {
         list-style: none;
