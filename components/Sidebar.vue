@@ -15,7 +15,7 @@
             class="nav-link"
             :class="{ active : $nuxt.$route.name === 'account'}"
           >
-            <i class="user" /> Мой аккаунт
+            <b-icon-person-fill /><span class="pl-2">Мой аккаунт</span>
           </NuxtLink>
         </li>
         <li v-if="can('metersData*')" class="nav-item">
@@ -23,7 +23,7 @@
             to="/development"
             class="nav-link"
           >
-            <i class="counter" /> Подать показания счетчиков
+            <b-icon-calculator-fill /><span class="pl-2">Подать показания счетчиков</span>
           </NuxtLink>
         </li>
         <li v-if="can('bills*')" class="nav-item">
@@ -31,7 +31,7 @@
             to="/development"
             class="nav-link"
           >
-            <i class="payment" /> Оплата счетов
+            <b-icon-credit-card /><span class="pl-2">Оплата счетов</span>
           </NuxtLink>
         </li>
       </ul>
@@ -43,7 +43,7 @@
             class="nav-link"
             :class="{ active : $nuxt.$route.name === 'index' || $nuxt.$route.name === 'appeals' }"
           >
-            <i class="book" /> Заявки
+            <b-icon-book /><span class="pl-2">Заявки</span>
           </NuxtLink>
           <ul class="nav d-block subnav">
             <li v-if="can('applications_*')" class="nav-item">
@@ -52,7 +52,7 @@
                 class="nav-link"
                 :class="{ active : $nuxt.$route.name === 'index'}"
               >
-                <i class="connect" /> Технологическое подключение
+                <b-icon-card-heading /><span class="pl-2">Технологическое подключение</span>
               </NuxtLink>
             </li>
             <li v-if="can('requests_*')" class="nav-item">
@@ -61,7 +61,7 @@
                 class="nav-link"
                 :class="{ active : $nuxt.$route.name === 'appeals'}"
               >
-                <i class="questions" /> Обращения
+                <b-icon-vector-pen /><span class="pl-2">Обращения</span>
               </NuxtLink>
             </li>
           </ul>
@@ -72,7 +72,7 @@
             class="nav-link"
             :class="{ active : $nuxt.$route.name === 'users'}"
           >
-            <i class="users" />Пользователи
+            <b-icon-people-fill /><span class="pl-2">Пользователи</span>
           </NuxtLink>
         </li>
         <li v-if="can('disclosure*')" class="nav-item">
@@ -81,7 +81,7 @@
             class="nav-link"
             :class="{ active : $nuxt.$route.name === 'disclosure'}"
           >
-            <i class="info" /> Раскрытие
+            <b-icon-info-circle /><span class="pl-2">Раскрытие</span>
           </NuxtLink>
         </li>
         <li v-if="can('settings')" class="nav-item">
@@ -90,7 +90,7 @@
             class="nav-link"
             :class="{ active : $nuxt.$route.name === 'settings'}"
           >
-            <i class="settings" /> Настройки
+            <b-icon-gear /><span class="pl-2">Настройки</span>
           </NuxtLink>
         </li>
       </ul>
@@ -99,8 +99,20 @@
 </template>
 
 <script>
+import { BIconBook, BIconCardHeading, BIconVectorPen, BIconPersonFill, BIconCalculatorFill, BIconCreditCard, BIconPeopleFill, BIconInfoCircle, BIconGear } from 'bootstrap-vue'
 export default {
-  name: 'Sidebar'
+  name: 'Sidebar',
+  components: {
+    BIconBook,
+    BIconCardHeading,
+    BIconVectorPen,
+    BIconPersonFill,
+    BIconCalculatorFill,
+    BIconCreditCard,
+    BIconPeopleFill,
+    BIconInfoCircle,
+    BIconGear
+  }
 }
 </script>
 
