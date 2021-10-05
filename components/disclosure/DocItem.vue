@@ -78,6 +78,22 @@ export default {
       this.processSemiannual()
       this.processQuarterly()
       this.processFrequency()
+      this.processMonthly()
+    },
+    processMonthly () {
+      if (this.item.frequency === 'monthly') {
+        const nextMonth = parseInt(this.$moment().format('MM')) + 1
+        let month = 0
+        let additionalYear = 0
+        if (nextMonth > 12) {
+          month = 1
+          additionalYear = 1
+        } else {
+          month = parseInt(nextMonth)
+        }
+        this.itemVal.deadline = this.item.deadline.replace('[YEAR]', this.$moment().add(additionalYear, 'years').format('yy'))
+        this.itemVal.deadline = this.item.deadline.replace('[NEXT_MONTH]', this.$moment(month, 'MM').format('MMMM'))
+      }
     },
     processQuarterly () {
       if (this.item.frequency === 'quarterly') {
@@ -92,7 +108,7 @@ export default {
           nextQuarter = 10
         } else if (currentMonth >= 10) {
           additionalYear = 1
-          nextQuarter = 4
+          nextQuarter = 1
         }
         if (this.item.is_processed) {
           if (nextQuarter === 1) {
@@ -141,6 +157,8 @@ export default {
         frequency = ' (ежеквартально) '
       } else if (this.item.frequency === 'semiannual') {
         frequency = ' (каждые полгода) '
+      } else if (this.item.frequency === 'monthly') {
+        frequency = ' (ежемесячно) '
       }
       if (this.itemVal.deadline.includes('[FREQUENCY]') === false) {
         this.itemVal.deadline += frequency
