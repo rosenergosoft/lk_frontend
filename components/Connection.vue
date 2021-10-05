@@ -13,9 +13,23 @@
         </NuxtLink>
       </div>
       <div v-if="can('applications_add') && !isSuper" class="ml-auto">
-        <button class="btn blue-button" @click="$router.push('/request/electricity/new')">
+        <button class="btn blue-button" @click="$bvModal.show('new-application-modal')">
           Новая заявка
         </button>
+        <b-modal
+          id="new-application-modal"
+          title="Выберите тип заявки"
+          :hide-footer="true"
+        >
+          <div class="content d-flex justify-content-around">
+            <button class="btn blue-button" @click="$router.push('/request/electricity/new')">
+              Электричество
+            </button>
+            <button class="btn blue-button" @click="$router.push('/request/warm/new')">
+              Тепло
+            </button>
+          </div>
+        </b-modal>
       </div>
     </div>
     <div v-if="isExecutive" class="row justify-content-between funnel align-middle">

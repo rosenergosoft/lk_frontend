@@ -80,7 +80,7 @@ export default {
     ...mapGetters(['userProfile', 'userCompany'])
   },
   mounted () {
-    this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/application/draft')
+    this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/application/draft/' + this.$route.params.type)
       .then((res) => {
         if (res.data.id) {
           this.application_id = res.data.id
@@ -173,7 +173,7 @@ export default {
     },
     createDraft () {
       this.setLoading(true)
-      this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/application/draft')
+      this.$axios.post(process.env.LARAVEL_API_BASE_URL + '/api/application/draft', { type: this.$route.params.type })
         .then((res) => {
           this.setLoading(false)
           if (res.data.success) {

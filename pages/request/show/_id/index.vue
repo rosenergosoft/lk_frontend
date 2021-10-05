@@ -65,7 +65,7 @@
             <div class="separator" />
           </div>
           <div class="personal-data">
-            <div>
+            <div v-if="application.type === 'electricity'">
               <div>
                 <label class="label">Параметры подключения</label>
                 <div class="text-content show-content">
@@ -95,6 +95,31 @@
                   </div>
                   <div>Ценовая категория:  {{ pricing[application.pricing] }}</div>
                   <div>Дополнительная информация:  {{ application.other }}</div>
+                </div>
+              </div>
+            </div>
+            <div v-if="application.type === 'warm'">
+              <div>
+                <label class="label">Параметры подключения</label>
+                <div class="text-content show-content">
+                  <div>Объект подключения: {{ application.objectName }}</div>
+                  <div>Местоположение объекта: {{ application.objectLocation }}</div>
+                  <div>Назначение: {{ application.objectPurpose }}</div>
+                  <div>Строительный объем: {{ application.constructionVolume }}</div>
+                  <div>Общая площадь: {{ application.totalArea }}</div>
+                  <div>Этажность: {{ application.numberOfStoreys }}</div>
+                  <div>Планируемый срок ввода в эксплуатацию: {{ application.commissioningDate }}</div>
+                  <label class="label">Тепловая нагрузка объекта</label>
+                  <div>ВСЕГО: {{ application.warmTotal }}</div>
+                  <div>в том числе отопление: {{ application.warmHeating }}</div>
+                  <div>вентиляция: {{ application.warmVentilation }}</div>
+                  <div>ГВС (расчетная): {{ application.warmHotWaterR }}</div>
+                  <div>ГВС (среднечасовая): {{ application.warmHotWaterH }}</div>
+                  <div>прочие виды нагрузки: {{ application.warmOther }}</div>
+                  <div>Правовые основания пользования подключаемым объектом или земельным участком, на котором расположен подключаемый объект: {{ application.legalBase }}</div>
+                  <div>Информация о границах земельного участка, на котором планируется осуществить строительство / реконструкцию / модернизацию подключаемого объекта: {{ application.landBoundaries }}</div>
+                  <div>Информация о виде разрешенного используемого земельного участка: {{ application.typeOfLand }}</div>
+                  <div>Информация о предельных параметрах разрешенного строительства / реконструкции / модернизации подключаемого объекта: {{ application.limitingParams }}</div>
                 </div>
               </div>
             </div>
