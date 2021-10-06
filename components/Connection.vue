@@ -22,10 +22,10 @@
           :hide-footer="true"
         >
           <div class="content d-flex justify-content-around">
-            <button class="btn blue-button" @click="$router.push('/request/electricity/new')">
+            <button v-if="clientType.includes('1')" class="btn blue-button" @click="$router.push('/request/electricity/new')">
               Электричество
             </button>
-            <button class="btn blue-button" @click="$router.push('/request/warm/new')">
+            <button v-if="clientType.includes('2')" class="btn blue-button" @click="$router.push('/request/warm/new')">
               Тепло
             </button>
           </div>
@@ -229,6 +229,7 @@ export default {
   name: 'Connection',
   data () {
     return {
+      clientType: [],
       perPage: 10,
       dataLoading: true,
       loadingText: 'Загрузка данных',
@@ -294,6 +295,13 @@ export default {
           this.counts = res.data.counts
         })
     }
+    this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/settings/type/list')
+      .then((res) => {
+        this.setLoading(false)
+        if (res.data.success) {
+          this.clientType = res.data.type
+        }
+      })
   },
   methods: {
     handleClick (value) {
