@@ -110,6 +110,7 @@ export default {
     middleware: ['auth']
   },
   env: {
-    LARAVEL_API_BASE_URL: process.env.LARAVEL_API_BASE_URL
+    LARAVEL_API_BASE_URL: process.env.LARAVEL_API_BASE_URL,
+    VUE_APP_DEMO_HOST: process.env.VUE_APP_DEMO_HOST
   }
 }
