@@ -421,12 +421,12 @@ export default {
           password: 'demo12Admin21',
           type: 'email'
         },
-        vendor: {
+        customer: {
           email: 'customer@demoenrgosoft.com',
           password: 'demo12Customer21',
           type: 'email'
         },
-        customer: {
+        vendor: {
           email: 'vendor@demoenrgosoft.com',
           password: 'demo12Vendor21',
           type: 'email'
