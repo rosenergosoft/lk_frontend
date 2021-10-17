@@ -1,20 +1,26 @@
 <template>
   <div class="disclosure">
     <div class="page-title d-flex">
-      <div :class="{ active: disclosureGroup === 0 }" @click="setDisclosureGroup(0)">
-        <a>Электроэнергия</a>
+      <div v-if="clientType.includes('1')" class="d-flex">
+        <div :class="{ active: disclosureGroup === 0 }" @click="setDisclosureGroup(0)">
+          <a>Электроэнергия</a>
+        </div>
+        <div v-if="clientType.includes('1') && (clientType.includes('2') || clientType.includes('3'))" class="l-separator">
+          /
+        </div>
       </div>
-      <div class="l-separator">
-        /
+      <div v-if="clientType.includes('2')" class="d-flex">
+        <div :class="{ active: disclosureGroup === 1 }" @click="setDisclosureGroup(1)">
+          <a>Тепло</a>
+        </div>
+        <div v-if="clientType.includes('2') && clientType.includes('3')" class="l-separator">
+          /
+        </div>
       </div>
-      <div :class="{ active: disclosureGroup === 1 }" @click="setDisclosureGroup(1)">
-        <a>Тепло</a>
-      </div>
-      <div class="l-separator">
-        /
-      </div>
-      <div :class="{ active: disclosureGroup === 2 }" @click="setDisclosureGroup(2)">
-        <a>Водоснабжение</a>
+      <div v-if="clientType.includes('3')" class="d-flex">
+        <div :class="{ active: disclosureGroup === 2 }" @click="setDisclosureGroup(2)">
+          <a>Водоснабжение</a>
+        </div>
       </div>
     </div>
     <div class="disclosure-documents">
@@ -38,8 +44,8 @@
       </div>
     </div>
     <DisclosureModal
-      @disclosure-list-update="getDisclosureList(disclosureGroup)"
       :content="modalContent"
+      @disclosure-list-update="getDisclosureList(disclosureGroup)"
     />
   </div>
 </template>
@@ -56,7 +62,8 @@ export default {
   data () {
     return {
       disclosureList: '',
-      disclosureGroup: 0,
+      disclosureGroup: '',
+      clientType: '',
       modalContent: {
         disclosure: {},
         disclosureListItem: {},
@@ -64,8 +71,22 @@ export default {
       }
     }
   },
-  created () {
-    this.getDisclosureList(this.disclosureGroup)
+  mounted () {
+    this.setLoading(true)
+    this.$axios.get(process.env.LARAVEL_API_BASE_URL + '/api/settings/type/list')
+      .then((res) => {
+        if (res.data.success) {
+          this.clientType = res.data.type
+          if (this.clientType.includes('1')) {
+            this.disclosureGroup = 0
+          } else if (this.clientType.includes('2')) {
+            this.disclosureGroup = 1
+          } else if (this.clientType.includes('3')) {
+            this.disclosureGroup = 2
+          }
+          this.getDisclosureList(this.disclosureGroup)
+        }
+      })
   },
   methods: {
     async openDisclosureModal (type) {
@@ -84,9 +105,11 @@ export default {
       this.getDisclosureList(this.disclosureGroup)
     },
     async getDisclosureList (group) {
+      this.setLoading(true)
       const res = await this.$axios.$get(process.env.LARAVEL_API_BASE_URL + '/api/disclosure/getList/' + group)
       if (res) {
         this.disclosureList = res.disclosures
+        this.setLoading(false)
       }
     }
   }

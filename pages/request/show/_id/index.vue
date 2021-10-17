@@ -123,9 +123,9 @@
                 </div>
               </div>
             </div>
-            <div class="separator" />
           </div>
-          <div v-if="messages" class="personal-data">
+          <div v-if="messages.length > 0" class="personal-data">
+            <div class="separator" />
             <label class="label">Сообщения</label>
             <div class="private-messages">
               <Message
@@ -237,7 +237,7 @@ export default {
       application: {},
       company: {},
       text: '',
-      messages: {},
+      messages: '',
       docs: {},
       documents: {
         phys: [],

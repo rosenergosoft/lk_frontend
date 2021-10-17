@@ -34,7 +34,7 @@
         </template>
       </vue-autosuggest>
       <div v-if="bankData">
-        <span>БИК {{ bankData.bic }}</span>
+        <span>БИК {{ bankData.bank_bik }}</span>
         <span>{{ bankData.bank_name }}</span>
         <span>Корр. счет {{ bankData.bank_corr_account }}</span>
       </div>

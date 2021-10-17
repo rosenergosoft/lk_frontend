@@ -7,7 +7,7 @@
       <div class="text-content">
         У вас указано не только физ. лицо, но и юридическое (или ИП), выберите на кого будет заключать договор.
       </div>
-      <div>
+      <div class="details">
         <div class="form-group tarifs">
           <div><input id="phys" v-model="details.requester" type="radio" value="phys" name="requester-type"></div>
           <div><label for="phys">Физическое лицо</label></div>

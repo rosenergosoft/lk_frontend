@@ -2,7 +2,8 @@
   <div class="sidebar">
     <div class="logo">
       <NuxtLink to="/">
-        <img src="/images/logo.svg" alt="" title="">
+        <img src="/images/res-logo-blue.svg" alt="" title="">
+        <p><label class="label">Личный кабинет</label></p>
       </NuxtLink>
     </div>
     <div class="separator" />
@@ -81,7 +82,16 @@
             class="nav-link"
             :class="{ active : $nuxt.$route.name === 'disclosure'}"
           >
-            <b-icon-info-circle /><span class="pl-2">Раскрытие</span>
+            <b-icon-ui-checks-grid /><span class="pl-2">Раскрытие</span>
+          </NuxtLink>
+        </li>
+        <li v-if="can('information')" class="nav-item">
+          <NuxtLink
+            to="/information"
+            class="nav-link"
+            :class="{ active : $nuxt.$route.name === 'information'}"
+          >
+            <b-icon-info-circle /><span class="pl-2">Информация</span>
           </NuxtLink>
         </li>
         <li v-if="can('settings')" class="nav-item">
@@ -95,11 +105,12 @@
         </li>
       </ul>
     </nav>
+    <div class="copyrights"><a href="https://newizze.com" target="_blank">Разработано в Newizze</a></div>
   </div>
 </template>
 
 <script>
-import { BIconBook, BIconCardHeading, BIconVectorPen, BIconPersonFill, BIconCalculatorFill, BIconCreditCard, BIconPeopleFill, BIconInfoCircle, BIconGear } from 'bootstrap-vue'
+import { BIconBook, BIconUiChecksGrid, BIconCardHeading, BIconVectorPen, BIconPersonFill, BIconCalculatorFill, BIconCreditCard, BIconPeopleFill, BIconInfoCircle, BIconGear } from 'bootstrap-vue'
 export default {
   name: 'Sidebar',
   components: {
@@ -111,11 +122,28 @@ export default {
     BIconCreditCard,
     BIconPeopleFill,
     BIconInfoCircle,
-    BIconGear
+    BIconGear,
+    BIconUiChecksGrid
   }
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+  .logo {
+    img {
+      width: 170px;
+    }
+    .label {
+      color: #393939;
+      margin: 0 0 0 30px;
+    }
+  }
+  .copyrights {
+    a {
+      color: #444B76;
+      font-size: 12px;
+      position: fixed;
+      bottom: 5px;
+    }
+  }
 </style>
