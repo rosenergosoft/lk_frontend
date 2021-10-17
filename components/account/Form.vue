@@ -71,12 +71,12 @@ export default {
   },
   watch: {
     snils (val) {
-      if (val) {
+      if (typeof (val) === 'string') {
         this.formData.snils = val.replace(/[^0-9]/g, '')
       }
     },
     displayedPhone (val) {
-      if (val) {
+      if (typeof (val) === 'string') {
         this.formData.phone = val.replace(/[^\d]/g, '')
       }
     }
