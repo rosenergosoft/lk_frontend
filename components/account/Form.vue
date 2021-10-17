@@ -73,7 +73,7 @@ export default {
     snils (val) {
       this.formData.snils = val.replace(/[^0-9]/g, '')
     },
-    phone (val) {
+    displayedPhone (val) {
       this.formData.phone = val.replace(/[^\d]/g, '')
     }
   },
