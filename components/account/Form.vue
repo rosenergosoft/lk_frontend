@@ -71,10 +71,14 @@ export default {
   },
   watch: {
     snils (val) {
-      this.formData.snils = val.replace(/[^0-9]/g, '')
+      if (val) {
+        this.formData.snils = val.replace(/[^0-9]/g, '')
+      }
     },
     displayedPhone (val) {
-      this.formData.phone = val.replace(/[^\d]/g, '')
+      if (val) {
+        this.formData.phone = val.replace(/[^\d]/g, '')
+      }
     }
   },
   mounted () {
