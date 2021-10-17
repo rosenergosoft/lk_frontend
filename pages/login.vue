@@ -280,6 +280,41 @@
           </div>
         </div>
       </div>
+      <div v-if="currentStep === 666" class="login-form mx-auto">
+        <div class="bg-white">
+          <div class="row">
+            <div class="col-6 form-container">
+              <h2 class="text-2xl leading-7 font-semibold">
+                Демо доступ
+              </h2>
+              <div class="login-form-row text-center mt-5">
+                <div class="row">
+                  <div class="col-12">
+                    <button class="btn submit mb-0" @click="demo('admin')">
+                      Войти как администратор
+                    </button>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <button class="btn submit mt-0 mb-0" @click="demo('customer')">
+                      Войти как пользователь
+                    </button>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <button class="btn submit mt-0 mb-0" @click="demo('vendor')">
+                      Войти как поставщик
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 form-image" />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -360,6 +395,13 @@ export default {
       this.snils = val.replace(/[^0-9]/g, '')
     }
   },
+  mounted () {
+    console.log(process.env.VUE_APP_DEMO_HOST)
+    console.log(this.host)
+    if (process.env.VUE_APP_DEMO_HOST === this.host) {
+      this.currentStep = 666
+    }
+  },
   methods: {
     async submitLogin () {
       const formData = JSON.parse(JSON.stringify(this.loginData))
@@ -370,6 +412,29 @@ export default {
         if (error.response.status === 401) {
           this.$notify({ type: 'error', title: 'Ошибка', text: 'Проверьте данные для входа. Если ошибка повторятся, обратитесь к администратору', duration: 6000 })
         }
+      })
+    },
+    demo (type) {
+      const credentials = {
+        admin: {
+          email: 'admin@demoenrgosoft.com',
+          password: 'demo12Admin21',
+          type: 'email'
+        },
+        customer: {
+          email: 'customer@demoenrgosoft.com',
+          password: 'demo12Customer21',
+          type: 'email'
+        },
+        vendor: {
+          email: 'vendor@demoenrgosoft.com',
+          password: 'demo12Vendor21',
+          type: 'email'
+        }
+      }
+
+      this.$auth.login({
+        data: credentials[type]
       })
     },
     submitRegistration () {
