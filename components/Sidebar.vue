@@ -2,7 +2,7 @@
   <div class="sidebar">
     <div class="logo">
       <NuxtLink to="/">
-        <img src="/images/res-logo-blue.svg" alt="" title="">
+        <img src="/images/res-logo.png" alt="" title="">
         <p><label class="label">Личный кабинет</label></p>
       </NuxtLink>
     </div>
