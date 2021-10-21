@@ -225,6 +225,11 @@ export default {
       return (this.details.objectLocation && !this.manualInput)
     }
   },
+  mounted() {
+    if (!this.userCompany) {
+      this.details.requester = 'phys'
+    }
+  },
   methods: {
     validate () {
       this.validation.requester = !this.details.requester
