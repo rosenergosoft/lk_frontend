@@ -571,6 +571,12 @@ input[type=radio] {
   height: 16px;
   margin-right: 10px;
 }
+input[type=checkbox] {
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+  cursor: pointer;
+}
 .details {
   margin-top: 12px;
   .form-group {

@@ -120,6 +120,22 @@
                   <div>Информация о границах земельного участка, на котором планируется осуществить строительство / реконструкцию / модернизацию подключаемого объекта: {{ application.landBoundaries }}</div>
                   <div>Информация о виде разрешенного используемого земельного участка: {{ application.typeOfLand }}</div>
                   <div>Информация о предельных параметрах разрешенного строительства / реконструкции / модернизации подключаемого объекта: {{ application.limitingParams }}</div>
+                  <div>Дополнительная информация:  {{ application.other }}</div>
+                </div>
+              </div>
+            </div>
+            <div v-if="application.type === 'water'">
+              <div>
+                <label class="label">Параметры подключения</label>
+                <div class="text-content show-content">
+                  <div>Объект подключения: {{ application.objectName }}</div>
+                  <div>Местоположение объекта: {{ application.objectLocation }}</div>
+                  <div>Кадастровый номер земельного участка: {{ application.kadastrNum }}</div>
+                  <div>Правоустанавливающие документы на земельный участок: {{ application.objectRightsDoc }}</div>
+                  <div>Данные расчета баланса: <span v-if="application.hasCalculationData === '1'">Есть данные расчета баланса водопотребления и водоотведения подключаемого объекта</span><span v-else>Нет данных расчета баланса водопотребления и водоотведения подключаемого объекта</span></div>
+                  <div v-if="application.hasCalculationData === '1'">ДАННЫЕ ОБ ОБЩЕЙ ПОДКЛЮЧАЕМОЙ НАГРУЗКЕ (м3/сутки): {{ application.waterLoad }}</div>
+                  <div v-if="application.hasCalculationData === '1'">ПРОЕКТ РАСЧЁТА БАЛАНСА ВОДОПОТРЕБЛЕНИЯ: {{ application.projectLoadCalcDoc }}</div>
+                  <div>Дополнительная информация:  {{ application.other }}</div>
                 </div>
               </div>
             </div>

@@ -36,6 +36,10 @@ export default {
     type: {
       type: String,
       default: 'appeals'
+    },
+    documentType: {
+      type: String,
+      default: 'common'
     }
   },
   data () {
@@ -62,6 +66,7 @@ export default {
           if (this.entityId) {
             formData.append('entity_id', this.entityId)
           }
+          formData.append('type', this.documentType)
           this.setLoading(true)
           const res = await this.$axios.$post(process.env.LARAVEL_API_BASE_URL + '/api/' + this.type + '/fileUpload', formData)
           this.setLoading(false)
