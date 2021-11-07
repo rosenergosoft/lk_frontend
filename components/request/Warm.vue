@@ -7,7 +7,7 @@
       <div class="text-content">
         У вас указано не только физ. лицо, но и юридическое (или ИП), выберите на кого будет заключать договор.
       </div>
-      <div>
+      <div class="details" :class="[validation.requester? 'red-border' : '']">
         <div class="form-group tarifs">
           <div><input id="phys" v-model="details.requester" type="radio" value="phys" name="requester-type"></div>
           <div><label for="phys">Физическое лицо</label></div>
@@ -28,7 +28,7 @@
     <div class="details">
       <div class="inputs">
         <div class="form-group">
-          <input v-model="details.objectName" class="form-control" type="text" placeholder="Наименование присоединяемых объектов (жилой дом, гараж и т.п.)">
+          <input v-model="details.objectName" class="form-control" type="text" placeholder="Наименование присоединяемых объектов (жилой дом, гараж и т.п.)" :class="[validation.objectName? 'red-border' : '']">
         </div>
         <div class="form-group position-relative">
           <vue-autosuggest
@@ -36,6 +36,7 @@
             :suggestions="suggestions"
             :input-props="{ id:'autosuggest__input', placeholder:'Местоположение объекта', 'class': 'form-control' }"
             :get-suggestion-value="getSuggestionValue"
+            :class="[validation.objectLocation? 'red-border' : '']"
             @input="onInputChange"
             @selected="selectHandler"
           >
@@ -46,22 +47,29 @@
           <button v-if="showManualInput" class="manual-input" @click="manualInput = true">
             Ввести вручную
           </button>
-          <input v-if="manualInput" v-model="details.objectLocation" class="form-control" type="text" placeholder="Местоположение объекта"> <!-- address autosuggest -->
+          <input
+            v-if="manualInput"
+            v-model="details.objectLocation"
+            class="form-control"
+            type="text"
+            placeholder="Местоположение объекта"
+            :class="[validation.objectLocation? 'red-border' : '']"
+          > <!-- address autosuggest -->
         </div>
         <div class="form-group">
-          <input v-model="details.objectPurpose" class="form-control" type="text" placeholder="Назначение">
+          <input v-model="details.objectPurpose" class="form-control" type="text" placeholder="Назначение" :class="[validation.objectPurpose? 'red-border' : '']">
         </div>
         <div class="form-group">
-          <input v-model="details.constructionVolume" class="form-control" type="text" placeholder="Строительный объем (m3)">
+          <input v-model="details.constructionVolume" class="form-control" type="text" placeholder="Строительный объем (m3)" :class="[validation.constructionVolume? 'red-border' : '']">
         </div>
         <div class="form-group">
-          <input v-model="details.totalArea" class="form-control" type="text" placeholder="Общая площадь (m2)">
+          <input v-model="details.totalArea" class="form-control" type="text" placeholder="Общая площадь (m2)" :class="[validation.totalArea? 'red-border' : '']">
         </div>
         <div class="form-group">
-          <input v-model="details.numberOfStoreys" class="form-control" type="text" placeholder="Этажность">
+          <input v-model="details.numberOfStoreys" class="form-control" type="text" placeholder="Этажность" :class="[validation.numberOfStoreys? 'red-border' : '']">
         </div>
         <div class="form-group">
-          <input v-model="details.commissioningDate" class="form-control" type="text" placeholder="Планируемый срок ввода в эксплуатацию">
+          <input v-model="details.commissioningDate" class="form-control" type="text" placeholder="Планируемый срок ввода в эксплуатацию" :class="[validation.commissioningDate? 'red-border' : '']">
         </div>
       </div>
       <div class="separator" />
@@ -75,22 +83,22 @@
     <div class="details">
       <div class="inputs">
         <div class="form-group">
-          <input v-model="details.warmTotal" class="form-control" type="text" placeholder="ВСЕГО">
+          <input v-model="details.warmTotal" class="form-control" type="text" placeholder="ВСЕГО" :class="[validation.warmTotal? 'red-border' : '']">
         </div>
         <div class="form-group">
-          <input v-model="details.warmHeating" class="form-control" type="text" placeholder="в том числе отопление">
+          <input v-model="details.warmHeating" class="form-control" type="text" placeholder="в том числе отопление" :class="[validation.warmHeating? 'red-border' : '']">
         </div>
         <div class="form-group">
-          <input v-model="details.warmVentilation" class="form-control" type="text" placeholder="вентиляция">
+          <input v-model="details.warmVentilation" class="form-control" type="text" placeholder="вентиляция" :class="[validation.warmVentilation? 'red-border' : '']">
         </div>
         <div class="form-group">
-          <input v-model="details.warmHotWaterR" class="form-control" type="text" placeholder="ГВС (расчетная)">
+          <input v-model="details.warmHotWaterR" class="form-control" type="text" placeholder="ГВС (расчетная)" :class="[validation.warmHotWaterR? 'red-border' : '']">
         </div>
         <div class="form-group">
-          <input v-model="details.warmHotWaterH" class="form-control" type="text" placeholder="ГВС (среднечасовая)">
+          <input v-model="details.warmHotWaterH" class="form-control" type="text" placeholder="ГВС (среднечасовая)" :class="[validation.warmHotWaterH? 'red-border' : '']">
         </div>
         <div class="form-group">
-          <input v-model="details.warmOther" class="form-control" type="text" placeholder="прочие виды нагрузки">
+          <input v-model="details.warmOther" class="form-control" type="text" placeholder="прочие виды нагрузки" :class="[validation.warmOther? 'red-border' : '']">
         </div>
       </div>
     </div>
@@ -99,7 +107,7 @@
     </div>
     <div class="details">
       <div class="inputs">
-        <textarea v-model="details.legalBase" class="form-control" placeholder="Правовые основания пользования подключаемым объектом или земельным участком, на котором расположен подключаемый объект" />
+        <textarea v-model="details.legalBase" class="form-control" placeholder="Правовые основания пользования подключаемым объектом или земельным участком, на котором расположен подключаемый объект" :class="[validation.legalBase? 'red-border' : '']" />
       </div>
     </div>
     <div>
@@ -107,7 +115,7 @@
     </div>
     <div class="details">
       <div class="inputs">
-        <textarea v-model="details.landBoundaries" class="form-control" placeholder="Информация о границах земельного участка, на котором планируется осуществить строительство / реконструкцию / модернизацию подключаемого объекта" />
+        <textarea v-model="details.landBoundaries" class="form-control" placeholder="Информация о границах земельного участка, на котором планируется осуществить строительство / реконструкцию / модернизацию подключаемого объекта" :class="[validation.landBoundaries? 'red-border' : '']" />
       </div>
     </div>
     <div>
@@ -115,7 +123,7 @@
     </div>
     <div class="details">
       <div class="inputs">
-        <textarea v-model="details.typeOfLand" class="form-control" placeholder="Информация о виде разрешенного используемого земельного участка" />
+        <textarea v-model="details.typeOfLand" class="form-control" placeholder="Информация о виде разрешенного используемого земельного участка" :class="[validation.typeOfLand? 'red-border' : '']" />
       </div>
     </div>
     <div>
@@ -123,7 +131,7 @@
     </div>
     <div class="details">
       <div class="inputs">
-        <textarea v-model="details.limitingParams" class="form-control" placeholder="Информация о предельных параметрах разрешенного строительства / реконструкции / модернизации подключаемого объекта" />
+        <textarea v-model="details.limitingParams" class="form-control" placeholder="Информация о предельных параметрах разрешенного строительства / реконструкции / модернизации подключаемого объекта" :class="[validation.limitingParams? 'red-border' : '']" />
       </div>
     </div>
     <div>
@@ -166,6 +174,26 @@ export default {
     return {
       suggestions: [],
       manualInput: false,
+      validation: {
+        requester: false,
+        objectName: false,
+        objectLocation: false,
+        objectPurpose: false,
+        constructionVolume: false,
+        totalArea: false,
+        commissioningDate: false,
+        numberOfStoreys: false,
+        warmTotal: false,
+        warmHeating: false,
+        warmVentilation: false,
+        warmHotWaterR: false,
+        warmHotWaterH: false,
+        warmOther: false,
+        legalBase: false,
+        landBoundaries: false,
+        typeOfLand: false,
+        limitingParams: false
+      },
       details: {
         requester: '',
         objectName: '',
@@ -197,8 +225,31 @@ export default {
       return (this.details.objectLocation && !this.manualInput)
     }
   },
+  mounted () {
+    if (!this.userCompany) {
+      this.details.requester = 'phys'
+    }
+  },
   methods: {
     validate () {
+      this.validation.requester = !this.details.requester
+      this.validation.objectName = !this.details.objectName
+      this.validation.objectLocation = !this.details.objectLocation
+      this.validation.objectPurpose = !this.details.objectPurpose
+      this.validation.constructionVolume = !this.details.constructionVolume
+      this.validation.totalArea = !this.details.totalArea
+      this.validation.commissioningDate = !this.details.commissioningDate
+      this.validation.numberOfStoreys = !this.details.numberOfStoreys
+      this.validation.warmTotal = !this.details.warmTotal
+      this.validation.warmHeating = !this.details.warmHeating
+      this.validation.warmVentilation = !this.details.warmVentilation
+      this.validation.warmHotWaterR = !this.details.warmHotWaterR
+      this.validation.warmHotWaterH = !this.details.warmHotWaterH
+      this.validation.warmOther = !this.details.warmOther
+      this.validation.legalBase = !this.details.legalBase
+      this.validation.landBoundaries = !this.details.landBoundaries
+      this.validation.typeOfLand = !this.details.typeOfLand
+      this.validation.limitingParams = !this.details.limitingParams
       if (
         this.details.requester &&
         this.details.objectName &&
@@ -261,5 +312,7 @@ export default {
 </script>
 
 <style scoped>
-
+  .red-border {
+    border: 1px solid red;
+  }
 </style>

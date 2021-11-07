@@ -69,6 +69,18 @@ export default {
       return this.user.login_type
     }
   },
+  watch: {
+    snils (val) {
+      if (typeof (val) === 'string') {
+        this.formData.snils = val.replace(/[^0-9]/g, '')
+      }
+    },
+    displayedPhone (val) {
+      if (typeof (val) === 'string') {
+        this.formData.phone = val.replace(/[^\d]/g, '')
+      }
+    }
+  },
   mounted () {
     if (this.user.phone) {
       this.mask = '+# (###) ###-##-##'
@@ -79,12 +91,6 @@ export default {
   },
   methods: {
     submitAccountForm () {
-      if (this.formData.phone !== null) {
-        this.formData.phone = this.displayedPhone.replace(/[^\d]/g, '')
-      }
-      if (this.formData.snils !== null) {
-        this.formData.snils = this.snils.replace(/[^\d]/g, '')
-      }
       const data = Object.assign({}, this.formData, this.passwordData)
       data.login_type = this.type
       this.setLoading(true)

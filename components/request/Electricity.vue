@@ -7,7 +7,7 @@
       <div class="text-content">
         У вас указано не только физ. лицо, но и юридическое (или ИП), выберите на кого будет заключать договор.
       </div>
-      <div>
+      <div class="details" :class="[validation.requester? 'red-border' : '']">
         <div class="form-group tarifs">
           <div><input id="phys" v-model="details.requester" type="radio" value="phys" name="requester-type"></div>
           <div><label for="phys">Физическое лицо</label></div>
@@ -16,8 +16,8 @@
           <div><input id="yur" v-model="details.requester" type="radio" value="yur" name="requester-type"></div>
           <div><label for="yur">Юридическое лицо</label></div>
         </div>
-        <div class="separator" />
       </div>
+      <div class="separator" />
     </div>
     <div>
       <label class="label">Тип подключения</label>
@@ -27,7 +27,14 @@
     </div>
     <div class="details">
       <div class="form-group">
-        <input id="constant" v-model="details.connectionType" type="radio" value="0" name="connection_type"><label for="constant">Постоянное подключение</label>
+        <input
+          id="constant"
+          v-model="details.connectionType"
+          type="radio"
+          value="0"
+          name="connection_type"
+          :class="[validation.connectionType? 'red-border' : '']"
+        ><label for="constant">Постоянное подключение</label>
       </div>
       <div class="form-group">
         <input id="short" v-model="details.connectionType" type="radio" value="1" name="connection_type"><label for="short">Временное на период выполнения постоянной схемы электроснабжения</label>
@@ -70,7 +77,7 @@
     <div class="details">
       <div class="inputs">
         <div class="form-group">
-          <input v-model="details.objectName" class="form-control" type="text" placeholder="Наименование присоединяемых объектов (жилой дом, гараж и т.п.)">
+          <input v-model="details.objectName" class="form-control" type="text" placeholder="Наименование присоединяемых объектов (жилой дом, гараж и т.п.)" :class="[validation.objectName? 'red-border' : '']">
         </div>
         <div class="form-group position-relative">
           <vue-autosuggest
@@ -78,6 +85,7 @@
             :suggestions="suggestions"
             :input-props="{ id:'autosuggest__input', placeholder:'Местоположение объекта', 'class': 'form-control' }"
             :get-suggestion-value="getSuggestionValue"
+            :class="[validation.objectLocation? 'red-border' : '']"
             @input="onInputChange"
             @selected="selectHandler"
           >
@@ -88,10 +96,17 @@
           <button v-if="showManualInput" class="manual-input" @click="manualInput = true">
             Ввести вручную
           </button>
-          <input v-if="manualInput" v-model="details.objectLocation" class="form-control" type="text" placeholder="Местоположение объекта"> <!-- address autosuggest -->
+          <input
+            v-if="manualInput"
+            v-model="details.objectLocation"
+            class="form-control"
+            type="text"
+            placeholder="Местоположение объекта"
+            :class="[validation.objectLocation? 'red-border' : '']"
+          > <!-- address autosuggest -->
         </div>
         <div class="form-group">
-          <input v-model="details.kadastrNum" class="form-control" type="text" placeholder="Кадастровый номер земельного участка">
+          <input v-model="details.kadastrNum" class="form-control" type="text" placeholder="Кадастровый номер земельного участка" :class="[validation.kadastrNum? 'red-border' : '']">
         </div>
         <div class="form-group select-wrapper">
           <select v-model="details.constructionReason" class="form-control">
@@ -127,13 +142,13 @@
     <div class="details">
       <div class="inputs">
         <div class="form-group">
-          <input v-model="details.connectorsCount" class="form-control" type="text" placeholder="Количество точек присоединения (шт.)">
+          <input v-model="details.connectorsCount" class="form-control" type="text" placeholder="Количество точек присоединения (шт.)" :class="[validation.connectorsCount? 'red-border' : '']">
         </div>
         <div class="form-group">
-          <input v-model="details.maxPower" class="form-control" type="text" placeholder="Запрашиваемая максимальная мощность для основного источника питания (кВт)"> <!-- address autosuggest -->
+          <input v-model="details.maxPower" class="form-control" type="text" placeholder="Запрашиваемая максимальная мощность для основного источника питания (кВт)" :class="[validation.maxPower? 'red-border' : '']"> <!-- address autosuggest -->
         </div>
         <div class="form-group">
-          <input v-model="details.previousMaxPower" class="form-control" type="text" placeholder="В том числе ранее присоединенная максимальная мощность (кВт)">
+          <input v-model="details.previousMaxPower" class="form-control" type="text" placeholder="В том числе ранее присоединенная максимальная мощность (кВт)" :class="[validation.previousMaxPower? 'red-border' : '']">
         </div>
         <div class="form-group select-wrapper">
           <select v-model="details.integrityCategory" class="form-control">
@@ -171,7 +186,7 @@
           </select>
         </div>
         <div class="form-group select-wrapper">
-          <select v-model="details.loadType" class="form-control">
+          <select v-model="details.loadType" class="form-control" :class="[validation.loadType? 'red-border' : '']">
             <option value="">
               Характер нагрузки (вид экономической деятельности)
             </option>
@@ -258,7 +273,7 @@
     <div class="details">
       <div class="inputs">
         <div class="form-group select-wrapper">
-          <select v-model="details.estimationYear" class="form-control">
+          <select v-model="details.estimationYear" class="form-control" :class="[validation.estimationYear? 'red-border' : '']">
             <option value="">
               Год
             </option>
@@ -298,7 +313,7 @@
           </select>
         </div>
         <div class="form-group select-wrapper">
-          <select v-model="details.estimationQuater" class="form-control">
+          <select v-model="details.estimationQuater" class="form-control" :class="[validation.estimationQuater? 'red-border' : '']">
             <option value="">
               Квартал
             </option>
@@ -317,7 +332,7 @@
           </select>
         </div>
         <div class="form-group">
-          <input v-model="details.power" class="form-control" type="text" placeholder="Мощность (кВт)">
+          <input v-model="details.power" class="form-control" type="text" placeholder="Мощность (кВт)" :class="[validation.power? 'red-border' : '']">
         </div>
       </div>
     </div>
@@ -344,7 +359,14 @@
         </div>
         <div class="form-group tarifs">
           <div>
-            <input id="tarif_1" v-model="details.pricing" type="radio" value="1" name="tarif">
+            <input
+              id="tarif_1"
+              v-model="details.pricing"
+              type="radio"
+              value="1"
+              name="tarif"
+              :class="[validation.pricing? 'red-border' : '']"
+            >
           </div>
           <div>
             <label for="tarif_1" class="mr-20">1 (Расчет = цена * объем потребления. Тариф по передаче эл.эн. одноставочный)</label>
@@ -435,6 +457,21 @@ export default {
       ru,
       suggestions: [],
       manualInput: false,
+      validation: {
+        connectionType: false,
+        requester: false,
+        objectName: false,
+        objectLocation: false,
+        kadastrNum: false,
+        connectorsCount: false,
+        maxPower: false,
+        previousMaxPower: false,
+        loadType: false,
+        estimationYear: false,
+        estimationQuater: false,
+        power: false,
+        pricing: false
+      },
       details: {
         connectionType: '',
         requester: '',
@@ -485,6 +522,19 @@ export default {
   },
   methods: {
     validate () {
+      this.validation.connectionType = !this.details.connectionType
+      this.validation.requester = !this.details.requester
+      this.validation.objectName = !this.details.objectName
+      this.validation.objectLocation = !this.details.objectLocation
+      this.validation.kadastrNum = !this.details.kadastrNum
+      this.validation.connectorsCount = !this.details.connectorsCount
+      this.validation.maxPower = !this.details.maxPower
+      this.validation.previousMaxPower = !this.details.previousMaxPower
+      this.validation.loadType = !this.details.loadType
+      this.validation.estimationQuater = !this.details.estimationQuater
+      this.validation.estimationYear = !this.details.estimationYear
+      this.validation.power = !this.details.power
+      this.validation.pricing = !this.details.pricing
       if (
         this.details.connectionType &&
         this.details.requester &&
@@ -555,5 +605,7 @@ export default {
 </script>
 
 <style scoped>
-
+  .red-border {
+    border: 1px solid red;
+  }
 </style>

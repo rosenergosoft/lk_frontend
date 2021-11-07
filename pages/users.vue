@@ -1,7 +1,11 @@
 <template>
-  <div class="user-list">
+  <div class="disclosure">
     <div class="d-flex justify-content-between mb-4">
-      <div style="width: 100px" />
+      <div class="page-title d-flex">
+        <div class="active">
+          Пользователи
+        </div>
+      </div>
       <div class="mr-4">
         <button class="btn blue-button" @click="$bvModal.show('modal-users-edit')">
           Новый пользователь

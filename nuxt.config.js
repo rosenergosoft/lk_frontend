@@ -69,7 +69,17 @@ export default {
     'cookie-universal-nuxt', // работа с печеньками
     ['@nuxtjs/moment', { locales: ['ru'], defaultLocale: 'ru' }], // работа с датой / временем
     '@nuxtjs/toast', // а это in-app пуши
-    '@nuxtjs/style-resources'
+    '@nuxtjs/style-resources',
+    [
+      '@nuxtjs/yandex-metrika',
+      {
+        id: '85992516',
+        webvisor: true,
+        clickmap: true,
+        trackLinks: true,
+        accurateTrackBounce: true
+      }
+    ]
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
