@@ -11,9 +11,14 @@
         {{ getType() }}
       </div>
     </div>
-    <div v-if="!doc.signature">
-      <a @click.prevent="signDoc"><b-icon-clipboard v-tooltip="'Подписать документ'" class="bootstrap-icon hoverColor mr-0" style="top: 4px;" /></a>
-      <a @click.prevent="deleteDocument"><b-icon-trash v-tooltip="'Удалить документ'" class="bootstrap-icon mr-0 red-status" style="top: 4px;" /></a>
+    <div v-if="!doc.signature && doc.type !== 'personal_id'">
+      <template v-if="doc.user_id === user.id">
+        <a @click.prevent="signDoc"><b-icon-clipboard v-tooltip="'Подписать документ'" class="bootstrap-icon hoverColor mr-0" style="top: 4px;" /></a>
+        <a @click.prevent="deleteDocument"><b-icon-trash v-tooltip="'Удалить документ'" class="bootstrap-icon mr-0 red-status" style="top: 4px;" /></a>
+      </template>
+      <template v-else>
+        <b-icon-clipboard-x v-tooltip="'Документ не подписан'" class="bootstrap-icon" style="top: 3px; color: red" />
+      </template>
     </div>
     <div v-else class="dark-green">
       <a v-if="!isExecutive" @click.prevent="signDoc"><b-icon-clipboard-check v-tooltip="'Документ подписан'" class="bootstrap-icon" style="top: 3px;" /></a>
@@ -25,13 +30,15 @@
   </div>
 </template>
 <script>
-import { BIconClipboardCheck, BIconClipboard, BIconFileEarmark, BIconTrash } from 'bootstrap-vue'
+import { BIconClipboardCheck, BIconClipboard, BIconClipboardX, BIconFileEarmark, BIconTrash } from 'bootstrap-vue'
+import { mapGetters } from 'vuex'
 import Signing from './Signing'
 export default {
   name: 'DocumentsItem',
   components: {
     Signing,
     BIconClipboardCheck,
+    BIconClipboardX,
     BIconFileEarmark,
     BIconClipboard,
     BIconTrash
@@ -68,6 +75,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([
+      'user'
+    ]),
     fileExtension () {
       const re = /(?:\.([^.]+))?$/
       return re.exec(this.doc.filename)[1]
