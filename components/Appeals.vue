@@ -5,7 +5,7 @@
         <NuxtLink
           to="/"
         >
-          Технологическое подключение
+          Технологическое присоединение
         </NuxtLink>
       </div>
       <div class="l-separator">

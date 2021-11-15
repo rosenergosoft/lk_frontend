@@ -16,7 +16,7 @@
             class="nav-link"
             :class="{ active : $nuxt.$route.name === 'account'}"
           >
-            <b-icon-person-fill /><span class="pl-2">Мой аккаунт</span>
+            <b-icon-person-fill /><span class="pl-2">Мой профиль</span>
           </NuxtLink>
         </li>
         <li v-if="can('metersData*')" class="nav-item">
@@ -53,7 +53,7 @@
                 class="nav-link"
                 :class="{ active : $nuxt.$route.name === 'index'}"
               >
-                <b-icon-card-heading /><span class="pl-2">Технологическое подключение</span>
+                <b-icon-card-heading /><span class="pl-2">Технологическое присоединение</span>
               </NuxtLink>
             </li>
             <li v-if="can('requests_*')" class="nav-item">

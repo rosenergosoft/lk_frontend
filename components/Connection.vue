@@ -2,7 +2,7 @@
   <div class="connection">
     <div class="page-title d-flex">
       <div class="active">
-        Технологическое подключение
+        Технологическое присоединение
       </div>
       <div class="l-separator">
         /
