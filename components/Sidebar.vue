@@ -1,14 +1,14 @@
 <template>
   <div class="sidebar">
     <div class="logo">
-      <NuxtLink to="/" v-if="user.client_id === 2">
-        <img src="https://rsosiluet.ru/images/logo.svg" alt="" title="">
-        <p><label class="label">Личный кабинет</label></p>
-      </NuxtLink>
-      <NuxtLink to="/" v-else>
-        <img src="/images/res-logo.png" alt="" title="">
-        <p><label class="label">Личный кабинет</label></p>
-      </NuxtLink>
+<!--      <NuxtLink to="/" v-if="user.client_id === 2">-->
+<!--        <img src="https://rsosiluet.ru/images/logo.svg" alt="" title="">-->
+<!--        <p><label class="label">Личный кабинет</label></p>-->
+<!--      </NuxtLink>-->
+<!--      <NuxtLink to="/" v-else>-->
+<!--        <img src="/images/res-logo.png" alt="" title="">-->
+<!--        <p><label class="label">Личный кабинет</label></p>-->
+<!--      </NuxtLink>-->
     </div>
     <div class="separator" />
     <nav>
@@ -129,8 +129,8 @@ export default {
     BIconInfoCircle,
     BIconGear,
     BIconUiChecksGrid
-  }
-  ,computed: {
+  },
+  computed: {
     ...mapGetters([
       'user'
     ])
