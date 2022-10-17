@@ -111,6 +111,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { BIconBook, BIconUiChecksGrid, BIconCardHeading, BIconVectorPen, BIconPersonFill, BIconCalculatorFill, BIconCreditCard, BIconPeopleFill, BIconInfoCircle, BIconGear } from 'bootstrap-vue'
 export default {
   name: 'Sidebar',
