@@ -2,7 +2,7 @@
   <div class="sidebar">
     <div class="logo">
       <NuxtLink to="/">
-        <img src="https://rsosiluet.ru/images/logo.svg" alt="" title="" v-if="auth.user.client_id === 2">
+        <img src="https://rsosiluet.ru/images/logo.svg" alt="" title="" v-if="user.client_id === 2">
         <img src="/images/res-logo.png" alt="" title="" v-else>
         <p><label class="label">Личный кабинет</label></p>
       </NuxtLink>
@@ -128,7 +128,7 @@ export default {
   }
   ,computed: {
     ...mapGetters([
-      'userCompany'
+      'user'
     ])
   },
 }
