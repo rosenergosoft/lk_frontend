@@ -2,8 +2,7 @@
   <div class="sidebar">
     <div class="logo">
       <NuxtLink to="/">
-        <img src="https://rsosiluet.ru/images/logo.svg" alt="" title="" v-if="auth.user.client_id === 2" style="width: 100px">
-        <img src="/images/res-logo.png" alt="" title="" v-else>
+        <img src="/images/res-logo.png" alt="" title="">
         <p><label class="label">Личный кабинет</label></p>
       </NuxtLink>
     </div>
@@ -126,11 +125,6 @@ export default {
     BIconGear,
     BIconUiChecksGrid
   }
-  ,computed: {
-    ...mapGetters([
-      'userCompany'
-    ])
-  },
 }
 </script>
 
