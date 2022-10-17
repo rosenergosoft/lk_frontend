@@ -2,7 +2,7 @@
   <div class="sidebar">
     <div class="logo">
       <NuxtLink to="/" v-if="user.client_id === 2">
-        <img src="https://rsosiluet.ru/images/logo.svg" alt="" title="" v-if="">
+        <img src="https://rsosiluet.ru/images/logo.svg" alt="" title="">
         <p><label class="label">Личный кабинет</label></p>
       </NuxtLink>
       <NuxtLink to="/" v-else>
