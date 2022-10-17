@@ -114,7 +114,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+// import { mapGetters } from 'vuex'
 import { BIconBook, BIconUiChecksGrid, BIconCardHeading, BIconVectorPen, BIconPersonFill, BIconCalculatorFill, BIconCreditCard, BIconPeopleFill, BIconInfoCircle, BIconGear } from 'bootstrap-vue'
 export default {
   name: 'Sidebar',
@@ -129,12 +129,12 @@ export default {
     BIconInfoCircle,
     BIconGear,
     BIconUiChecksGrid
-  },
-  computed: {
-    ...mapGetters([
-      'user'
-    ])
-  },
+  }
+  // computed: {
+  //   ...mapGetters([
+  //     'user'
+  //   ])
+  // },
 }
 </script>
 
