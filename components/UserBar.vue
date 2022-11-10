@@ -1,6 +1,6 @@
 <template>
   <div class="userBar d-flex inputs">
-    <div v-if="current_client === 2">
+    <div v-if="parseInt(current_client) === 2">
       Телефон технической службы: +7 (4152) 31-61-41
     </div>
     <div v-if="isSuper" class="mr-20 select-wrapper">
