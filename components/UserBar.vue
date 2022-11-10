@@ -1,5 +1,8 @@
 <template>
   <div class="userBar d-flex inputs">
+    <div v-if="user.client_id === 2">
+      Телефон технической службы: +7 (4152) 31-61-41
+    </div>
     <div v-if="isSuper" class="mr-20 select-wrapper">
       <select v-model="current_client" class="form-control" @change="switchClient">
         <option v-for="(value, key) of clients" :key="key" :value="key">
