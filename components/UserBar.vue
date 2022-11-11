@@ -1,6 +1,6 @@
 <template>
   <div class="userBar d-flex inputs">
-    <div v-if="current_client == 2" style="font-weight: bold;margin-right: 10px; margin-top: 4px;">
+    <div v-if="$store.getters.user.client_id == 2" style="font-weight: bold;margin-right: 10px; margin-top: 4px;">
       Телефон технической службы: +7 (4152) 31-61-41
     </div>
     <div v-if="isSuper" class="mr-20 select-wrapper">
