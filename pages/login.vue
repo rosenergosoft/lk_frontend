@@ -222,39 +222,13 @@
               <div class="login-form-row">
                 <div class="steps">
                   <div class="step-title">
-                    3. Лицевой счет
+                    3. Соглашения
                   </div>
-                  <div class="step-description">
-                    Если вы уже являетесь нашим клиентом, укажите ваш лицевой счет и ФИО (по договору). Его можно будет
-                    добавить позже в вашем профиле.
+                  <div class="form-group login-form-checkbox" v-if="host == 'lk.rsosiluet.ru'">
+                    <input id="agreement" v-model="agreement" type="checkbox"><label for="agreement">Я принимаю <a href="https://rsosiluet.ru/privacy-policy" target="_blank">соглашение</a> об обработке персональных данных</label>
                   </div>
-                </div>
-                <div class="form-group login-form-checkbox">
-                  <input
-                    id="im-not-a-client"
-                    v-model="notaclient"
-                    type="checkbox"
-                    value="1"
-                  ><label for="im-not-a-client">Я не являюсь клиентом компании и у меня нет лицевого счета</label>
-                </div>
-                <div v-if="notaclient === false" class="inputs">
-                  <div class="form-group">
-                    <input v-model="account" type="text" class="form-control" placeholder="Лицевой счет">
-                  </div>
-                  <div class="form-group">
-                    <input v-model="name" type="text" class="form-control" placeholder="ФИО">
-                  </div>
-                </div>
-                <div class="steps">
-                  <div class="step-title">
-                    4. Соглашения
-                  </div>
-                  <div class="form-group login-form-checkbox">
-                    <input id="agreement" v-model="agreement" type="checkbox"><label for="agreement">Я принимаю <a
-                      href="http://rosenergosite.newizze.com/user-agreement"
-                      target="_blank"
-                    >соглашение</a> об обработке
-                      персональных данных</label>
+                  <div v-else>
+                    <input id="agreement" v-model="agreement" type="checkbox"><label for="agreement">Я принимаю <a href="#" target="_blank">соглашение</a> об обработке персональных данных</label>
                   </div>
                 </div>
               </div>
