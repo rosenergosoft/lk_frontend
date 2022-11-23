@@ -447,16 +447,16 @@ export default {
       }
     },
     validateThirdStep () {
-      if (!this.notaclient) {
-        if (!this.account) {
-          this.$notify({ type: 'error', title: 'Ошибка', text: 'Укажите номер лицевого счета', duration: 6000 })
-          return false
-        }
-        if (!this.name) {
-          this.$notify({ type: 'error', title: 'Ошибка', text: 'Укажите ФИО', duration: 6000 })
-          return false
-        }
-      }
+      // if (!this.notaclient) {
+      //   if (!this.account) {
+      //     this.$notify({ type: 'error', title: 'Ошибка', text: 'Укажите номер лицевого счета', duration: 6000 })
+      //     return false
+      //   }
+      //   if (!this.name) {
+      //     this.$notify({ type: 'error', title: 'Ошибка', text: 'Укажите ФИО', duration: 6000 })
+      //     return false
+      //   }
+      // }
       if (!this.agreement) {
         this.$notify({ type: 'error', title: 'Ошибка', text: 'Примите соглашение об обработке персональных данных', duration: 6000 })
         return false
