@@ -229,28 +229,31 @@
                       <input id="agreement1" v-model="agreement" type="checkbox"><label for="agreement1">Я даю согласие на <a href="https://rsosiluet.ru/privacy-policy" target="_blank">обработку персональных данных</a></label>
                     </div>
                     <div class="form-group login-form-checkbox">
-                      <input id="agreement2" v-model="agreement" type="checkbox"><label for="agreement2">Я принимаю <a href="https://rsosiluet.ru/user-agreement" target="_blank">соглашение об обработке персональных данных</a></label>
+                      <input id="agreement2" v-model="agreement2" type="checkbox"><label for="agreement2">Я принимаю <a href="https://rsosiluet.ru/user-agreement" target="_blank">соглашение об обработке персональных данных</a></label>
                     </div>
                   </div>
                   <div v-else-if="host === 'lk.zoloto-krs.ru'">
                     <div class="form-group login-form-checkbox">
-                      <input id="agreement3" v-model="agreement" type="checkbox"><label for="agreement4">Я принимаю <a href="https://zoloto-krs.ru/privacy-policy" target="_blank">политику конфиденциальности</a> и соглашаюсь на обработку <a href="https://zoloto-krs.ru/privacy-policy" target="_blank">конфиденциальных данных</a></label>
+                      <input id="agreement3" v-model="agreement" type="checkbox"><label for="agreement4">Я даю согласие на <a href="https://zoloto-krs.ru/privacy-policy" target="_blank">обработку персональных данных</a></label>
                     </div>
                     <div class="form-group login-form-checkbox">
-                      <input id="agreement4" v-model="agreement" type="checkbox"><label for="agreement4">Я принимаю <a href="https://zoloto-krs.ru/user-agreement" target="_blank">соглашение об обработке персональных данных</a></label>
+                      <input id="agreement4" v-model="agreement2" type="checkbox"><label for="agreement4">Я принимаю <a href="https://zoloto-krs.ru/user-agreement" target="_blank">соглашение об обработке персональных данных</a></label>
                     </div>
                   </div>
                   <div v-else-if="host === 'lk.sks-energo.ru'">
                     <div class="form-group login-form-checkbox">
-                      <input id="agreement5" v-model="agreement" type="checkbox"><label for="agreement5">Я принимаю <a href="https://sks-energo.ru/politika-confidencialnosti/" target="_blank">политику конфиденциальности</a> и соглашаюсь на обработку <a href="https://zoloto-krs.ru/privacy-policy" target="_blank">конфиденциальных данных</a></label>
+                      <input id="agreement5" v-model="agreement" type="checkbox"><label for="agreement5">Я даю согласие на <a href="https://sks-energo.ru/politika-confidencialnosti/" target="_blank">обработку персональных данных</a></label>
                     </div>
                     <div class="form-group login-form-checkbox">
-                      <input id="agreement6" v-model="agreement" type="checkbox"><label for="agreement6">Я принимаю <a href="https://sks-energo.ru/soglashenie-na-obrabotku-dannyh/" target="_blank">соглашение об обработке персональных данных</a></label>
+                      <input id="agreement6" v-model="agreement2" type="checkbox"><label for="agreement6">Я принимаю <a href="https://sks-energo.ru/soglashenie-na-obrabotku-dannyh/" target="_blank">соглашение об обработке персональных данных</a></label>
                     </div>
                   </div>
                   <div v-else>
                     <div class="form-group login-form-checkbox">
-                      <input id="agreement7" v-model="agreement" type="checkbox"><label for="agreement7">Я принимаю <a href="#" target="_blank">соглашение</a> об обработке персональных данных</label>
+                      <input id="agreement7" v-model="agreement" type="checkbox"><label for="agreement7">Я даю согласие на <a href="#" target="_blank">обработку персональных данных</a></label>
+                    </div>
+                    <div class="form-group login-form-checkbox">
+                      <input id="agreement8" v-model="agreement2" type="checkbox"><label for="agreement8">Я принимаю <a href="#" target="_blank">соглашение об обработке персональных данных</a></label>
                     </div>
                   </div>
                 </div>
@@ -342,6 +345,7 @@ export default {
       },
       email: '',
       agreement: false,
+      agreement2: false,
       password: '',
       confirmPassword: '',
       phone: '',
@@ -393,8 +397,6 @@ export default {
     }
   },
   mounted () {
-    console.log(process.env.VUE_APP_DEMO_HOST)
-    console.log(this.host)
     if (process.env.VUE_APP_DEMO_HOST === this.host) {
       this.currentStep = 666
     }
@@ -470,17 +472,11 @@ export default {
       }
     },
     validateThirdStep () {
-      // if (!this.notaclient) {
-      //   if (!this.account) {
-      //     this.$notify({ type: 'error', title: 'Ошибка', text: 'Укажите номер лицевого счета', duration: 6000 })
-      //     return false
-      //   }
-      //   if (!this.name) {
-      //     this.$notify({ type: 'error', title: 'Ошибка', text: 'Укажите ФИО', duration: 6000 })
-      //     return false
-      //   }
-      // }
       if (!this.agreement) {
+        this.$notify({ type: 'error', title: 'Ошибка', text: 'Примите соглашение об обработке персональных данных', duration: 6000 })
+        return false
+      }
+      if (!this.agreement2) {
         this.$notify({ type: 'error', title: 'Ошибка', text: 'Примите соглашение об обработке персональных данных', duration: 6000 })
         return false
       }
