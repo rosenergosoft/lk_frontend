@@ -224,7 +224,7 @@
                   <div class="step-title">
                     3. Соглашения
                   </div>
-                  <div v-if="host === 'lk.rsosiluet.ru'" >
+                  <div v-if="host == 'lk.rsosiluet.ru'" >
                     <div class="form-group login-form-checkbox">
                       <input id="agreement1" v-model="agreement" type="checkbox"><label for="agreement1">Я даю согласие на <a href="https://rsosiluet.ru/privacy-policy" target="_blank">обработку персональных данных</a></label>
                     </div>
@@ -232,7 +232,7 @@
                       <input id="agreement2" v-model="agreement2" type="checkbox"><label for="agreement2">Я принимаю <a href="https://rsosiluet.ru/user-agreement" target="_blank">соглашение об обработке персональных данных</a></label>
                     </div>
                   </div>
-                  <div v-else-if="host === 'lk.zoloto-krs.ru'">
+                  <div v-else-if="host == 'lk.zoloto-krs.ru'">
                     <div class="form-group login-form-checkbox">
                       <input id="agreement3" v-model="agreement" type="checkbox"><label for="agreement4">Я даю согласие на <a href="https://zoloto-krs.ru/privacy-policy" target="_blank">обработку персональных данных</a></label>
                     </div>
@@ -240,7 +240,7 @@
                       <input id="agreement4" v-model="agreement2" type="checkbox"><label for="agreement4">Я принимаю <a href="https://zoloto-krs.ru/user-agreement" target="_blank">соглашение об обработке персональных данных</a></label>
                     </div>
                   </div>
-                  <div v-else-if="host === 'lk.sks-energo.ru'">
+                  <div v-else-if="host == 'lk.sks-energo.ru'">
                     <div class="form-group login-form-checkbox">
                       <input id="agreement5" v-model="agreement" type="checkbox"><label for="agreement5">Я даю согласие на <a href="https://sks-energo.ru/politika-confidencialnosti/" target="_blank">обработку персональных данных</a></label>
                     </div>
