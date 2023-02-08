@@ -1,11 +1,11 @@
 <template>
   <div class="login-container">
     <notifications />
-    <div class="d-flex align-items-center flex-row" style="min-height: 100vh;">
+    <div class="d-flex align-items-center flex-wrap" style="min-height: 100vh; padding: 40px 0;" :class="currentStep === 1 ? 'flex-column': ''">
       <div v-if="currentStep === 0" class="login-form">
         <div class="bg-white">
           <div class="row">
-            <div class="col-6 form-container">
+            <div class="form-container">
               <h2>
                 Авторизация
               </h2>
@@ -72,7 +72,6 @@
                 </div>
               </div>
             </div>
-            <div class="col-6 form-image" />
           </div>
         </div>
       </div>
@@ -137,24 +136,8 @@
                 </div>
               </div>
               <div class="form-group d-flex justify-content-between">
-<!--                <div>-->
-<!--                  <button class="btn reg" @click="nextTo(0)">-->
-<!--                    Назад-->
-<!--                  </button>-->
-<!--                </div>-->
-<!--                <div>-->
-<!--                  <button class="btn submit" @click="validateFirstStep">-->
-<!--                    Далее-->
-<!--                  </button>-->
-<!--                </div>-->
               </div>
-<!--              <div class="d-flex ellipses justify-content-between">-->
-<!--                <div class="active-ellipse" />-->
-<!--                <div />-->
-<!--                <div />-->
-<!--              </div>-->
             </div>
-<!--            <div class="col-6 form-image" />-->
           </div>
         </div>
       </div>
@@ -162,9 +145,6 @@
         <div class="bg-white">
           <div class="row">
             <div class="col form-container">
-<!--              <h2 class="text-2xl leading-7 font-semibold">-->
-<!--                Регистрация-->
-<!--              </h2>-->
               <div class="login-form-row">
                 <div class="steps">
                   <div class="step-title">
@@ -191,24 +171,8 @@
                 </div>
               </div>
               <div class="form-group d-flex justify-content-between">
-<!--                <div>-->
-<!--                  <button class="btn reg" @click="nextTo(1)">-->
-<!--                    Назад-->
-<!--                  </button>-->
-<!--                </div>-->
-<!--                <div>-->
-<!--                  <button class="btn submit" @click="validateSecondStep()">-->
-<!--                    Далее-->
-<!--                  </button>-->
-<!--                </div>-->
               </div>
-<!--              <div class="d-flex ellipses justify-content-between">-->
-<!--                <div />-->
-<!--                <div class="active-ellipse" />-->
-<!--                <div />-->
-<!--              </div>-->
             </div>
-<!--            <div class="col-6 form-image" />-->
           </div>
         </div>
       </div>
@@ -216,9 +180,6 @@
         <div class="bg-white">
           <div class="row">
             <div class="col form-container">
-<!--              <h2 class="text-2xl leading-7 font-semibold">-->
-<!--                Регистрация-->
-<!--              </h2>-->
               <div class="login-form-row">
                 <div class="steps">
                   <div class="step-title">
@@ -259,24 +220,18 @@
                 </div>
               </div>
               <div class="form-group d-flex justify-content-between">
-<!--                <div>-->
-<!--                  <button class="btn reg" @click="nextTo(2)">-->
-<!--                    Назад-->
-<!--                  </button>-->
-<!--                </div>-->
+                <div>
+                  <button class="btn reg" @click="nextTo(0)">
+                    Авторизация
+                  </button>
+                </div>
                 <div>
                   <button class="btn submit" @click="submitRegistration">
-                    Далее
+                    Зарегистрироваться
                   </button>
                 </div>
               </div>
-              <div class="d-flex ellipses justify-content-between">
-                <div />
-                <div />
-                <div class="active-ellipse" />
-              </div>
             </div>
-<!--            <div class="col-6 form-image" />-->
           </div>
         </div>
       </div>
@@ -553,7 +508,7 @@ export default {
     padding: 0;
   }
   .login-form-row {
-    height: 365px;
+    //height: 365px;
     margin: 0 auto;
   }
   .step-title {
@@ -575,7 +530,7 @@ export default {
     background-size: cover;
   }
   .login-form {
-    max-width: 1140px;
+    max-width: 570px;
     width: 100%;
     margin: 0 auto !important;
   }
@@ -612,9 +567,10 @@ export default {
     padding-left: 32px;
     padding-right: 32px;
     padding-top: 32px;
-    height: 611px;
+    width: 100%;
+    //height: 611px;
     input[type=text], input[type=password], input[type=tel] {
-      width: 508px;
+      //width: 508px;
       border-radius: 0;
       height: 40px;
       border: 1px solid $radioColor;
