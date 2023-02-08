@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <notifications />
-    <div class="d-flex align-items-center" style="min-height: 100vh;">
+    <div class="d-flex align-items-center flex-row" style="min-height: 100vh;">
       <div v-if="currentStep === 0" class="login-form">
         <div class="bg-white">
           <div class="row">
@@ -79,7 +79,7 @@
       <div v-if="currentStep === 1" class="login-form mx-auto">
         <div class="bg-white">
           <div class="row">
-            <div class="col-6 form-container">
+            <div class="col form-container">
               <h2 class="text-2xl leading-7 font-semibold">
                 Регистрация
               </h2>
@@ -148,20 +148,20 @@
 <!--                  </button>-->
 <!--                </div>-->
               </div>
-              <div class="d-flex ellipses justify-content-between">
-                <div class="active-ellipse" />
-                <div />
-                <div />
-              </div>
+<!--              <div class="d-flex ellipses justify-content-between">-->
+<!--                <div class="active-ellipse" />-->
+<!--                <div />-->
+<!--                <div />-->
+<!--              </div>-->
             </div>
-            <div class="col-6 form-image" />
+<!--            <div class="col-6 form-image" />-->
           </div>
         </div>
       </div>
-      <div class="login-form mx-auto">
+      <div v-if="currentStep === 1" class="login-form mx-auto">
         <div class="bg-white">
           <div class="row">
-            <div class="col-6 form-container">
+            <div class="col form-container">
 <!--              <h2 class="text-2xl leading-7 font-semibold">-->
 <!--                Регистрация-->
 <!--              </h2>-->
@@ -202,20 +202,20 @@
 <!--                  </button>-->
 <!--                </div>-->
               </div>
-              <div class="d-flex ellipses justify-content-between">
-                <div />
-                <div class="active-ellipse" />
-                <div />
-              </div>
+<!--              <div class="d-flex ellipses justify-content-between">-->
+<!--                <div />-->
+<!--                <div class="active-ellipse" />-->
+<!--                <div />-->
+<!--              </div>-->
             </div>
-            <div class="col-6 form-image" />
+<!--            <div class="col-6 form-image" />-->
           </div>
         </div>
       </div>
-      <div class="login-form mx-auto">
+      <div v-if="currentStep === 1" class="login-form mx-auto">
         <div class="bg-white">
           <div class="row">
-            <div class="col-6 form-container">
+            <div class="col form-container">
 <!--              <h2 class="text-2xl leading-7 font-semibold">-->
 <!--                Регистрация-->
 <!--              </h2>-->
@@ -276,7 +276,7 @@
                 <div class="active-ellipse" />
               </div>
             </div>
-            <div class="col-6 form-image" />
+<!--            <div class="col-6 form-image" />-->
           </div>
         </div>
       </div>
