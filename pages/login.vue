@@ -137,16 +137,16 @@
                 </div>
               </div>
               <div class="form-group d-flex justify-content-between">
-                <div>
-                  <button class="btn reg" @click="nextTo(0)">
-                    Назад
-                  </button>
-                </div>
-                <div>
-                  <button class="btn submit" @click="validateFirstStep">
-                    Далее
-                  </button>
-                </div>
+<!--                <div>-->
+<!--                  <button class="btn reg" @click="nextTo(0)">-->
+<!--                    Назад-->
+<!--                  </button>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                  <button class="btn submit" @click="validateFirstStep">-->
+<!--                    Далее-->
+<!--                  </button>-->
+<!--                </div>-->
               </div>
               <div class="d-flex ellipses justify-content-between">
                 <div class="active-ellipse" />
@@ -158,13 +158,13 @@
           </div>
         </div>
       </div>
-      <div v-if="currentStep === 2" class="login-form mx-auto">
+      <div class="login-form mx-auto">
         <div class="bg-white">
           <div class="row">
             <div class="col-6 form-container">
-              <h2 class="text-2xl leading-7 font-semibold">
-                Регистрация
-              </h2>
+<!--              <h2 class="text-2xl leading-7 font-semibold">-->
+<!--                Регистрация-->
+<!--              </h2>-->
               <div class="login-form-row">
                 <div class="steps">
                   <div class="step-title">
@@ -191,16 +191,16 @@
                 </div>
               </div>
               <div class="form-group d-flex justify-content-between">
-                <div>
-                  <button class="btn reg" @click="nextTo(1)">
-                    Назад
-                  </button>
-                </div>
-                <div>
-                  <button class="btn submit" @click="validateSecondStep()">
-                    Далее
-                  </button>
-                </div>
+<!--                <div>-->
+<!--                  <button class="btn reg" @click="nextTo(1)">-->
+<!--                    Назад-->
+<!--                  </button>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                  <button class="btn submit" @click="validateSecondStep()">-->
+<!--                    Далее-->
+<!--                  </button>-->
+<!--                </div>-->
               </div>
               <div class="d-flex ellipses justify-content-between">
                 <div />
@@ -212,13 +212,13 @@
           </div>
         </div>
       </div>
-      <div v-if="currentStep === 3" class="login-form mx-auto">
+      <div class="login-form mx-auto">
         <div class="bg-white">
           <div class="row">
             <div class="col-6 form-container">
-              <h2 class="text-2xl leading-7 font-semibold">
-                Регистрация
-              </h2>
+<!--              <h2 class="text-2xl leading-7 font-semibold">-->
+<!--                Регистрация-->
+<!--              </h2>-->
               <div class="login-form-row">
                 <div class="steps">
                   <div class="step-title">
@@ -259,11 +259,11 @@
                 </div>
               </div>
               <div class="form-group d-flex justify-content-between">
-                <div>
-                  <button class="btn reg" @click="nextTo(2)">
-                    Назад
-                  </button>
-                </div>
+<!--                <div>-->
+<!--                  <button class="btn reg" @click="nextTo(2)">-->
+<!--                    Назад-->
+<!--                  </button>-->
+<!--                </div>-->
                 <div>
                   <button class="btn submit" @click="submitRegistration">
                     Далее
@@ -437,7 +437,7 @@ export default {
       })
     },
     submitRegistration () {
-      if (this.validateThirdStep()) {
+      if (this.validateFirstStep() && this.validateSecondStep() && this.validateThirdStep()) {
         const data = {
           password: this.password,
           email: this.email,
