@@ -446,7 +446,7 @@ export default {
         this.$notify({ type: 'error', title: 'Ошибка', text: 'Введите телефон', duration: 6000 })
         return false
       }
-      this.nextTo(3)
+      return true
     },
     validateFirstStep () {
       Object.assign(this.passwordError, {
@@ -471,21 +471,21 @@ export default {
           message: 'Обязательное поле'
         }
         this.$notify({ type: 'error', title: 'Ошибка', text: 'Придумайте пароль', duration: 6000 })
-        return
+        return false
       }
       if (this.password.length < 6) {
         this.$notify({ type: 'error', title: 'Ошибка', text: 'Пароль должен содержать минимум 6 символов', duration: 6000 })
-        return
+        return false
       }
       if (this.password !== this.confirmPassword) {
         this.passwordError.confirm = {
           message: 'Пароли не совпадают'
         }
         this.$notify({ type: 'error', title: 'Ошибка', text: 'Пароли не совпадают', duration: 6000 })
-        return
+        return false
       }
       if (result) {
-        this.nextTo(2)
+        return true
       }
     },
     nextTo (to = false) {
