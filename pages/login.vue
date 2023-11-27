@@ -237,8 +237,8 @@
       </div>
       <div v-if="currentStep === 666" class="login-form mx-auto">
         <div class="bg-white">
-          <div class="row">
-            <div class="col-6 form-container">
+          <div class="row" style="padding-bottom: 50px;">
+            <div class="form-container">
               <h2 class="text-2xl leading-7 font-semibold">
                 Демо доступ
               </h2>
@@ -266,7 +266,6 @@
                 </div>
               </div>
             </div>
-            <div class="col-6 form-image" />
           </div>
         </div>
       </div>
